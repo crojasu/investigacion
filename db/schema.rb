@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_29_124325) do
+ActiveRecord::Schema.define(version: 2018_06_29_125106) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "peliculas", force: :cascade do |t|
+    t.string "titulo"
+    t.string "responsable"
+    t.integer "monto"
+    t.string "institucion"
+    t.integer "agno"
+    t.string "imbd"
+    t.integer "idcinechile"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "personajes", force: :cascade do |t|
+    t.string "name"
+    t.boolean "genero", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "rols", force: :cascade do |t|
+    t.string "name"
+    t.bigint "personaje_id"
+    t.bigint "pelicula_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pelicula_id"], name: "index_rols_on_pelicula_id"
+    t.index ["personaje_id"], name: "index_rols_on_personaje_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -32,4 +61,6 @@ ActiveRecord::Schema.define(version: 2018_06_29_124325) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "rols", "peliculas"
+  add_foreign_key "rols", "personajes"
 end
