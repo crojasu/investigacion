@@ -211,7 +211,7 @@ require 'i18n'
 # puts "cantidad directores #{@directors.count}"
 # puts "cantidad peliculas #{Pelicula.count}"
 
-# # # # #arte
+# # # #arte
 
 # dataart= Array.new
 # csv_text_direc = File.read(Rails.root.join('lib', 'seeds', 'arte.csv'))
@@ -228,11 +228,9 @@ require 'i18n'
 #   @rol = Rol.where(pelicula_id: cinechile2.id)
 #   @personart = Personaje.where(name: nombre2)
 
-#   if @personart != nil
 #    if(@artes.any?{|rol| @personart.include? (rol.personaje)})
 #         puts " #{nombre2} ya existe ///////
 #         //////"
-#       end
 #     else
 #      puts  "no existe asi que lo agregamos como"
 #         pear3 = Personaje.create(name: nombre2)
@@ -249,62 +247,72 @@ require 'i18n'
 
 
 # # #productor
-datapro = Array.new
-csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'productor.csv'))
-csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
-csvd.each do |row|
-  datapro  << row.to_h
- end
+# datapro = Array.new
+# csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'productor.csv'))
+# csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
+# csvd.each do |row|
+#   datapro  << row.to_h
+#  end
 
-@productore= []
-@productore = Rol.where(name: "Produccion")
- datapro.each do |data3|
-  nombre3 = I18n.transliterate(data3[:nombre_personaje])
-  cinechile3 = Pelicula.find_by(idcinechile: data3[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile3.id)
-  @personpro = Personaje.where(name: nombre3)
+# @productore= []
+# @productore = Rol.where(name: "Produccion")
+#  datapro.each do |data3|
+#   nombre3 = I18n.transliterate(data3[:nombre_personaje])
+#   cinechile3 = Pelicula.find_by(idcinechile: data3[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile3.id)
+#   @personpro = Personaje.where(name: nombre3)
 
-  if @personpro != nil
-   if(@productore.any?{|rol| @personpro.include? (rol.personaje)})
-        puts " #{nombre3} ya existe ///////
-        //////"
-      end
-    else
-     puts  "no existe asi que lo agregamos como"
-        pepro = Personaje.create(name: nombre3)
-        dapro = Rol.create(name: "Produccion")
-        dapro.pelicula = cinechile3
-        dapro.personaje = pepro
-        dapro.save
-         puts " nuevo productor #{dapro.personaje.name}/////
-         /////"
-      end
-end
+#    if(@productore.any?{|rol| @personpro.include? (rol.personaje)})
+#         puts " #{nombre3} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         pepro = Personaje.create(name: nombre3)
+#         dapro = Rol.create(name: "Produccion")
+#         dapro.pelicula = cinechile3
+#         dapro.personaje = pepro
+#         dapro.save
+#          puts " nuevo productor #{dapro.personaje.name}/////
+#          /////"
+#       end
+# end
 
-puts @productore.count
+# puts @productore.count
 
 # # # asistente de direc
-# # asistentedire = Array.new
-# # csv_text_asistdir = File.read(Rails.root.join('lib', 'seeds', 'asistentedire.csv'))
-# # csvd = CSV.parse(csv_text_asistdir, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
-# # csvd.each do |row|
-# #   asistentedire  << row.to_h
-# #  end
+# asistentedire = Array.new
+# csv_text_asdir = File.read(Rails.root.join('lib', 'seeds', 'asistentedire2.csv'))
+# csvd2 = CSV.parse(csv_text_asdir, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
+# csvd2.each do |row|
+#   asistentedire  << row.to_h
+#  end
 
-# #  asistentedire.each do |prod|
-# #   peliasistentedire = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-# #   peliasistentedire.asistarte = prod[:nombre_personaje]
-# #   peliasistentedire.save
-# #   puts "agregando asistentedire #{peliasistentedire.asistentedire} a #{peliasistentedire.titulo} "
-# # end
+# @asistente= []
+# @asistente = Rol.where(name: "Asistente de Produccion")
+#  asistentedire.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
 
-# #  asistentedire.each do |asistentedire|
-# #    da = Asistentdire.new(peliculaid: asistentedire[:pelicula_id], nombre: asistentedire[:nombre_personaje])
-# #   da.save!
-# #   puts "agregando asistentedire #{da.nombre}"
-# #   end
+#    if(@asistente.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Asistente de Produccion")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo asistente de direccions #{dasist.personaje.name}/////
+#          /////"
+#       end
+# end
 
-# #director de foto
+# puts @asistente.count
+
+# # #director de foto
 # direfoto = Array.new
 # csv_text_direfoto = File.read(Rails.root.join('lib', 'seeds', 'direfoto.csv'))
 # csvd = CSV.parse(csv_text_direfoto, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
@@ -312,64 +320,111 @@ puts @productore.count
 #   direfoto  << row.to_h
 #  end
 
-#  direfoto.each do |prod|
-#   pelidirefoto = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   pelidirefoto.direcfoto = prod[:nombre_personaje]
-#   pelidirefoto.save
-#   puts "agregando direfoto #{pelidirefoto.direcfoto} a #{pelidirefoto.titulo} "
+# @direfotos= []
+# @direfotos = Rol.where(name: "Direccion de Fotografia")
+#  direfoto.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@direfotos.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Direccion de Fotografia")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo direfotos  #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
 
-#  direfoto.each do |direfoto|
-#    da = Direfoto.new(peliculaid: direfoto[:pelicula_id], nombre: direfoto[:nombre_personaje])
-#   da.save!
-#   puts "agregando direfoto #{da.nombre}"
-#   end
+# puts @direfotos.count
 
-# #efectos
-# efectos = Array.new
+# # #efectos
+# efectosa = Array.new
 # csv_text_efectos = File.read(Rails.root.join('lib', 'seeds', 'efectosespeciales.csv'))
 # csvd = CSV.parse(csv_text_efectos, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
 # csvd.each do |row|
-#   efectos  << row.to_h
+#   efectosa  << row.to_h
 #  end
 
-#  efectos.each do |prod|
-#   peliefectos = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   peliefectos.efectos = prod[:nombre_personaje]
-#   peliefectos.save
-#   puts "agregando efectos #{peliefectos.efectos} a #{peliefectos.titulo} "
+# @efectos= []
+# @efectos = Rol.where(name: "Efectos")
+#  efectosa.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@efectos.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Efectos")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo efectos #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
 
-#  efectos.each do |efecto|
-#    da = Efecto.new(peliculaid: efecto[:pelicula_id], nombre: efecto[:nombre_personaje])
-#   da.save!
-#   puts "agregando efectos #{da.nombre}"
-#   end
+# puts @efectos.count
 
-
-# #guion
-# guion = Array.new
+# # #guion
+# dataguion = Array.new
 # csv_text_guion = File.read(Rails.root.join('lib', 'seeds', 'guion.csv'))
 # csvd = CSV.parse(csv_text_guion, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
 # csvd.each do |row|
-#   guion  << row.to_h
+#   dataguion  << row.to_h
 #  end
 
-#  guion.each do |prod|
-#   peliguion = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   peliguion.guion = prod[:nombre_personaje]
-#   peliguion.save
-#   puts "agregando guion #{peliguion.guion} a #{peliguion.titulo} "
+# @rol= Rol.all
+# @guions = []
+# @guions = Rol.where(name: "Guion")
+# puts @guions.count
+
+# @count1g =0
+# @existentesg = 0
+# @nuevosg = 0
+#  dataguion.each do |data|
+#   nombre = I18n.transliterate(data[:nombre_personaje])
+#   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile.id)
+#   @persona = Personaje.where(name: nombre)
+
+#   if @rol.any?{|rol| @persona.include? (rol.personaje)}
+#       puts " #{nombre} ya existe ///////
+#       //////"
+#       @existentesg = @existentesg +1
+#   else
+#    puts  "#{nombre} no existe asi que lo agregamos como"
+#       pe3 = Personaje.create(name: nombre)
+#       da3 = Rol.create(name: "Guion")
+#       da3.pelicula = cinechile
+#       da3.personaje = pe3
+#       da3.save
+#        puts " nuevo guion #{da3.personaje.name}/////
+#        /////"
+#        @nuevosg =@nuevosg + 1
+#     end
 # end
 
-#  guion.each do |guion|
-#    da = Guion.new(peliculaid: guion[:pelicula_id], nombre: guion[:nombre_personaje])
-#   da.save!
-#   puts "agregando guion #{da.nombre}"
-#   end
+# puts "guiones nuevos #{@nuevosg}"
+# puts "guiones @existentes #{@existentesg}"
+# puts "cantidad guiones #{@guions.count}"
+# puts "cantidad peliculas #{Pelicula.count}"
 
 
-# # #jefedeproduccion
+
+# # # #jefedeproduccion
 # jefedeproduccion = Array.new
 # csv_text_jefedeproduccion = File.read(Rails.root.join('lib', 'seeds', 'jefedeproduccion.csv'))
 # csvd = CSV.parse(csv_text_jefedeproduccion, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
@@ -377,17 +432,30 @@ puts @productore.count
 #   jefedeproduccion  << row.to_h
 #  end
 
-#  jefedeproduccion.each do |prod|
-#   pelijefedeproduccion = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   pelijefedeproduccion.jefedeprod = prod[:nombre_personaje]
-#   pelijefedeproduccion.save
-#   puts "agregando jefedeproduccion #{pelijefedeproduccion.jefedeprod} a #{pelijefedeproduccion.titulo} "
+#  @jefeprod= []
+# @jefeprod = Rol.where(name: "Jefatura de Produccion")
+#  jefedeproduccion.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@jefeprod.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Jefatura de Produccion")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo jefeprod #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
-#  jefedeproduccion.each do |jefedeproduccion|
-#    da = JefeProduccion.new(peliculaid: jefedeproduccion[:pelicula_id], nombre: jefedeproduccion[:nombre_personaje])
-#   da.save!
-#   puts "agregando jefedeproduccion #{da.nombre}"
-#   end
+
+# puts @jefeprod.count
 
 
 # # # montaje
@@ -398,20 +466,30 @@ puts @productore.count
 #   montaje  << row.to_h
 #  end
 
-#  montaje.each do |prod|
-#   pelimontaje = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   pelimontaje.montaje = prod[:nombre_personaje]
-#   pelimontaje.save
-#   puts "agregando montaje #{pelimontaje.montaje} a #{pelimontaje.titulo} "
+#  @montajes= []
+# @montajes = Rol.where(name: "Montaje")
+#  montaje.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@montajes.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Montaje")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo montajes #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
 
-#  montaje.each do |montaje|
-#    da = Montaje.new(peliculaid: montaje[:pelicula_id], nombre: montaje[:nombre_personaje])
-#   da.save!
-#   puts "agregando montaje #{da.nombre}"
-#   end
-
-
+# puts @montajes.count
 
 # # # musica
 # musica = Array.new
@@ -421,20 +499,32 @@ puts @productore.count
 #   musica  << row.to_h
 #  end
 
-#  musica.each do |prod|
-#   pelimusica = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   pelimusica.musica = prod[:nombre_personaje]
-#   pelimusica.save
-#   puts "agregando musica #{pelimusica.musica} a #{pelimusica.titulo} "
+#  @musicas= []
+# @musicas = Rol.where(name: "Musica")
+#  musica.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@musicas.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Musica")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo musicas #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
 
-#  musica.each do |musica|
-#    da = Musica.new(peliculaid: musica[:pelicula_id], nombre: musica[:nombre_personaje])
-#   da.save!
-#   puts "agregando musica #{da.nombre}"
-#   end
+# puts @musicas.count
 
-# # # maquillaje
+# # # # maquillaje
 # maquillaje = Array.new
 # csv_text_maquillaje = File.read(Rails.root.join('lib', 'seeds', 'maquillaje.csv'))
 # csvd = CSV.parse(csv_text_maquillaje, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
@@ -442,18 +532,31 @@ puts @productore.count
 #   maquillaje  << row.to_h
 #  end
 
-#  maquillaje.each do |prod|
-#   pelimaquillaje = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   pelimaquillaje.maquillaje = prod[:nombre_personaje]
-#   pelimaquillaje.save
-#   puts "agregando maquillaje #{pelimaquillaje.maquillaje} a #{pelimaquillaje.titulo} "
+
+#  @maquillajes= []
+# @maquillajes = Rol.where(name: "Maquillaje")
+#  maquillaje.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@maquillajes.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Maquillaje")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo maquillajes #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
 
-#  maquillaje.each do |maquillaje|
-#    da = Maquillaje.new(peliculaid: maquillaje[:pelicula_id], nombre: maquillaje[:nombre_personaje])
-#   da.save!
-#   puts "agregando maquillaje #{da.nombre}"
-#   end
+# puts @maquillajes.count
 
 # # # productora
 # productora = Array.new
@@ -463,17 +566,42 @@ puts @productore.count
 #   productora  << row.to_h
 #  end
 
-#  productora.each do |prod|
-#   peliproductora = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   peliproductora.productora = prod[:nombre_personaje]
-#   peliproductora.save
-#   puts "agregando Productora #{peliproductora.productora} a #{peliproductora.titulo} "
+# @rol= Rol.all
+# @casaproduct = []
+# @casaproduct = Rol.where(name: "Casa Productora")
+# puts @casaproduct.count
+
+# @count1cp =0
+# @existentescp = 0
+# @nuevoscp = 0
+#  productora.each do |data|
+#   nombre = I18n.transliterate(data[:nombre_personaje])
+#   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile.id)
+#   @persona = Personaje.where(name: nombre)
+
+#   if @rol.any?{|rol| @persona.include? (rol.personaje)}
+#       puts " #{nombre} ya existe ///////
+#       //////"
+#       @existentescp = @existentescp +1
+#   else
+#    puts  "#{nombre} no existe asi que lo agregamos como"
+#       pe3 = Personaje.create(name: nombre)
+#       da3 = Rol.create(name: "Casa Productora")
+#       da3.pelicula = cinechile
+#       da3.personaje = pe3
+#       da3.save
+#        puts " nuevo casa productora #{da3.personaje.name}/////
+#        /////"
+#        @nuevoscp =@nuevoscp + 1
+#     end
 # end
-# productora.each do |productora|
-#    da = Productora.new(peliculaid: productora[:pelicula_id], nombre: productora[:nombre_personaje])
-#   da.save!
-#   puts "agregando productora #{da.nombre}"
-#   end
+
+# puts "casa productora nuevos #{@nuevoscp}"
+# puts "casa productora @existentes #{@existentescp}"
+# puts "cantidad casa productora #{@casaproduct.count}"
+# puts "cantidad peliculas #{Pelicula.count}"
+
 
 # # #productorasociado
 # productorasociado = Array.new
@@ -483,18 +611,30 @@ puts @productore.count
 #   productorasociado  << row.to_h
 #  end
 
-#  productorasociado.each do |prod|
-#   peliproductorasociado = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   peliproductorasociado.productorasociado = prod[:nombre_personaje]
-#   peliproductorasociado.save
-#   puts "agregando Productorasociado #{peliproductorasociado.productorasociado} a #{peliproductorasociado.titulo} "
+#  @prodcasoci= []
+# @prodcasoci = Rol.where(name: "Produccion Asociada")
+#  productorasociado.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje])
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@prodcasoci.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Produccion Asociada")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo prodcasoci #{dasist.personaje.name}/////
+#          /////"
+#       end
 # end
 
-# productorasociado.each do |productorasociado|
-#    da = Productorasociado.new(peliculaid: productorasociado[:pelicula_id], nombre: productorasociado[:nombre_personaje])
-#   da.save!
-#   puts "agregando productorasociado #{da.nombre}"
-#   end
+# puts @prodcasoci.count
 
 # # #productorejecutivo
 # productorejecutivo = Array.new
