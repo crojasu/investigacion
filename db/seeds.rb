@@ -210,6 +210,7 @@ require 'i18n'
 # puts "directores @existentes #{@existentes}"
 # puts "cantidad directores #{@directors.count}"
 # puts "cantidad peliculas #{Pelicula.count}"
+
 # # # # #arte
 
 # dataart= Array.new
@@ -227,8 +228,8 @@ require 'i18n'
 #   @rol = Rol.where(pelicula_id: cinechile2.id)
 #   @personart = Personaje.where(name: nombre2)
 
-#   if @personaart != nil
-#    if(@artes.any?{|rol| @personaart.include? (rol.personaje)})
+#   if @personart != nil
+#    if(@artes.any?{|rol| @personart.include? (rol.personaje)})
 #         puts " #{nombre2} ya existe ///////
 #         //////"
 #       end
@@ -248,25 +249,39 @@ require 'i18n'
 
 
 # # #productor
-productor = Array.new
+datapro = Array.new
 csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'productor.csv'))
 csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
-  productor  << row.to_h
+  datapro  << row.to_h
  end
 
-#  productor.each do |prod|
-#   peliproductor = Pelicula.find_by(idcinechile: prod[:pelicula_id])
-#   peliproductor.productor = prod[:nombre_personaje]
-#   peliproductor.save
-#   puts "agregando Productor #{peliproductor.productor} a #{peliproductor.titulo} "
-# end
+@productore= []
+@productore = Rol.where(name: "Produccion")
+ datapro.each do |data3|
+  nombre3 = I18n.transliterate(data3[:nombre_personaje])
+  cinechile3 = Pelicula.find_by(idcinechile: data3[:pelicula_id])
+  @rol = Rol.where(pelicula_id: cinechile3.id)
+  @personpro = Personaje.where(name: nombre3)
 
- productor.each do |prod|
-   da = Productor.new(peliculaid: prod[:pelicula_id], nombre: prod[:nombre_personaje])
-  da.save!
-  puts "agregando Productor@s #{da.nombre}"
-  end
+  if @personpro != nil
+   if(@productore.any?{|rol| @personpro.include? (rol.personaje)})
+        puts " #{nombre3} ya existe ///////
+        //////"
+      end
+    else
+     puts  "no existe asi que lo agregamos como"
+        pepro = Personaje.create(name: nombre3)
+        dapro = Rol.create(name: "Produccion")
+        dapro.pelicula = cinechile3
+        dapro.personaje = pepro
+        dapro.save
+         puts " nuevo productor #{dapro.personaje.name}/////
+         /////"
+      end
+end
+
+puts @productore.count
 
 # # # asistente de direc
 # # asistentedire = Array.new
