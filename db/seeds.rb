@@ -10,11 +10,11 @@ Personaje.destroy_all
 #total de peliculas
 @count=0
 sinficha =[]
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'pelisdecinechile.csv'))
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'compilado.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
-  tit = I18n.transliterate(row["nombre_pelicula"])
-  t = Pelicula.create(idcinechile: row["pelicula_id"], titulo: tit, responsable: row["responsable"], monto: row["monto"], institucion: row["tipo"], contacto: row["contacto"] )
+  tit = I18n.transliterate(row["titulo"]).upcase
+  t = Pelicula.create(idcinechile: row["pelicula_id"], agno: row["ano"], responsable: row["responsable"], monto: row["monto"], institucion: row["institucion"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
     t.save
     puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
 
@@ -28,7 +28,7 @@ csv.each do |row|
   if value["Response"]== "True"
     if value["Director"] != "N/A"
     value["Director"].split(",").each do |dir|
-    dire = I18n.transliterate(dir)
+    dire = I18n.transliterate(dir).upcase
     pe = Personaje.create(name: dire)
     da = Rol.create(name: "Direccion")
     da.pelicula = t
@@ -40,7 +40,7 @@ csv.each do |row|
       end
     if value["Writer"] != "N/A"
     value["Writer"].split(",").each do |gu|
-    gui = I18n.transliterate(gu)
+    gui = I18n.transliterate(gu).upcase
     pe2 = Personaje.create(name: gui)
     da2 = Rol.create(name: "Guion")
     da2.pelicula = t
@@ -52,7 +52,7 @@ csv.each do |row|
       end
     if value["Actors"] != "N/A"
     value["Actors"].split(",").each do |ac|
-      act = I18n.transliterate(ac)
+      act = I18n.transliterate(ac).upcase
     pe3 = Personaje.create(name: act)
     da3 = Rol.create(name: "Elenco")
     da3.pelicula = t
@@ -63,7 +63,7 @@ csv.each do |row|
       end
     if value["Production"] != nil && value["Production"] != "N/A"
       value["Production"].split(",").each do |po|
-        pro = I18n.transliterate(po)
+        pro = I18n.transliterate(po).upcase
       pe4 = Personaje.create(name: pro)
       da4 = Rol.create(name: "Casa Productora")
       da4.pelicula = t
@@ -92,7 +92,7 @@ imbd = Array.new
 csv_text_imbd = File.read(Rails.root.join('lib', 'seeds', 'imdb.csv'))
 csvd = CSV.parse(csv_text_imbd, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
-  tit = I18n.transliterate(row[:titulo])
+  tit = I18n.transliterate(row[:titulo]).upcase
   p2 = Pelicula.find_by_titulo(tit)
   if p2 && row[:im] != nil
   imbd2  = row[:im]
@@ -104,7 +104,7 @@ csvd.each do |row|
     if value2["Response"]== "True"
     if value2["Director"] != "N/A"
     value2["Director"].split(",").each do |dir|
-      dire = I18n.transliterate(dir)
+      dire = I18n.transliterate(dir).upcase
     pe = Personaje.create(name: dire)
     da = Rol.create(name: "Direccion")
     da.pelicula = p2
@@ -115,7 +115,7 @@ csvd.each do |row|
       end
     if value2["Writer"] != "N/A"
     value2["Writer"].split(",").each do |gu|
-      gui = I18n.transliterate(gu)
+      gui = I18n.transliterate(gu).upcase
     pe2 = Personaje.create(name: gui)
     da2 = Rol.create(name: "Guion")
     da2.pelicula = p2
@@ -126,7 +126,7 @@ csvd.each do |row|
       end
     if value2["Actors"] != "N/A"
     value2["Actors"].split(",").each do |ac|
-      act = I18n.transliterate(ac)
+      act = I18n.transliterate(ac).upcase
     pe3 = Personaje.create(name: act)
     da3 = Rol.create(name: "Elenco")
     da3.pelicula = p2
@@ -137,7 +137,7 @@ csvd.each do |row|
       end
     if value2["Production"] != nil && value2["Production"] != "N/A"
       value2["Production"].split(",").each do |po|
-        pro = I18n.transliterate(po)
+        pro = I18n.transliterate(po).upcase
       pe4 = Personaje.create(name: pro)
       da4 = Rol.create(name: "Casa Productora")
       da4.pelicula = p2
@@ -184,7 +184,7 @@ puts @directors.count
 @existentes = 0
 @nuevos = 0
  data.each do |data|
-  nombre = I18n.transliterate(data[:nombre_personaje])
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile.id)
   @persona = Personaje.where(name: nombre)
@@ -224,7 +224,7 @@ csvd.each do |row|
 @artes= []
 @artes = Rol.where(name: "Arte")
  dataart.each do |data2|
-  nombre2 = I18n.transliterate(data2[:nombre_personaje])
+  nombre2 = I18n.transliterate(data2[:nombre_personaje]).upcase
   cinechile2 = Pelicula.find_by(idcinechile: data2[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile2.id)
   @personart = Personaje.where(name: nombre2)
@@ -258,7 +258,7 @@ csvd.each do |row|
 @productore= []
 @productore = Rol.where(name: "Produccion")
  datapro.each do |data3|
-  nombre3 = I18n.transliterate(data3[:nombre_personaje])
+  nombre3 = I18n.transliterate(data3[:nombre_personaje]).upcase
   cinechile3 = Pelicula.find_by(idcinechile: data3[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile3.id)
   @personpro = Personaje.where(name: nombre3)
@@ -291,7 +291,7 @@ csvd2.each do |row|
 @asistente= []
 @asistente = Rol.where(name: "Asistente de Direccion")
  asistentedire.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -324,7 +324,7 @@ csvd.each do |row|
 @direfotos= []
 @direfotos = Rol.where(name: "Direccion de Fotografia")
  direfoto.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -357,7 +357,7 @@ csvd.each do |row|
 @efectos= []
 @efectos = Rol.where(name: "Efectos")
  efectosa.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -396,7 +396,7 @@ puts @guions.count
 @existentesg = 0
 @nuevosg = 0
  dataguion.each do |data|
-  nombre = I18n.transliterate(data[:nombre_personaje])
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile.id)
   @persona = Personaje.where(name: nombre)
@@ -436,7 +436,7 @@ csvd.each do |row|
  @jefeprod= []
 @jefeprod = Rol.where(name: "Jefatura de Produccion")
  jefedeproduccion.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -470,7 +470,7 @@ csvd.each do |row|
  @montajes= []
 @montajes = Rol.where(name: "Montaje")
  montaje.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -503,7 +503,7 @@ csvd.each do |row|
  @musicas= []
 @musicas = Rol.where(name: "Musica")
  musica.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -537,7 +537,7 @@ csvd.each do |row|
  @maquillajes= []
 @maquillajes = Rol.where(name: "Maquillaje")
  maquillaje.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -576,7 +576,7 @@ puts @casaproduct.count
 @existentescp = 0
 @nuevoscp = 0
  productora.each do |data|
-  nombre = I18n.transliterate(data[:nombre_personaje])
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile.id)
   @persona = Personaje.where(name: nombre)
@@ -615,7 +615,7 @@ csvd.each do |row|
  @prodcasoci= []
 @prodcasoci = Rol.where(name: "Produccion Asociada")
  productorasociado.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -648,7 +648,7 @@ csvd.each do |row|
  @prodeject= []
 @prodeject = Rol.where(name: "Produccion Ejecutiva")
  productorejecutivo.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -681,7 +681,7 @@ csvd.each do |row|
  @realizacions= []
 @realizacions = Rol.where(name: "Realizacion")
  realizacion.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -714,7 +714,7 @@ csvd.each do |row|
  @sonidos= []
 @sonidos = Rol.where(name: "Sonido")
  sonido.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -747,7 +747,7 @@ csvd.each do |row|
  @vestuarios= []
 @vestuarios = Rol.where(name: "Vestuario")
  vestuario.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -780,7 +780,7 @@ puts @vestuarios.count
  @vozenoff= []
 @vozenoff = Rol.where(name: "Voz en Off")
  vozenoff.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje])
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
   @rol = Rol.where(pelicula_id: cinechile4.id)
   @personasi = Personaje.where(name: nombre4)
@@ -801,4 +801,3 @@ puts @vestuarios.count
 end
 
 puts @vozenoff.count
-

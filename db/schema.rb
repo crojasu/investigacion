@@ -10,23 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_02_081057) do
+ActiveRecord::Schema.define(version: 2018_07_03_163118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "unaccent"
 
+  create_table "fondos", force: :cascade do |t|
+    t.string "tipo"
+    t.integer "monto"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "peliculas", force: :cascade do |t|
     t.string "titulo"
     t.string "responsable"
-    t.integer "monto"
-    t.string "institucion"
     t.integer "agno"
     t.string "imbd"
     t.integer "idcinechile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "contacto"
+    t.string "tipo"
+    t.integer "salas"
+    t.integer "copias"
+    t.integer "publico"
+    t.bigint "fondo_id"
+    t.index ["fondo_id"], name: "index_peliculas_on_fondo_id"
   end
 
   create_table "personajes", force: :cascade do |t|
@@ -63,6 +74,7 @@ ActiveRecord::Schema.define(version: 2018_07_02_081057) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "peliculas", "fondos"
   add_foreign_key "rols", "peliculas"
   add_foreign_key "rols", "personajes"
 end
