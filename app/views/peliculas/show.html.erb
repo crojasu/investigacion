@@ -1,0 +1,103 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+     <%= link_to "<< #{@pelicula.prev.titulo}", @pelicula.prev %>
+    </div>
+    <div class="col-sm">
+      <table style="width:50%">
+        <tr>
+          <th>Título</th>
+          <th>Dirección</th>
+        </tr>
+        <tr>
+          <td><%= @pelicula.titulo %></td>
+          <td><%= @pelicula.director %></td>
+        </tr>
+      </table>
+
+      <table style="width:50%">
+      <tr>
+        <th>Año</th>
+        <th>Responsable de Proyecto</th>
+        <th>Monto Adjudicado</th>
+        <th>Institución</th>
+        <th>Cantidad de Mujeres</th>
+        <th>Cantidad de Hombres</th>
+        <th>Total</th>
+        <th>Porcentaje de Participación </th>
+      </tr>
+      <tr>
+        <td><%= @pelicula.ano %></td>
+        <td><%= @pelicula.responsable %></td>
+        <td><%= @pelicula.monto %></td>
+        <td><%= @pelicula.tipo %></td>
+        <td><%= @mujeres.count %></td>
+        <td><%= @hombres.count %></td>
+        <td><%= @total %></td>
+        <td><%= @porcentaje_mujeres %></td>
+      </tr>
+      </table>
+<br>
+        <table style="width:50%">
+        <tr>
+          <th>Ficha Técnica</th>
+        </tr>
+        <tr>
+          <th>Dirección Arte</th>
+          <th>Asistente de Dirección</th>
+          <th>Dirección de Fotografía</th>
+          <th>Producción</th>
+          <th>Empresa Productora</th>
+          <th>Producción Ejecutiva</th>
+          <th>Producción Asociada</th>
+          <th>Jefatura de Producción</th>
+          <th>Guión</th>
+          <th>Montaje</th>
+          <th>Efectos Especiales</th>
+          <th>Voz en off</th>
+          <th>Vestuario</th>
+          <th>Sonido</th>
+          <th>Realización</th>
+          <th>Maquillaje</th>
+          <th>Música</th>
+        </tr>
+        <tr>
+          <% @pelicula.arte.each do |arte| %>
+            <td><%= arte.nombre %></td>
+          <% end %>
+          <td><%= @pelicula.asistarte %></td>
+          <td><%= @pelicula.direcfoto %></td>
+          <td><%= @pelicula.productor %></td>
+          <td><%= @pelicula.productora %></td>
+          <td><%= @pelicula.productorejecutivo %></td>
+          <td><%= @pelicula.productorasociado %></td>
+          <td><%= @pelicula.jefedeprod %></td>
+          <td><%= @pelicula.guion %></td>
+          <td><%= @pelicula.montaje %></td>
+          <td><%= @pelicula.efectos %></td>
+          <td><%= @pelicula.vozenoff %></td>
+          <td><%= @pelicula.vestuario %></td>
+          <td><%= @pelicula.sonido %></td>
+          <td><%= @pelicula.realizacion %></td>
+          <td><%= @pelicula.maquillaje %></td>
+          <td><%= @pelicula.musica %></td>
+        </tr>
+      </table>
+<br>
+     <div class="col-sm">
+        <table style="width:50%">
+        <tr>
+          <th>Ficha Artística</th>
+        </tr>
+        <tr>
+          <% @pelicula.elenco.each do |elenco| %>
+          <td><%= elenco.nombre %></td>
+          <% end %>
+        </tr>
+        </table>
+    </div>
+    <div class="col-sm">
+    <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>
+    </div>
+  </div>
+</div>

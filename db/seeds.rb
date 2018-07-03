@@ -13,7 +13,7 @@ sinficha =[]
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'pelisdecinechile.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
-   tit = I18n.transliterate(row["nombre_pelicula"])
+  tit = I18n.transliterate(row["nombre_pelicula"])
   t = Pelicula.create(idcinechile: row["pelicula_id"], agno: row["ano"], titulo: tit, responsable: row["responsable"], monto: row["monto"], institucion: row["tipo"], contacto: row["contacto"] )
     t.save
     puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
@@ -106,7 +106,7 @@ csvd.each do |row|
     value2["Director"].split(",").each do |dir|
       dire = I18n.transliterate(dir)
     pe = Personaje.create(name: dire)
-    da = Rol.create(name: "Dirección")
+    da = Rol.create(name: "Direccion")
     da.pelicula = p2
     da.personaje = pe
     da.save
@@ -202,6 +202,7 @@ puts @directors.count
       da3.save
        puts " nuevo director #{da3.personaje.name}/////
        /////"
+       pe3.id
        @nuevos =@nuevos + 1
     end
 end
@@ -288,7 +289,7 @@ csvd2.each do |row|
  end
 
 @asistente= []
-@asistente = Rol.where(name: "Asistente de Produccion")
+@asistente = Rol.where(name: "Asistente de Direccion")
  asistentedire.each do |data4|
   nombre4 = I18n.transliterate(data4[:nombre_personaje])
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
@@ -301,7 +302,7 @@ csvd2.each do |row|
     else
      puts  "no existe asi que lo agregamos como"
         peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Asistente de Produccion")
+        dasist = Rol.create(name: "Asistente de Direccion")
         dasist.pelicula = cinechile4
         dasist.personaje = peasist
         dasist.save

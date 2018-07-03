@@ -1,0 +1,31 @@
+<div class="container">
+<div class="col-sm">
+  <table style="width:50%">
+    <tr>
+      <th>Título</th>
+      <th>Dirección</th>
+      <th>CineChile</th>
+      <th>Imbd</th>
+    </tr>
+    <tr>
+      <% @peliculas.each do |peli| %>
+      <% @r = peli.imbd %>
+      <% @f= JSON.parse @r.gsub('=>', ':')%>
+      <td><%=  peli.titulo %></td>
+      <% direccion= Rol.where(pelicula_id: peli.id, name: "Direccion") %>
+      <td>
+        <ul>
+          <% direccion.each do |dire|%>
+      <% nombre =Personaje.find(dire.personaje_id) %>
+          <li><%= nombre.name %> </li>
+             <% end %>
+        <ul>
+
+        </td>
+      <td><%= peli.idcinechile %></td>
+      <td><%= @f["imdbID"]%></td>
+    </tr>
+    <% end %>
+  </table>
+</div>
+</div>
