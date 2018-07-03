@@ -23,14 +23,18 @@ class PeliculasController < ApplicationController
   end
 
   def show
+    @personas =[]
     @pelicula = Pelicula.find(params[:id])
-    @persona = Personaje.all
     @rols = Rol.where(pelicula_id: params[:id])
-    @personas =
-    @mujeres = Personaje.where(genero: true)
-    @hombres = Personaje.where(genero: false)
-    @total = @persona.count
+    @rols.each do |rol|
+      @personas << Personaje.where(id: rol.personaje_id)
+    end
+    @personas.count
+    @mujeres = @personas
+    @hombres = @personas
+    @total = @personas.count
     @porcentaje_mujeres= (100* (@mujeres.count))/@total
+
      @directors = @rols.where(name: "Direccion")
      @artes = @rols.where(name: "Arte")
      @asistentdires = @rols.where(name: "Asistente de Direccion")

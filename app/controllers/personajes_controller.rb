@@ -11,14 +11,14 @@ class PersonajesController < ApplicationController
   end
 
   def deactivate
-   @r = Rol.find(params[:id])
+   @r = Personaje.find(params[:id])
    @r.genero = false
    @r.save
    redirect_to personajes_path
   end
 
   def activate
-  @r = Rol.find(params[:id])
+  @r = Personaje.find(params[:id])
    @r.genero = true
    @r.save
    redirect_to personajes_path

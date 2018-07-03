@@ -14,7 +14,7 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'pelisdecinechile.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
   tit = I18n.transliterate(row["nombre_pelicula"])
-  t = Pelicula.create(idcinechile: row["pelicula_id"], agno: row["ano"], titulo: tit, responsable: row["responsable"], monto: row["monto"], institucion: row["tipo"], contacto: row["contacto"] )
+  t = Pelicula.create(idcinechile: row["pelicula_id"], titulo: tit, responsable: row["responsable"], monto: row["monto"], institucion: row["tipo"], contacto: row["contacto"] )
     t.save
     puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
 
