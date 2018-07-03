@@ -14,9 +14,12 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'compilado.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
   tit = I18n.transliterate(row["titulo"]).upcase
-  t = Pelicula.create(idcinechile: row["pelicula_id"], agno: row["ano"], responsable: row["responsable"], monto: row["monto"], institucion: row["institucion"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
-    t.save
-    puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
+  fondo = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+  t = Pelicula.create(idcinechile: row["pelicula_id"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
+  t.fondo = fondo
+  t.save
+  puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
+  puts "con fondos de #{t.fondo.institucion} por #{t.fondo.monto}"
 
 # #matching database from imdb
   imbd  = I18n.transliterate(t.titulo).split.join('+')
