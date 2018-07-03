@@ -24,13 +24,35 @@ class PeliculasController < ApplicationController
 
   def show
     @pelicula = Pelicula.find(params[:id])
-    @mujeres = @pelicula.where(mujer: true)
-    @hombres = @pelicula.where(mujer: false)
-    @total = @rol.count
-    if @mujeres != 0 && @total != nil
+    @persona = Personaje.all
+    @rols = Rol.where(pelicula_id: params[:id])
+    @personas =
+    @mujeres = Personaje.where(genero: true)
+    @hombres = Personaje.where(genero: false)
+    @total = @persona.count
     @porcentaje_mujeres= (100* (@mujeres.count))/@total
-    end
-  end
+     @directors = @rols.where(name: "Direccion")
+     @artes = @rols.where(name: "Arte")
+     @asistentdires = @rols.where(name: "Asistente de Direccion")
+     @direfotos = @rols.where(name: "Direccion de Fotografia")
+     @efectoss = @rols.where(name: "Efectos")
+     @guiones = @rols.where(name: "Guion")
+     @jefedeproduccion = @rols.where(name: "Jefatura de Produccion")
+     @maquillajes = @rols.where(name: "Maquillaje")
+     @montajistas = @rols.where(name: "Montaje")
+     @musicas = @rols.where(name: "Musica")
+     @productors = @rols.where(name: "Produccion")
+     @productorasociados = @rols.where(name: "Produccion Asociada")
+     @productorejecutivos = @rols.where(name: "Produccion Ejecutiva")
+     @realizacions = @rols.where(name: "Realizacion")
+     @sonidos = @rols.where(name: "Sonido")
+     @vestuarios = @rols.where(name: "Direccion")
+     @vozenoffs = @rols.where(name: "Voz en off")
+     @elenco = @rols.where(name: "Elenco")
+     @casaprod = @rols.where(name: "Casa Productora")
+
+
+end
 
   def new
     @pelicula = Pelicula.new
