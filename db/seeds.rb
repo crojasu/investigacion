@@ -14,73 +14,85 @@ csv_text = File.read(Rails.root.join('lib', 'seeds', 'compilado.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 csv.each do |row|
   tit = I18n.transliterate(row["titulo"]).upcase
-  fondo = Fondo.create(monto: row["monto"], tipo: row["institucion"])
-  t = Pelicula.create(idcinechile: row["pelicula_id"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
-  t.fondo = fondo
-  t.save
-  puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
-  puts "con fondos de #{t.fondo.institucion} por #{t.fondo.monto}"
-
-# #matching database from imdb
-  imbd  = I18n.transliterate(t.titulo).split.join('+')
-  url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
-  user_serialized = open(url).read
-  value = JSON.parse(user_serialized)
-  t.imbd = value
-  t.save
-  if value["Response"]== "True"
-    if value["Director"] != "N/A"
-    value["Director"].split(",").each do |dir|
-    dire = I18n.transliterate(dir).upcase
-    pe = Personaje.create(name: dire)
-    da = Rol.create(name: "Direccion")
-    da.pelicula = t
-    da.personaje = pe
-    da.save
-     puts "agregando director@s #{da.personaje.name}"
-     puts da.id
-        end
-      end
-    if value["Writer"] != "N/A"
-    value["Writer"].split(",").each do |gu|
-    gui = I18n.transliterate(gu).upcase
-    pe2 = Personaje.create(name: gui)
-    da2 = Rol.create(name: "Guion")
-    da2.pelicula = t
-    da2.personaje = pe2
-    da2.save
-     puts "agregando guion #{da2.personaje.name}"
-     puts da2.id
-        end
-      end
-    if value["Actors"] != "N/A"
-    value["Actors"].split(",").each do |ac|
-      act = I18n.transliterate(ac).upcase
-    pe3 = Personaje.create(name: act)
-    da3 = Rol.create(name: "Elenco")
-    da3.pelicula = t
-    da3.personaje = pe3
-    da3.save
-     puts "agregando elenco #{da3.personaje.name}"
-        end
-      end
-    if value["Production"] != nil && value["Production"] != "N/A"
-      value["Production"].split(",").each do |po|
-        pro = I18n.transliterate(po).upcase
-      pe4 = Personaje.create(name: pro)
-      da4 = Rol.create(name: "Casa Productora")
-      da4.pelicula = t
-      da4.personaje = pe4
-      da4.save
-       puts "agregando productora #{da4.personaje.name}"
-        end
-    end
+  if Pelicula.find_by(idcinechile: row["idcinechile"])
+    peli = Pelicula.find_by(idcinechile: row["idcinechile"])
+    fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+    fond.pelicula_id = peli.id
+    fond.save
+    puts "XXXXXXXXXX
+    se agrega un segundo fondo a #{peli.titulo} de #{fond.tipo}
+    XXXXXXXXx"
   else
-    @count = @count+1
-    sinficha << ("#{t.titulo}")
-    puts "sin ficha"
-  end
-  t.save
+    t = Pelicula.create(idcinechile: row["idcinechile"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
+    fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+    fond.pelicula_id = t.id
+    t.save
+    fond.save
+    puts "///////"
+    puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
+    puts "con fondos de #{fond.tipo} por #{fond.monto}"
+    puts "///////"
+  # #matching database from imdb
+    imbd  = I18n.transliterate(t.titulo).split.join('+')
+    url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
+    user_serialized = open(url).read
+    value = JSON.parse(user_serialized)
+    t.imbd = value
+    t.save
+    if value["Response"]== "True"
+      if value["Director"] != "N/A"
+      value["Director"].split(",").each do |dir|
+      dire = I18n.transliterate(dir).upcase
+      pe = Personaje.create(name: dire)
+      da = Rol.create(name: "Direccion")
+      da.pelicula = t
+      da.personaje = pe
+      da.save
+       puts "agregando director@s #{da.personaje.name}"
+       puts da.id
+          end
+        end
+      if value["Writer"] != "N/A"
+      value["Writer"].split(",").each do |gu|
+      gui = I18n.transliterate(gu).upcase
+      pe2 = Personaje.create(name: gui)
+      da2 = Rol.create(name: "Guion")
+      da2.pelicula = t
+      da2.personaje = pe2
+      da2.save
+       puts "agregando guion #{da2.personaje.name}"
+       puts da2.id
+          end
+        end
+      if value["Actors"] != "N/A"
+      value["Actors"].split(",").each do |ac|
+        act = I18n.transliterate(ac).upcase
+      pe3 = Personaje.create(name: act)
+      da3 = Rol.create(name: "Elenco")
+      da3.pelicula = t
+      da3.personaje = pe3
+      da3.save
+       puts "agregando elenco #{da3.personaje.name}"
+          end
+        end
+      if value["Production"] != nil && value["Production"] != "N/A"
+        value["Production"].split(",").each do |po|
+          pro = I18n.transliterate(po).upcase
+        pe4 = Personaje.create(name: pro)
+        da4 = Rol.create(name: "Casa Productora")
+        da4.pelicula = t
+        da4.personaje = pe4
+        da4.save
+         puts "agregando productora #{da4.personaje.name}"
+          end
+      end
+    else
+      @count = @count+1
+      sinficha << ("#{t.titulo}")
+      puts "sin ficha"
+    end
+    t.save
+    end
   end
 
 puts @count
@@ -155,8 +167,6 @@ csvd.each do |row|
     end
   else
   @count2 = @count2+1
-  puts "la pelicula #{p2.titulo} no se agrego"
-  sinficha2 << ("#{p2.titulo}")
   end
  end
 
@@ -169,6 +179,7 @@ puts "ahora agregamos director@s /////////////////
 ////////////////
 //////////////
 ///////////"
+
 # director@s
 
 data= Array.new
@@ -189,6 +200,7 @@ puts @directors.count
  data.each do |data|
   nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  puts cinechile.id
   @rol = Rol.where(pelicula_id: cinechile.id)
   @persona = Personaje.where(name: nombre)
 
@@ -205,7 +217,6 @@ puts @directors.count
       da3.save
        puts " nuevo director #{da3.personaje.name}/////
        /////"
-       pe3.id
        @nuevos =@nuevos + 1
     end
 end
