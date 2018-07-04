@@ -1,83 +1,84 @@
-"pelicula_id","nombre_personaje"
-48,"Pablo Kohler"
-49,"Ruth Orellana"
-70,"Eduardo Castro"
-75,"Daniela González"
-61,"Constanza Duclos"
-108,"Julio Jorquera"
-123,"Karla Estrada"
-130,"Bruno Bettati"
-141,"Ruth Orellana"
-147,"Eduardo Castro"
-148,"Mirtha Molina"
-157,"Eduardo Castro"
-244,"Bruno Bettati"
-253,"Fernando Hubbe"
-262,"María Paz González"
-297,"Juan Pablo Olivares"
-321,"Eduardo Lobos"
-635,"Soledad Santelices"
-780,"Lizzy Becker"
-788,"Paola Cano"
-949,"Patricia Pardo"
-1050,"Andrés Guiloff"
-778,"Ruth Orellana"
-1176,"Hernán Cheyre Triat"
-783,"Daniel Aguilera"
-782,"Cake Ibarra"
-1379,"Ruth Orellana"
-1690,"Matías Muñoz Rodríguez"
-1380,"Javier Pradenas"
-1497,"Viviana Lobos"
-1667,"Paola Zoccola"
-1393,"Macarena López"
-1837,"Edgardo Retamal"
-1391,"Ruth Orellana"
-870,"Carola Carter"
-2013,"Ely Fenner"
-1982,"Eduardo Castro"
-2037,"Mario Jacob"
-2048,"Emilio Ormazábal"
-2054,"Paula Talloni"
-2054,"Tatiana Lorca"
-2108,"Eduardo Robles"
-2108,"Adela Cofré"
-2094,"Eduardo Castro"
-2221,"Carolina Castillo"
-2254,"Susana Tello"
-2080,"Mauricio Dupuis"
-2292,"Valentina Castro"
-2273,"Eduardo Lobos"
-1386,"Franco Valsecchi"
-1377,"Enrique Lerman"
-2421,"Marcela Morilla"
-1192,"Marcela Morilla"
-2483,"Felipe Balbontin "
-2607,"Paulina Murillo"
-2637,"José Luis Rivas"
-2678,"Wilson Quezada"
-2678,"Alejandro Lillo"
-2706,"Anita Lira"
-2738,"Abner Hurtado"
-2740,"Sebastián Araya"
-2403,"Macarena Baeza"
-2760,"María Paz Eberhard"
-2741,"Francisca Barraza"
-2347,"Hugo Espinoza"
-2827,"Pablo Pinto"
-2836,"José Luis Rivas"
-2851,"Daniela Ramírez"
-2851,"María Paz Calvo"
-2861,"Paulina Aguilar"
-2861,"Vicente Carrasco"
-2869,"Viviana Erpel"
-2870,"Viviana Lobos"
-3000,"Erik Aeshlimann"
-3011,"Eduardo Castro"
-3085,"Viviana Erpel"
-3164,"Franco Valsecchi"
-3203,"Fernando Alé"
-3309,"Alberto Serrano Fillol"
-3321,"Eduardo Castro"
-3582,"Inga Rojas Gornall"
-2243,"Guillermo Prieto"
+"nombre_personaje","pelicula_id"
+"Pablo Kohler",48
+"Ruth Orellana",49
+"Eduardo Castro",70
+"Daniela González",75
+"Constanza Duclos",61
+"Julio Jorquera",108
+"Karla Estrada",123
+"Bruno Bettati",130
+"Ruth Orellana",141
+"Eduardo Castro",147
+"Mirtha Molina",148
+"Eduardo Castro",157
+"Bruno Bettati",244
+"Fernando Hubbe",253
+"María Paz González",262
+"Juan Pablo Olivares",297
+"Eduardo Lobos",321
+"Soledad Santelices",635
+"Lizzy Becker",780
+"Paola Cano",788
+"Patricia Pardo",949
+"Andrés Guiloff",1050
+"Ruth Orellana",778
+"Hernán Cheyre Triat",1176
+"Daniel Aguilera",783
+"Cake Ibarra",782
+"Pablo Sierralta",1179
+"Ruth Orellana",1379
+"Matías Muñoz Rodríguez",1690
+"Javier Pradenas",1380
+"Viviana Lobos",1497
+"Paola Zoccola",1667
+"Macarena López",1393
+"Edgardo Retamal",1837
+"Ruth Orellana",1391
+"Carola Carter",870
+"Ely Fenner",2013
+"Eduardo Castro",1982
+"Mario Jacob",2037
+"Emilio Ormazábal",2048
+"Paula Talloni",2054
+"Tatiana Lorca",2054
+"Eduardo Robles",2108
+"Adela Cofré",2108
+"Eduardo Castro",2094
+"Carolina Castillo",2221
+"Susana Tello",2254
+"Mauricio Dupuis",2080
+"Valentina Castro",2292
+"Eduardo Lobos",2273
+"Franco Valsecchi",1386
+"Enrique Lerman",1377
+"Marcela Morilla",2421
+"Marcela Morilla",1192
+"Felipe Balbontin ",2483
+"Paulina Murillo",2607
+"José Luis Rivas",2637
+"Wilson Quezada",2678
+"Alejandro Lillo",2678
+"Anita Lira",2706
+"Abner Hurtado",2738
+"Sebastián Araya",2740
+"Macarena Baeza",2403
+"María Paz Eberhard",2760
+"Francisca Barraza",2741
+"Hugo Espinoza",2347
+"Pablo Pinto",2827
+"José Luis Rivas",2836
+"Daniela Ramírez",2851
+"María Paz Calvo",2851
+"Paulina Aguilar",2861
+"Vicente Carrasco",2861
+"Viviana Erpel",2869
+"Viviana Lobos",2870
+"Erik Aeshlimann",3000
+"Eduardo Castro",3011
+"Viviana Erpel",3085
+"Franco Valsecchi",3164
+"Fernando Alé",3203
+"Alberto Serrano Fillol",3309
+"Eduardo Castro",3321
+"Inga Rojas Gornall",3582
+"Guillermo Prieto",2243

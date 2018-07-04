@@ -1,225 +1,227 @@
-"pelicula_id","nombre_personaje"
-48,"Ángel Parra (II)"
-49,"Carlos Cabezas"
-50,"Claudio Pérez Herrera"
-51,"Juan Cristóbal Meza"
-52,"Andreas Bodenhöfer"
-53,"Francisco Alarcón"
-54,"Alfredo Espinoza"
-55,"Pedro Subercaseaux"
-55,"Andrés Subercaseaux"
-55,"Jorge del Campo"
-56,"Maurice Ravel"
-59,"Carlos Cabezas"
-60,"Manuel Riveiro"
-60,"Miguel Ángel Fuster"
-61,"Edgardo Cantón"
-62,"Juan Cristóbal Meza"
-63,"Rocco"
-64,"Javiera Parra & Los Imposibles"
-66,"Ángela Acuña"
-75,"Diego Fontecilla"
-90,"Gustavo Letelier"
-75,"Guido Goñi"
-108,"Juan Cristóbal Meza"
-114,"Rodrigo Cuadra"
-114,"Gamal Eltit"
-123,"Felipe Lacerda"
-123,"Angelo Pierattini"
-125,"Andreas Bodenhöfer"
-126,"Eduardo Caces"
-128,"Jorge Arriagada"
-130,"Cristián Freund"
-132,"Rocco"
-135,"Miranda & Tobar"
-137,"Manuel Riveiro"
-139,"Diego Fontecilla"
-139,"Rodrigo Jarque"
-140,"Cuti Aste"
-144,"Miranda & Tobar"
-144,"Gepe"
-145,"Esteban Agosin"
-145,"Paul Hernández"
-145,"Cristián Galarce"
-145,"Cristián López"
-147,"José Miguel Tobar"
-147,"Miguel Miranda"
-152,"Pebre"
-154,"Ricardo Santander"
-244,"Cristóbal Briceño"
-245,"Los Jaivas"
-253,"Mauricio Dell"
-262,"Fernando Milagros"
-274,"Emilio Bascuñán"
-274,"Adan Jodorowsky"
-289,"Jorge Arriagada"
-297,"Sebastián Jarpa"
-299,"Manu Riveiro"
-321,"Juan Carlos Zagal"
-324,"Manuel García"
-324,"Silvio Paredes"
-344,"Sebastián Torres"
-345,"Jorge Aliaga"
-358,"José Manuel Gatica"
-361,"Jorge Aliaga"
-396,"Camilo Salinas"
-397,"Ángel Parra (II)"
-603,"Roberto Retes"
-731,"Miguel Miranda"
-731,"José Miguel Tobar"
-779,"Diego Fontecilla"
-789,"Camilo Salinas"
-789,"Juan Antonio Sánchez"
-786,"José Miguel Tobar"
-786,"Miguel Miranda"
-888,"Enrique Icka"
-888,"Lorenzo Moscia"
-888,"Manuel Marín"
-888,"Alexis Rivero"
-890,"Elizabeth Morris"
-949,"Cristián Cuturrufo"
-1050,"Gepe"
-1171,"Patricio Wang"
-1176,"Hernán Cheyre Triat"
-1176,"Franco Sanguinetti Mendoza"
-1171,"Elisa Avendaño"
-1171,"José Necul"
-783,"Jorge Aliaga"
-753,"André Arancibia"
-782,"James H. Frazier"
-1392,"Jorge Arriagada"
-792,"Julio de la Rosa"
-1551,"Camilo Salinas"
-1200,"Camilo Salinas"
-1378,"Caroline Chaspoul"
-1378,"Eduardo Henríquez"
-1664,"Fernando Milagros"
-1379,"Ángel Parra"
-1379,"Chango Spasiuk"
-1379,"José Miguel Tobar"
-1379,"Miguel Miranda"
-1690,"Ángela Acuña"
-1344,"Jorge Arriagada"
-1709,"Jorge Arriagada"
-1667,"Manuel Riveiro"
-1717,"Andrés Subercaseaux"
-1769,"Ángela Acuña"
-70,"Cristobal Carvajal"
-1380,"Cristobal Carvajal"
-1098,"Cristobal Carvajal"
-1770,"Rodrigo Taulis"
-1393,"José Miguel Tobar"
-1393,"Miguel Miranda"
-1496,"Los Jaivas"
-1811,"Jorge Campos"
-1837,"Sebastian Duplaquet"
-1846,"Matías Castro"
-1991,"Andrés Pérez"
-2048,"Jorge Arriagada"
-1205,"Valeria Jara"
-1205,"Marcos Meza"
-1205,"Cómo Asesinar a Felipes"
-1205,"Makaroni"
-2054,"Subhira"
-1382,"Nicolás Torres"
-2108,"Michael Landau"
-2109,"José Miguel Tobar"
-1098,"Fernando Briones"
-2134,"Carlos Klein"
-2134,"Daniel Almada"
-2172,"Patricio Cáceres (II)"
-2172,"Mauro Galleguillos"
-1377,"Ricardo Santander"
-2242,"Camila Moreno"
-2243,"Rocco"
-2254,"Pedro Santa Cruz"
-2273,"Sebastián Vergara"
-2080,"José Miguel Tobar"
-2080,"Miguel Miranda"
-2340,"Sebastián Saavedra"
-2168,"Caroline Chaspoul"
-2168,"Eduardo Henríquez"
-2403,"Miguel Miranda"
-2475,"Eduardo Henríquez"
-2475,"Caroline Chaspoul"
-2038,"Milton Núñez Mora"
-2525,"Miguel Miranda"
-2563,"Nico Casal"
-2564,"Vadoinmessico"
-2564,"Teresita Cabezas"
-2564,"Eduardo Caces"
-2566,"Pablo Ilabaca"
-2580,"Cristobal Carvajal"
-2604,"Manuel Riveiro"
-2169,"Manuel Riveiro"
-2609,"Manuel García"
-2637,"Jean Herrera"
-2678,"Francisco Becker"
-2704,"Eduardo Henríquez"
-2704,"Caroline Chaspoul"
-2109,"Miguel Miranda"
-2738,"Cristian Morales"
-2740,"Christian Pérez"
-2744,"Patricio Arias"
-2403,"José Miguel Tobar"
-2760,"Felipe Valenzuela"
-2760,"Dani Casarano"
-2781,"Cristián López"
-2785,"Dënver"
-2788,"Fabiano Krieger"
-2788,"Lucas Marcier"
-2836,"Adam Waito"
-2837,"Christian Basso"
-2836,"Caroline Chaspoul"
-2836,"Eduardo Henríquez"
-2861,"Miguel Tapia"
-2869,"Juan Antonio Sánchez"
-2877,"Daniel Baeza"
-2877,"Govinda Shakti"
-2877,"Rodrigo Aliaga"
-2885,"Rocco"
-2833,"Carlos Cabezas"
-2897,"Camilo Salinas"
-2897,"Anita Tijoux"
-2900,"José Miguel Tobar"
-2900,"Miguel Miranda"
-2914,"Manuel Riveiro"
-2787,"Esperanza Restucci"
-2787,"Luciana Taulis"
-2916,"Jorge Delaselva"
-3009,"Camilo Salinas"
-3011,"Carlos Cabezas"
-3010,"Sebastián Vergara"
-3014,"José Miguel Tobar"
-3014,"Miguel Miranda"
-3021,"Leonardo Heiblum"
-3021,"Jacobo Lieberman"
-3048,"Isabel Parra"
-3048,"Roberto Trenca"
-3060,"Alfredo Ibarra"
-3079,"Diego Fontecilla"
-3085,"Cristóbal Piña"
-3100,"Camilo Salinas"
-3100,"Pablo Ilabaca"
-3120,"Angelo Pierattini"
-3123,"Cristián Schmidt"
-3126,"Njo Kong Kie "
-3150,"Danny Benzi"
-3150,"Saunder Jurriaans"
-3164,"Santiago Farah"
-3164,"Tomás Gubbins"
-3172,"Manuel Riveiro"
-3203,"Alberto Alen"
-3124,"Gabriel E. Pulido"
-3309,"Eduardo Velásquez"
-3309,"Sergio Pérez Bontes"
-3321,"Federico Jusid"
-3316,"Fernando Milagros"
-3316,"Marcelo Wilson"
-3419,"Jorge Aliaga"
-3428,"Keko Yoma"
-3428,"Amongelatina"
-3428,"Matorral"
-3428,"Viena"
-3428,"María Colores"
-3428,"0 Regias"
+"nombre_personaje","pelicula_id"
+"Ángel Parra (II)",48
+"Carlos Cabezas",49
+"Claudio Pérez Herrera",50
+"Juan Cristóbal Meza",51
+"Andreas Bodenhöfer",52
+"Francisco Alarcón",53
+"Alfredo Espinoza",54
+"Pedro Subercaseaux",55
+"Andrés Subercaseaux",55
+"Jorge del Campo",55
+"Maurice Ravel",56
+"Carlos Cabezas",59
+"Manuel Riveiro",60
+"Miguel Ángel Fuster",60
+"Edgardo Cantón",61
+"Juan Cristóbal Meza",62
+"Rocco",63
+"Javiera Parra & Los Imposibles",64
+"Ángela Acuña",66
+"Diego Fontecilla",75
+"Gustavo Letelier",90
+"Guido Goñi",75
+"Juan Cristóbal Meza",108
+"Rodrigo Cuadra",114
+"Gamal Eltit",114
+"Felipe Lacerda",123
+"Angelo Pierattini",123
+"Andreas Bodenhöfer",125
+"Eduardo Caces",126
+"Jorge Arriagada",128
+"Cristián Freund",130
+"Rocco",132
+"Miranda & Tobar",135
+"Manuel Riveiro",137
+"Diego Fontecilla",139
+"Rodrigo Jarque",139
+"Cuti Aste",140
+"Miranda & Tobar",144
+"Gepe",144
+"Esteban Agosin",145
+"Paul Hernández",145
+"Cristián Galarce",145
+"Cristián López",145
+"José Miguel Tobar",147
+"Miguel Miranda",147
+"Pebre",152
+"Ricardo Santander",154
+"Cristóbal Briceño",244
+"Los Jaivas",245
+"Mauricio Dell",253
+"Fernando Milagros",262
+"Emilio Bascuñán",274
+"Adan Jodorowsky",274
+"Jorge Arriagada",289
+"Sebastián Jarpa",297
+"Manu Riveiro",299
+"Juan Carlos Zagal",321
+"Manuel García",324
+"Silvio Paredes",324
+"Sebastián Torres",344
+"Jorge Aliaga",345
+"José Manuel Gatica",358
+"Jorge Aliaga",361
+"Camilo Salinas",396
+"Ángel Parra (II)",397
+"Roberto Retes",603
+"Miguel Miranda",731
+"José Miguel Tobar",731
+"Diego Fontecilla",779
+"Camilo Salinas",789
+"Juan Antonio Sánchez",789
+"José Miguel Tobar",786
+"Miguel Miranda",786
+"Enrique Icka",888
+"Lorenzo Moscia",888
+"Manuel Marín",888
+"Alexis Rivero",888
+"Elizabeth Morris",890
+"Cristián Cuturrufo",949
+"Gepe",1050
+"Patricio Wang",1171
+"Hernán Cheyre Triat",1176
+"Franco Sanguinetti Mendoza",1176
+"Dominique Depret",1179
+"Elisa Avendaño",1171
+"José Necul",1171
+"Jorge Aliaga",783
+"André Arancibia",753
+"James H. Frazier",782
+"Jorge Arriagada",1392
+"Julio de la Rosa",792
+"Camilo Salinas",1551
+"Camilo Salinas",1200
+"Caroline Chaspoul",1378
+"Eduardo Henríquez",1378
+"Fernando Milagros",1664
+"Ángel Parra",1379
+"Chango Spasiuk",1379
+"José Miguel Tobar",1379
+"Miguel Miranda",1379
+"Ángela Acuña",1690
+"Jorge Arriagada",1344
+"Jorge Arriagada",1709
+"Manuel Riveiro",1667
+"Andrés Subercaseaux",1717
+"Ángela Acuña",1769
+"Cristobal Carvajal",70
+"Cristobal Carvajal",1380
+"Cristobal Carvajal",1098
+"Rodrigo Taulis",1770
+"José Miguel Tobar",1393
+"Miguel Miranda",1393
+"Los Jaivas",1496
+"Jorge Campos",1811
+"Sebastian Duplaquet",1837
+"Matías Castro",1846
+"Andrés Pérez",1991
+"Jorge Arriagada",2048
+"Valeria Jara",1205
+"Marcos Meza",1205
+"Cómo Asesinar a Felipes",1205
+"Makaroni",1205
+"Subhira",2054
+"Nicolás Torres",1382
+"Michael Landau",2108
+"José Miguel Tobar",2109
+"Fernando Briones",1098
+"Carlos Klein",2134
+"Daniel Almada",2134
+"Patricio Cáceres (II)",2172
+"Mauro Galleguillos",2172
+"Ricardo Santander",1377
+"Camila Moreno",2242
+"Rocco",2243
+"Pedro Santa Cruz",2254
+"Sebastián Vergara",2273
+"José Miguel Tobar",2080
+"Miguel Miranda",2080
+"Sebastián Saavedra",2340
+"Caroline Chaspoul",2168
+"Eduardo Henríquez",2168
+"Miguel Miranda",2403
+"Eduardo Henríquez",2475
+"Caroline Chaspoul",2475
+"Milton Núñez Mora",2038
+"Miguel Miranda",2525
+"Nico Casal",2563
+"Vadoinmessico",2564
+"Teresita Cabezas",2564
+"Eduardo Caces",2564
+"Pablo Ilabaca",2566
+"Cristobal Carvajal",2580
+"Manuel Riveiro",2604
+"Manuel Riveiro",2169
+"Manuel García",2609
+"Jean Herrera",2637
+"Francisco Becker",2678
+"Eduardo Henríquez",2704
+"Caroline Chaspoul",2704
+"Miguel Miranda",2109
+"Cristian Morales",2738
+"Christian Pérez",2740
+"Patricio Arias",2744
+"José Miguel Tobar",2403
+"Felipe Valenzuela",2760
+"Dani Casarano",2760
+"Cristián López",2781
+"Dënver",2785
+"Fabiano Krieger",2788
+"Lucas Marcier",2788
+"Adam Waito",2836
+"Christian Basso",2837
+"Caroline Chaspoul",2836
+"Eduardo Henríquez",2836
+"Miguel Tapia",2861
+"Juan Antonio Sánchez",2869
+"Guillermo Rodríguez",2876
+"Daniel Baeza",2877
+"Govinda Shakti",2877
+"Rodrigo Aliaga",2877
+"Rocco",2885
+"Carlos Cabezas",2833
+"Camilo Salinas",2897
+"Anita Tijoux",2897
+"José Miguel Tobar",2900
+"Miguel Miranda",2900
+"Manuel Riveiro",2914
+"Esperanza Restucci",2787
+"Luciana Taulis",2787
+"Jorge Delaselva",2916
+"Camilo Salinas",3009
+"Carlos Cabezas",3011
+"Sebastián Vergara",3010
+"José Miguel Tobar",3014
+"Miguel Miranda",3014
+"Leonardo Heiblum",3021
+"Jacobo Lieberman",3021
+"Isabel Parra",3048
+"Roberto Trenca",3048
+"Alfredo Ibarra",3060
+"Diego Fontecilla",3079
+"Cristóbal Piña",3085
+"Camilo Salinas",3100
+"Pablo Ilabaca",3100
+"Angelo Pierattini",3120
+"Cristián Schmidt",3123
+"Njo Kong Kie ",3126
+"Danny Benzi",3150
+"Saunder Jurriaans",3150
+"Santiago Farah",3164
+"Tomás Gubbins",3164
+"Manuel Riveiro",3172
+"Alberto Alen",3203
+"Gabriel E. Pulido",3124
+"Eduardo Velásquez",3309
+"Sergio Pérez Bontes",3309
+"Federico Jusid",3321
+"Fernando Milagros",3316
+"Marcelo Wilson",3316
+"Jorge Aliaga",3419
+"Keko Yoma",3428
+"Amongelatina",3428
+"Matorral",3428
+"Viena",3428
+"María Colores",3428
+"0 Regias",3428

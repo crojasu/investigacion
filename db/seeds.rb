@@ -296,7 +296,7 @@ puts @productore.count
 
 # # asistente de direc
 asistentedire = Array.new
-csv_text_asdir = File.read(Rails.root.join('lib', 'seeds', 'asistentedire2.csv'))
+csv_text_asdir = File.read(Rails.root.join('lib', 'seeds', 'asistdire.csv'))
 csvd2 = CSV.parse(csv_text_asdir, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd2.each do |row|
   asistentedire  << row.to_h
@@ -329,7 +329,7 @@ puts @asistente.count
 
 # #director de foto
 direfoto = Array.new
-csv_text_direfoto = File.read(Rails.root.join('lib', 'seeds', 'direfoto.csv'))
+csv_text_direfoto = File.read(Rails.root.join('lib', 'seeds', 'direfotos.csv'))
 csvd = CSV.parse(csv_text_direfoto, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
 csvd.each do |row|
   direfoto  << row.to_h
@@ -362,7 +362,7 @@ puts @direfotos.count
 
 # #efectos
 efectosa = Array.new
-csv_text_efectos = File.read(Rails.root.join('lib', 'seeds', 'efectosespeciales.csv'))
+csv_text_efectos = File.read(Rails.root.join('lib', 'seeds', 'efectos.csv'))
 csvd = CSV.parse(csv_text_efectos, headers: true, header_converters: :symbol, converters: :all, :encoding => 'iso-8859-1:UTF-8')
 csvd.each do |row|
   efectosa  << row.to_h
@@ -575,7 +575,7 @@ puts @maquillajes.count
 
 # # productora
 productora = Array.new
-csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'productora.csv'))
+csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'casaproductora.csv'))
 csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
   productora  << row.to_h
@@ -620,7 +620,7 @@ puts "cantidad peliculas #{Pelicula.count}"
 
 # #productorasociado
 productorasociado = Array.new
-csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'productorasociado.csv'))
+csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'casaproductorasociado.csv'))
 csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
   productorasociado  << row.to_h
@@ -693,7 +693,7 @@ csvd.each do |row|
  end
 
  @realizacions= []
-@realizacions = Rol.where(name: "Realizacion")
+@realizacions = Rol.where(name: "Produccion")
  realizacion.each do |data4|
   nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
@@ -706,7 +706,7 @@ csvd.each do |row|
     else
      puts  "no existe asi que lo agregamos como"
         peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Realizacion")
+        dasist = Rol.create(name: "Produccion")
         dasist.pelicula = cinechile4
         dasist.personaje = peasist
         dasist.save
@@ -719,7 +719,7 @@ puts @realizacions.count
 
 # #sonido
 sonido = Array.new
-csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'sonido.csv'))
+csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'sonido2.csv'))
 csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
   sonido  << row.to_h
@@ -752,7 +752,7 @@ puts @sonidos.count
 
 # # #vestuario
 vestuario = Array.new
-csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'vestuario.csv'))
+csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'vestuario2.csv'))
 csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
   vestuario  << row.to_h
@@ -785,7 +785,7 @@ puts @vestuarios.count
 
 # # #vozenoff
   vozenoff = Array.new
-  csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'vozenoff.csv'))
+  csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'vozenoff2.csv'))
   csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
   csvd.each do |row|
     vozenoff  << row.to_h
@@ -815,3 +815,135 @@ puts @vestuarios.count
 end
 
 puts @vozenoff.count
+
+# # #animacion
+  animacion = Array.new
+  csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'animacion2.csv'))
+  csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
+  csvd.each do |row|
+    animacion  << row.to_h
+   end
+
+ @animacion= []
+@animacion = Rol.where(name: "Animacion")
+ animacion.each do |data4|
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
+  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+  @rol = Rol.where(pelicula_id: cinechile4.id)
+  @personasi = Personaje.where(name: nombre4)
+
+   if(@animacion.any?{|rol| @personasi.include? (rol.personaje)})
+        puts " #{nombre4} ya existe ///////
+        //////"
+    else
+     puts  "no existe asi que lo agregamos como"
+        peasist = Personaje.create(name: nombre4)
+        dasist = Rol.create(name: "Animacion")
+        dasist.pelicula = cinechile4
+        dasist.personaje = peasist
+        dasist.save
+         puts " nuevo animacion #{dasist.personaje.name}/////
+         /////"
+      end
+end
+
+puts @animacion.count
+
+# # #decoracion
+  decoracion = Array.new
+  csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'decorados2.csv'))
+  csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
+  csvd.each do |row|
+    decoracion  << row.to_h
+   end
+
+ @decoracion= []
+@decoracion = Rol.where(name: "Decoracion")
+ decoracion.each do |data4|
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
+  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+  @rol = Rol.where(pelicula_id: cinechile4.id)
+  @personasi = Personaje.where(name: nombre4)
+
+   if(@decoracion.any?{|rol| @personasi.include? (rol.personaje)})
+        puts " #{nombre4} ya existe ///////
+        //////"
+    else
+     puts  "no existe asi que lo agregamos como"
+        peasist = Personaje.create(name: nombre4)
+        dasist = Rol.create(name: "Decoracion")
+        dasist.pelicula = cinechile4
+        dasist.personaje = peasist
+        dasist.save
+         puts " nuevo decoracion #{dasist.personaje.name}/////
+         /////"
+      end
+end
+
+puts @decoracion.count
+
+# # #elenco2
+  elenco2 = Array.new
+  csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'elenco2.csv'))
+  csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
+  csvd.each do |row|
+    elenco2  << row.to_h
+   end
+
+ @elenco2= []
+@elenco2 = Rol.where(name: "Elenco")
+ elenco2.each do |data4|
+  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
+  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+  @rol = Rol.where(pelicula_id: cinechile4.id)
+  @personasi = Personaje.where(name: nombre4)
+
+   if(@elenco2.any?{|rol| @personasi.include? (rol.personaje)})
+        puts " #{nombre4} ya existe ///////
+        //////"
+    else
+     puts  "no existe asi que lo agregamos como"
+        peasist = Personaje.create(name: nombre4)
+        dasist = Rol.create(name: "Elenco")
+        dasist.pelicula = cinechile4
+        dasist.personaje = peasist
+        dasist.save
+         puts " nuevo elenco2 #{dasist.personaje.name}/////
+         /////"
+      end
+end
+
+puts @elenco2.count
+
+# # # #premios
+#   premios = Array.new
+#   csv_text_prod = File.read(Rails.root.join('lib', 'seeds', 'premios.csv'))
+#   csvd = CSV.parse(csv_text_prod, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
+#   csvd.each do |row|
+#     premios  << row.to_h
+#    end
+
+#   @premios= []
+#   @premios = Pelicula.where(name: "Elenco")
+#   premios.each do |data4|
+#   nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
+#   cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
+#   @rol = Rol.where(pelicula_id: cinechile4.id)
+#   @personasi = Personaje.where(name: nombre4)
+
+#    if(@premios.any?{|rol| @personasi.include? (rol.personaje)})
+#         puts " #{nombre4} ya existe ///////
+#         //////"
+#     else
+#      puts  "no existe asi que lo agregamos como"
+#         peasist = Personaje.create(name: nombre4)
+#         dasist = Rol.create(name: "Elenco")
+#         dasist.pelicula = cinechile4
+#         dasist.personaje = peasist
+#         dasist.save
+#          puts " nuevo premios #{dasist.personaje.name}/////
+#          /////"
+#       end
+# end
+
+# puts @premios.count

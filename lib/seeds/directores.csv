@@ -1,271 +1,275 @@
-"pelicula_id","nombre_personaje"
-48,"Cristián Lecaros"
-48,"Rodrigo Duque"
-49,"Roberto Artiagoitía"
-50,"Jorge Olguín"
-51,"Tatiana Gaviola"
-52,"Joaquín Eyzaguirre"
-53,"Daniel Benavides"
-54,"Alberto Daiber"
-55,"Sebastián Silva"
-56,"Luis R. Vera"
-59,"Roberto Artiagoitía"
-60,"Boris Quercia"
-61,"Alfonso Gazitúa"
-62,"Pablo Larraín"
-63,"Ernesto Díaz"
-64,"Sebastián Lelio"
-66,"Rodrigo Sepúlveda"
-70,"Sebastián Lelio"
-75,"Matías Bize"
-90,"Gustavo Letelier"
-94,"Víctor Jiménez Atkin"
-108,"Miguel Littin"
-114,"Jorge Olguín"
-123,"Pedro Peirano"
-123,"Álvaro Díaz"
-125,"Ricardo Larraín"
-126,"Shawn Garry"
-127,"José Luis Torres Leiva"
-128,"Valeria Sarmiento"
-130,"Sebastián Arrau"
-132,"Ernesto Díaz"
-135,"Cristián Galaz"
-135,"Andrea Ugalde"
-136,"Bettina Perut"
-136,"Iván Osnovikoff"
-137,"Nicolás López"
-139,"Matías Bize"
-140,"Gonzalo Justiniano"
-141,"Pablo Larraín"
-144,"Fernando Valenzuela Quinteros"
-145,"Shai Agosin"
-147,"Andrés Wood"
-148,"Esteban Schroeder"
-149,"Hernán Caffiero"
-150,"Emilio Pacull"
-152,"Andrés Waissbluth"
-154,"Esteban Larraín"
-157,"Fernanda Aljaro"
-157,"Felipe del Río"
-242,"Alicia Scherson"
-244,"Cristián Jiménez"
-245,"Alejandro Fernández Almendras"
-253,"Rodrigo Ortúzar"
-262,"Francisco Hervé"
-274,"Che Sandoval"
-289,"Marcela Said Cares"
-289,"Jean de Certeau"
-297,"Francisca Fuenzalida"
-299,"Coca Gómez"
-321,"Carmen Castillo"
-324,"Sebastián Moreno"
-339,"José Luis Torres Leiva"
-343,"Bettina Perut"
-343,"Iván Osnovikoff"
-344,"Juan Ignacio Sabatini"
-345,"Daniel Henríquez"
-358,"César Caro"
-361,"Edgardo Viereck"
-396,"Lorena Giachino Torréns"
-397,"Andrés Racz"
-482,"Cristián Sánchez G."
-603,"Nicanor de la Sotta"
-635,"Christopher Murray"
-635,"Pablo Carrera"
-641,"María Elena Wood"
-731,"Germán Berger-Hertz"
-753,"José Luis Sepúlveda"
-753,"Carolina Adriazola"
-778,"Pablo Larraín"
-779,"Matías Bize"
-780,"Nicolás López"
-781,"Sebastián Silva"
-782,"Pablo Illanes"
-783,"Edgardo Viereck"
-785,"Iván Osnovikoff"
-785,"Bettina Perut"
-786,"Patricio Guzmán"
-787,"José Luis Guridi"
-788,"José Luis Guridi"
-789,"Juan Ignacio Sabatini"
-789,"Juan Pablo Sallato"
-789,"Ismael Larraín"
-791,"Niles Atallah"
-792,"Pablo Perelman"
-849,"Jorge Durán"
-870,"Marialy Rivas"
-888,"Lorenzo Moscia"
-890,"Macarena Aguiló"
-898,"Matías Lira"
-949,"Nicolás Acuña"
-890,"Susana Foxley"
-1050,"Paula Leovendagar"
-1098,"Julio Jorquera"
-781,"Pedro Peirano"
-1170,"Sergio Castro San Martín"
-1171,"Elena Varela"
-1176,"Camilo Becerra"
-1192,"Lorena Giachino Torréns"
-1200,"Carla Valencia Dávila"
-1205,"Elisa Eliash"
-1236,"Bernardo Palau"
-1261,"Luis R. Vera"
-1344,"Carmen Castillo"
-1377,"Esteban Larraín"
-1378,"Cristián Jiménez"
-1379,"Andrés Wood"
-1380,"Sebastián Lelio"
-1382,"Diego Rougier"
-1386,"Matías Cruz"
-1391,"Oscar Godoy"
-1392,"Marcela Said Cares"
-1392,"Jean de Certeau"
-1393,"Sebastián Brahm"
-1395,"Maite Alberdi"
-1429,"Constanza Fernández Bertrand"
-1496,"Alejandro Fernández Almendras"
-1497,"José Luis Torres Leiva"
-1551,"María Elena Wood"
-1664,"María Paz González"
-1667,"Nicolás López"
-1690,"Constanza Fernández Bertrand"
-1709,"Gonzalo Justiniano"
-1717,"Santiago Elordi"
-1753,"Ana María Hurtado"
-1769,"Marcelo Ferrari"
-1770,"Rodrigo Marín"
-1811,"Pablo Basulto"
-1837,"Martín Duplaquet"
-1846,"Aníbal Herrera"
-1846,"Alejandro Salazar"
-1982,"Marialy Rivas"
-1991,"Sebastián Araya"
-2013,"Dominga Sotomayor"
-2037,"Walter Tournier"
-2038,"Francesc Morales"
-2048,"Raúl Ruiz"
-2053,"Fernando Guzzoni"
-2054,"Tatiana Lorca"
-2080,"Jorge Olguín"
-2094,"Pablo Larraín"
-2108,"Tevo Díaz"
-2109,"Alan Fischer"
-2134,"Carlos Klein"
-2135,"Patricia Correa"
-2135,"Valentina Mac-Pherson"
-2156,"Álvaro Viguera"
-2168,"Alicia Scherson"
-2169,"Nicolás López"
-2172,"Víctor Cubillos"
-2211,"Fernando Lasalvia"
-2218,"Roberto Artiagoitía"
-2221,"Javier Aguirrezabal G."
-2224,"Cristián Soto"
-2224,"Catalina Vergara"
-2242,"Tiziana Panizza"
-2242,"Paola Castillo"
-2243,"Ernesto Díaz"
-2254,"Christian Aylwin"
-2254,"Nicolás Superby"
-2273,"Fernando Lavanderos"
-2292,"Sebastián Badilla"
-2292,"Gonzalo Badilla"
-2335,"Pablo Berthelon"
-2340,"Ricardo Villarroel "
-2347,"Matías Pinochet"
-2377,"Sebastián Lelio"
-2381,"Sebastián Silva"
-2403,"Che Sandoval"
-2421,"Isabel Miquel"
-2475,"Marcela Said Cares"
-2483,"Bernardo Quesney"
-2520,"Esteban Vidal"
-2524,"Diego Ruiz"
-2525,"José Luis Torres Leiva"
-2562,"Mateo Iribarren"
-2563,"Isabel Ayguavives"
-2564,"Gonzalo Díaz Ugarte"
-2566,"Alejandro Lagos"
-2580,"Moisés Sepúlveda"
-2588,"Sebastián Sepúlveda"
-2603,"Matías Rojas"
-2604,"Nicolás López"
-2607,"Diego Ayala Riquelme"
-2607,"Aníbal Jofré"
-2609,"Iván Tziboulka"
-2637,"Lalo Prieto"
-2647,"Rodrigo González Larrondo "
-2637,"Jalil Riff"
-2678,"Ignacio González"
-2704,"Pablo Illanes"
-2706,"Sebastián Badilla"
-2706,"Gonzalo Badilla"
-2715,"Alejandro Fernández Almendras"
-2738,"Hernán Caffiero"
-2740,"Juan Vicente Araya"
-2741,"Christopher Murray"
-2744,"Matías Pinochet"
-2760,"pitu.the.beat."
-2760,"Daniel Véliz"
-2741,"Israel Pimentel Bustamante"
-2781,"Sebastián Lelio"
-2782,"Margarita Cid"
-2785,"Gabriel Osorio"
-2787,"Jorge Olguín"
-2788,"Jorge Durán"
-2827,"Esteban Vidal"
-2833,"Rodrigo Sepúlveda"
-2835,"José Miguel Zuñiga"
-2836,"Cristián Jiménez"
-2837,"Isidora Marras"
-2851,"Rosario Espinosa"
-2851,"Enrique Farías"
-2853,"Miguel Littin"
-2861,"Ricardo Carrasco"
-2869,"Galut Alarcón"
-2869,"Chamila Rodríguez"
-2870,"Mauricio López Fernández"
-2877,"Carolina García Bloj "
-2885,"Ernesto Díaz"
-2897,"Paola Castillo"
-2899,"Jorge Yacoman"
-2900,"Maite Alberdi"
-2914,"Guillermo Amoedo"
-2916,"Emilio Romero"
-3000,"Harold Avilés"
-3000,"Rodrigo Susarte"
-3009,"Matías Lira"
-3010,"Sergio Castro San Martín"
-3011,"Pablo Larraín"
-3014,"Patricio Guzmán"
-3021,"Marcia Tambutti"
-3022,"Claudio Marcone"
-3048,"Sergio Castilla"
-3060,"Claudia Barril"
-3060,"Sebastián Moreno"
-3061,"Bettina Perut"
-3061,"Iván Osnovikoff"
-3079,"Matías Bize"
-3085,"Coti Donoso"
-3100,"Diego Rougier"
-3120,"Ticoy Rodríguez"
-3123,"Cristóbal Valderrama"
-3124,"Carola Fuentes"
-3124,"Rafael Valdeavellano"
-3126,"Vivienne Barry"
-3150,"Sebastián Silva"
-149,"José Pérez"
-3164,"Sebastián Brahm"
-3169,"Yassin Velásquez"
-3169,"Constanza Erenchun"
-3172,"Eli Roth"
-3203,"Nicolás López"
-3309,"Alberto Serrano Fillol"
-3309,"Cristóbal Azócar"
-3316,"Francisco Hervé"
-3321,"Pablo Larraín"
-3419,"María Teresa Larraín"
-3428,"Cristóbal Olivares"
-3458,"Alvaro de la Barra"
-3582,"Manuel Venegas Chaparro"
+"nombre_personaje","pelicula_id"
+"Cristián Lecaros",48
+"Rodrigo Duque",48
+"Roberto Artiagoitía",49
+"Jorge Olguín",50
+"Tatiana Gaviola",51
+"Joaquín Eyzaguirre",52
+"Daniel Benavides",53
+"Alberto Daiber",54
+"Sebastián Silva",55
+"Luis R. Vera",56
+"Roberto Artiagoitía",59
+"Boris Quercia",60
+"Alfonso Gazitúa",61
+"Pablo Larraín",62
+"Ernesto Díaz",63
+"Sebastián Lelio",64
+"Rodrigo Sepúlveda",66
+"Sebastián Lelio",70
+"Matías Bize",75
+"Gustavo Letelier",90
+"Víctor Jiménez Atkin",94
+"Miguel Littin",108
+"Jorge Olguín",114
+"Pedro Peirano",123
+"Álvaro Díaz",123
+"Ricardo Larraín",125
+"Shawn Garry",126
+"José Luis Torres Leiva",127
+"Valeria Sarmiento",128
+"Sebastián Arrau",130
+"Ernesto Díaz",132
+"Cristián Galaz",135
+"Andrea Ugalde",135
+"Bettina Perut",136
+"Iván Osnovikoff",136
+"Nicolás López",137
+"Matías Bize",139
+"Gonzalo Justiniano",140
+"Pablo Larraín",141
+"Fernando Valenzuela Quinteros",144
+"Shai Agosin",145
+"Andrés Wood",147
+"Esteban Schroeder",148
+"Hernán Caffiero",149
+"Emilio Pacull",150
+"Andrés Waissbluth",152
+"Esteban Larraín",154
+"Fernanda Aljaro",157
+"Felipe del Río",157
+"Alicia Scherson",242
+"Cristián Jiménez",244
+"Alejandro Fernández Almendras",245
+"Rodrigo Ortúzar",253
+"Francisco Hervé",262
+"Che Sandoval",274
+"Marcela Said Cares",289
+"Jean de Certeau",289
+"Francisca Fuenzalida",297
+"Coca Gómez",299
+"Carmen Castillo",321
+"Sebastián Moreno",324
+"José Luis Torres Leiva",339
+"Bettina Perut",343
+"Iván Osnovikoff",343
+"Juan Ignacio Sabatini",344
+"Daniel Henríquez",345
+"César Caro",358
+"Edgardo Viereck",361
+"Lorena Giachino Torréns",396
+"Andrés Racz",397
+"Cristián Sánchez G.",482
+"Nicanor de la Sotta",603
+"Christopher Murray",635
+"Pablo Carrera",635
+"María Elena Wood",641
+"Germán Berger-Hertz",731
+"José Luis Sepúlveda",753
+"Carolina Adriazola",753
+"Pablo Larraín",778
+"Matías Bize",779
+"Nicolás López",780
+"Sebastián Silva",781
+"Pablo Illanes",782
+"Edgardo Viereck",783
+"Iván Osnovikoff",785
+"Bettina Perut",785
+"Patricio Guzmán",786
+"José Luis Guridi",787
+"José Luis Guridi",788
+"Juan Ignacio Sabatini",789
+"Juan Pablo Sallato",789
+"Ismael Larraín",789
+"Niles Atallah",791
+"Pablo Perelman",792
+"Jorge Durán",849
+"Marialy Rivas",870
+"Lorenzo Moscia",888
+"Macarena Aguiló",890
+"Matías Lira",898
+"Nicolás Acuña",949
+"Susana Foxley",890
+"Paula Leovendagar",1050
+"Julio Jorquera",1098
+"Pedro Peirano",781
+"Sergio Castro San Martín",1170
+"Elena Varela",1171
+"Camilo Becerra",1176
+"Nayra Illic",1179
+"Lorena Giachino Torréns",1192
+"Carla Valencia Dávila",1200
+"Elisa Eliash",1205
+"Bernardo Palau",1236
+"Luis R. Vera",1261
+"Carmen Castillo",1344
+"Esteban Larraín",1377
+"Cristián Jiménez",1378
+"Andrés Wood",1379
+"Sebastián Lelio",1380
+"Diego Rougier",1382
+"Matías Cruz",1386
+"Claudio del Valle",1390
+"Oscar Godoy",1391
+"Marcela Said Cares",1392
+"Jean de Certeau",1392
+"Sebastián Brahm",1393
+"Maite Alberdi",1395
+"Constanza Fernández Bertrand",1429
+"Alejandro Fernández Almendras",1496
+"José Luis Torres Leiva",1497
+"María Elena Wood",1551
+"María Paz González",1664
+"Nicolás López",1667
+"Constanza Fernández Bertrand",1690
+"Gonzalo Justiniano",1709
+"Santiago Elordi",1717
+"Ana María Hurtado",1753
+"Marcelo Ferrari",1769
+"Rodrigo Marín",1770
+"Pablo Basulto",1811
+"Martín Duplaquet",1837
+"Aníbal Herrera",1846
+"Alejandro Salazar",1846
+"Marialy Rivas",1982
+"Sebastián Araya",1991
+"Dominga Sotomayor",2013
+"Walter Tournier",2037
+"Francesc Morales",2038
+"Raúl Ruiz",2048
+"Fernando Guzzoni",2053
+"Tatiana Lorca",2054
+"Jorge Olguín",2080
+"Pablo Larraín",2094
+"Tevo Díaz",2108
+"Alan Fischer",2109
+"Carlos Klein",2134
+"Patricia Correa",2135
+"Valentina Mac-Pherson",2135
+"Álvaro Viguera",2156
+"Alicia Scherson",2168
+"Nicolás López",2169
+"Víctor Cubillos",2172
+"Fernando Lasalvia",2211
+"Roberto Artiagoitía",2218
+"Javier Aguirrezabal G.",2221
+"Cristián Soto",2224
+"Catalina Vergara",2224
+"Tiziana Panizza",2242
+"Paola Castillo",2242
+"Ernesto Díaz",2243
+"Christian Aylwin",2254
+"Nicolás Superby",2254
+"Fernando Lavanderos",2273
+"Sebastián Badilla",2292
+"Gonzalo Badilla",2292
+"Pablo Berthelon",2335
+"Ricardo Villarroel ",2340
+"Matías Pinochet",2347
+"Sebastián Lelio",2377
+"Sebastián Silva",2381
+"Che Sandoval",2403
+"Isabel Miquel",2421
+"Marcela Said Cares",2475
+"Bernardo Quesney",2483
+"Esteban Vidal",2520
+"Diego Ruiz",2524
+"José Luis Torres Leiva",2525
+"Mateo Iribarren",2562
+"Isabel Ayguavives",2563
+"Gonzalo Díaz Ugarte",2564
+"Alejandro Lagos",2566
+"Moisés Sepúlveda",2580
+"Sebastián Sepúlveda",2588
+"Matías Rojas",2603
+"Nicolás López",2604
+"Diego Ayala Riquelme",2607
+"Aníbal Jofré",2607
+"Iván Tziboulka",2609
+"Cristóbal Palma",2632
+"Lalo Prieto",2637
+"Rodrigo González Larrondo ",2647
+"Jalil Riff",2637
+"Ignacio González",2678
+"Pablo Illanes",2704
+"Sebastián Badilla",2706
+"Gonzalo Badilla",2706
+"Alejandro Fernández Almendras",2715
+"Hernán Caffiero",2738
+"Juan Vicente Araya",2740
+"Christopher Murray",2741
+"Matías Pinochet",2744
+"pitu.the.beat.",2760
+"Daniel Véliz",2760
+"Israel Pimentel Bustamante",2741
+"Sebastián Lelio",2781
+"Margarita Cid",2782
+"Gabriel Osorio",2785
+"Jorge Olguín",2787
+"Jorge Durán",2788
+"Esteban Vidal",2827
+"Rodrigo Sepúlveda",2833
+"José Miguel Zuñiga",2835
+"Cristián Jiménez",2836
+"Isidora Marras",2837
+"Rosario Espinosa",2851
+"Enrique Farías",2851
+"Miguel Littin",2853
+"Ricardo Carrasco",2861
+"Galut Alarcón",2869
+"Chamila Rodríguez",2869
+"Mauricio López Fernández",2870
+"Dominga Sotomayor",2876
+"Carolina García Bloj ",2877
+"Ernesto Díaz",2885
+"Paola Castillo",2897
+"Jorge Yacoman",2899
+"Maite Alberdi",2900
+"Guillermo Amoedo",2914
+"Emilio Romero",2916
+"Harold Avilés",3000
+"Rodrigo Susarte",3000
+"Matías Lira",3009
+"Sergio Castro San Martín",3010
+"Pablo Larraín",3011
+"Patricio Guzmán",3014
+"Marcia Tambutti",3021
+"Claudio Marcone",3022
+"Sergio Castilla",3048
+"Claudia Barril",3060
+"Sebastián Moreno",3060
+"Bettina Perut",3061
+"Iván Osnovikoff",3061
+"Matías Bize",3079
+"Coti Donoso",3085
+"Diego Rougier",3100
+"Ticoy Rodríguez",3120
+"Cristóbal Valderrama",3123
+"Carola Fuentes",3124
+"Rafael Valdeavellano",3124
+"Vivienne Barry",3126
+"Sebastián Silva",3150
+"José Pérez",149
+"Sebastián Brahm",3164
+"Yassin Velásquez",3169
+"Constanza Erenchun",3169
+"Eli Roth",3172
+"Nicolás López",3203
+"Alberto Serrano Fillol",3309
+"Cristóbal Azócar",3309
+"Francisco Hervé",3316
+"Pablo Larraín",3321
+"María Teresa Larraín",3419
+"Cristóbal Olivares",3428
+"Alvaro de la Barra",3458
+"Manuel Venegas Chaparro",3582

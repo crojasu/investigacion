@@ -1,61 +1,61 @@
-"pelicula_id","nombre_personaje"
-48,"Antonia Irarr√°zaval"
-48,"Valentina Aylwin"
-49,"Claudia Robles"
-51,"Loreto Vuskovic"
-52,"Loreto Vuskovic"
-61,"Alejandro Moya"
-62,"Paola Saavedra"
-63,"Constanza Meza-Lopehand√≠a"
-64,"Carola Espina"
-108,"Marisol Torres"
-126,"Laura Fuentes"
-126,"Sof√≠a Salas"
-127,"Paola Saavedra"
-128,"Lola Cabezas"
-135,"Muriel Parra"
-137,"Claudia Robles"
-140,"Tamara Contreras"
-148,"Mar√≠a Elena Eliash"
-152,"Francisca Kelter"
-253,"Nicole Blanc"
-345,"Carlos Gallardo"
-358,"Sandra Carvajal"
-358,"Jos√© Luis Mu√±oz"
-358,"Claudia Loza"
-780,"Fran Emparanza"
-849,"Anna Cantanhede"
-849,"Joana Ribas"
-898,"Jeanine Mckirnan"
-898,"Francisca Rom√°n"
-783,"Tamara Contreras"
-783,"Pilar G√°rate"
-787,"Ximena Wiesenfeld"
-1379,"Pamela Chamorro"
-1497,"Catalina Devia"
-1667,"Fran Emparanza"
-1811,"Magdalena P√©rez"
-1837,"Pamela Chamorro"
-1846,"Gina Franzani"
-1846,"Gina Franzani"
-1846,"Mai-Lyn Leal"
-870,"Claudia Robles"
-2048,"Lola Cabezas"
-2377,"Loreto Vuskovic"
-1377,"Carolina Espina"
-2483,"Melisa Nicitich "
-2520,"Loreto Vuskovic"
-2588,"Muriel Parra"
-2211,"Catalina D√≠az de Vald√©s"
-2607,"Javiera Gonz√°lez (II)"
-2678,"Gabriela Olivares"
-2678,"Nadia Cabezas"
-2740,"Malena Y√°√±ez"
-2788,"Carolina Espina"
-2851,"Karin L√≥pez"
-3150,"Mark Grattan"
-3172,"Elisa Hormaz√°bal"
-3022,"Sebasti√°n Torrico"
-3203,"Pilar Calder√≥n"
-2715,"Sebasti√°n Torrico"
-3321,"Muriel Parra"
+"nombre_personaje","pelicula_id"
+"Antonia Irarr·zaval",48
+"Valentina Aylwin",48
+"Claudia Robles",49
+"Loreto Vuskovic",51
+"Loreto Vuskovic",52
+"Alejandro Moya",61
+"Paola Saavedra",62
+"Constanza Meza-LopehandÌa",63
+"Carola Espina",64
+"Marisol Torres",108
+"Laura Fuentes",126
+"SofÌa Salas",126
+"Paola Saavedra",127
+"Lola Cabezas",128
+"Muriel Parra",135
+"Claudia Robles",137
+"Tamara Contreras",140
+"MarÌa Elena Eliash",148
+"Francisca Kelter",152
+"Nicole Blanc",253
+"Carlos Gallardo",345
+"Sandra Carvajal",358
+"JosÈ Luis MuÒoz",358
+"Claudia Loza",358
+"Fran Emparanza",780
+"Anna Cantanhede",849
+"Joana Ribas",849
+"Jeanine Mckirnan",898
+"Francisca Rom·n",898
+"Tamara Contreras",783
+"Pilar G·rate",783
+"Ximena Wiesenfeld",787
+"Pamela Chamorro",1379
+"Catalina Devia",1497
+"Fran Emparanza",1667
+"Magdalena PÈrez",1811
+"Pamela Chamorro",1837
+"Gina Franzani",1846
+"Gina Franzani",1846
+"Mai-Lyn Leal",1846
+"Claudia Robles",870
+"Lola Cabezas",2048
+"Loreto Vuskovic",2377
+"Carolina Espina",1377
+"Melisa Nicitich ",2483
+"Loreto Vuskovic",2520
+"Muriel Parra",2588
+"Catalina DÌaz de ValdÈs",2211
+"Javiera Gonz·lez (II)",2607
+"Gabriela Olivares",2678
+"Nadia Cabezas",2678
+"Malena Y·Òez",2740
+"Carolina Espina",2788
+"Karin LÛpez",2851
+"Mark Grattan",3150
+"Elisa Hormaz·bal",3172
+"Sebasti·n Torrico",3022
+"Pilar CalderÛn",3203
+"Sebasti·n Torrico",2715
+"Muriel Parra",3321
