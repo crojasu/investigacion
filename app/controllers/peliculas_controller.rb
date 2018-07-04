@@ -87,6 +87,10 @@ end
     redirect_to pelicula_path(@pelicula)
   end
 
+  def destroy
+    raise
+  end
+
   private
 
   def pelicula_params

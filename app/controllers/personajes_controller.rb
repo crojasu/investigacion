@@ -24,6 +24,12 @@ class PersonajesController < ApplicationController
    redirect_to personajes_path
   end
 
+  def destroy
+    @nombre = Personaje.find(params[:id])
+    @nombre.destroy
+    #redirect_to  peliculas_path
+  end
+
   private
 
   def allowed_params

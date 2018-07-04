@@ -16,8 +16,9 @@
       <td>
         <ul>
           <% direccion.each do |dire|%>
-      <% nombre =Personaje.find(dire.personaje_id) %>
-          <li><%= nombre.name %> </li>
+          <% @nombre = Personaje.find(dire.personaje_id) %>
+          <li data-dire-id="<%= @nombre.id %>"><%= @nombre.name %> //
+          <%= link_to "Duplicado", personaje_path(@nombre), method: :delete, remote: true %>
              <% end %>
         <ul>
 

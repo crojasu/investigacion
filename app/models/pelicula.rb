@@ -1,6 +1,6 @@
 class Pelicula < ApplicationRecord
-  has_many :rols
-  has_many :personajes, through: :rols
+  has_many :rols, dependent: :destroy
+  has_many :personajes, through: :rols, dependent: :destroy
   belongs_to :fondo, optional: true
 
 def next
