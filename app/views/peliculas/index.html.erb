@@ -1,6 +1,6 @@
 <div class="container">
 <div class="col-sm">
-  <table style="width:50%">
+  <table border = "1" bordercolor = "green" bgcolor = "">
     <tr>
       <th>Título</th>
       <th>Dirección</th>
@@ -17,15 +17,22 @@
         <ul>
           <% direccion.each do |dire|%>
           <% @nombre = Personaje.find(dire.personaje_id) %>
-          <li data-dire-id="<%= @nombre.id %>"><%= @nombre.name %> //
-          <%= link_to "Duplicado", personaje_path(@nombre), method: :delete, remote: true %>
+          <li data-dire-id="<%= @nombre.id %>"><%= @nombre.name %>
+          <%= link_to "doble", personaje_path(@nombre), class: 'btn btn-warning', method: :delete, remote: true %>
+          <% if @nombre.genero == true %>
+            <%= link_to 'mujer', deactivate_personaje_path(@nombre), class: 'btn btn-danger', method: :patch , remote: true %>
+            <% end %>
+            <% if @nombre.genero == false %>
+            <%= link_to 'hombre', activate_personaje_path(@nombre), class: 'btn btn-primary',
+            method: :patch , remote: true %>
+            <% end %>
              <% end %>
         <ul>
 
         </td>
       <td><%= peli.idcinechile %></td>
       <td><%= @f["imdbID"]%></td>
-      <td><%= link_to "Ver Ficha Tecnica", pelicula_path(peli) %> </td>
+      <td><%= link_to "Ver Ficha Tecnica", pelicula_path(peli), class: 'btn btn-info' %> </td>
     </tr>
     <% end %>
   </table>

@@ -3,15 +3,12 @@ require 'json'
 require 'open-uri'
 require 'i18n'
 
-Pelicula.destroy_all
-Rol.destroy_all
-Personaje.destroy_all
-
 #total de peliculas
 @count=0
 sinficha =[]
 csv_text = File.read(Rails.root.join('lib', 'seeds', 'compilado.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
 csv.each do |row|
   tit = I18n.transliterate(row["titulo"]).upcase
   if Pelicula.find_by(idcinechile: row["idcinechile"])
@@ -19,9 +16,7 @@ csv.each do |row|
     fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
     fond.pelicula_id = peli.id
     fond.save
-    puts "XXXXXXXXXX
-    se agrega un segundo fondo a #{peli.titulo} de #{fond.tipo}
-    XXXXXXXXx"
+    puts "se agrega un segundo fondo a #{peli.titulo} de #{fond.tipo}"
   else
     t = Pelicula.create(idcinechile: row["idcinechile"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
     fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
@@ -31,7 +26,6 @@ csv.each do |row|
     puts "///////"
     puts "Creando pelicula #{t.titulo} #{t.idcinechile}"
     puts "con fondos de #{fond.tipo} por #{fond.monto}"
-    puts "///////"
   # #matching database from imdb
     imbd  = I18n.transliterate(t.titulo).split.join('+')
     url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
@@ -39,34 +33,68 @@ csv.each do |row|
     value = JSON.parse(user_serialized)
     t.imbd = value
     t.save
+    @roldepeliculas = Rol.where(pelicula_id: t.id)
     if value["Response"]== "True"
       if value["Director"] != "N/A"
       value["Director"].split(",").each do |dir|
       dire = I18n.transliterate(dir).upcase
-      pe = Personaje.create(name: dire)
-      da = Rol.create(name: "Direccion")
-      da.pelicula = t
-      da.personaje = pe
-      da.save
-       puts "agregando director@s #{da.personaje.name}"
-       puts da.id
-          end
+      @persona = Personaje.find_by(name: dire)
+      @rol= @roldepeliculas.where(name: "Direccion")
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{dire} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Direccion")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando nuevo rol a director@s #{da.personaje.name}"
+        else
+        pe = Personaje.create(name: dire)
+        da = Rol.create(name: "Direccion")
+        da.pelicula = t
+        da.personaje = pe
+        da.save
+         puts "agregando director@s #{da.personaje.name}"
         end
+        end
+      end
       if value["Writer"] != "N/A"
       value["Writer"].split(",").each do |gu|
       gui = I18n.transliterate(gu).upcase
-      pe2 = Personaje.create(name: gui)
-      da2 = Rol.create(name: "Guion")
-      da2.pelicula = t
-      da2.personaje = pe2
-      da2.save
-       puts "agregando guion #{da2.personaje.name}"
-       puts da2.id
+      @persona = Personaje.find_by(name: gui)
+      @rol= @roldepeliculas.where(name: "Guion")
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{gui} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Guion")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando ** nuevo rol a guion #{da.personaje.name}"
+        else
+          pe2 = Personaje.create(name: gui)
+          da2 = Rol.create(name: "Guion")
+          da2.pelicula = t
+          da2.personaje = pe2
+          da2.save
+           puts "agregando guion #{da2.personaje.name}"
+          end
           end
         end
       if value["Actors"] != "N/A"
       value["Actors"].split(",").each do |ac|
-        act = I18n.transliterate(ac).upcase
+      act = I18n.transliterate(ac).upcase
+      @persona = Personaje.find_by(name: act)
+      @rol= @roldepeliculas.where(name: "Elenco")
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{act} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Elenco")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "**agregando ** nuevo rol a elenco #{da.personaje.name}"
+        else
       pe3 = Personaje.create(name: act)
       da3 = Rol.create(name: "Elenco")
       da3.pelicula = t
@@ -75,9 +103,21 @@ csv.each do |row|
        puts "agregando elenco #{da3.personaje.name}"
           end
         end
+      end
       if value["Production"] != nil && value["Production"] != "N/A"
         value["Production"].split(",").each do |po|
-          pro = I18n.transliterate(po).upcase
+        pro = I18n.transliterate(po).upcase
+        @persona = Personaje.find_by(name: pro)
+        @rol= @roldepeliculas.where(name: "Casa Productora")
+        if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{pro} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Casa Productora")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando ** nuevo rol a productora #{da.personaje.name}"
+        else
         pe4 = Personaje.create(name: pro)
         da4 = Rol.create(name: "Casa Productora")
         da4.pelicula = t
@@ -86,6 +126,7 @@ csv.each do |row|
          puts "agregando productora #{da4.personaje.name}"
           end
       end
+    end
     else
       @count = @count+1
       sinficha << ("#{t.titulo}")
@@ -101,78 +142,128 @@ puts @count
  puts "Ahora agregamos las fichas con imbd tt
  ????????????????
  ///////////////"
+
 sinficha2=[]
 @count2 =0
-imbd = Array.new
+imbd2 = Array.new
 csv_text_imbd = File.read(Rails.root.join('lib', 'seeds', 'imdb.csv'))
 csvd = CSV.parse(csv_text_imbd, headers: true, header_converters: :symbol, converters: :all, :encoding => 'ISO-8859-1')
 csvd.each do |row|
   tit = I18n.transliterate(row[:titulo]).upcase
-  p2 = Pelicula.find_by_titulo(tit)
-  if p2 && row[:im] != nil
+  t = Pelicula.find_by_titulo(tit)
+  if t && row[:im] != nil
   imbd2  = row[:im]
   url2 = "http://www.omdbapi.com/?i=#{imbd2}&apikey=e91b7024"
   user_serialized2 = open(url2).read
-  value2 = JSON.parse(user_serialized2)
-  p2.imbd = value2
-  p2.save
-    if value2["Response"]== "True"
-    if value2["Director"] != "N/A"
-    value2["Director"].split(",").each do |dir|
+  value = JSON.parse(user_serialized2)
+  t.imbd = value
+  t.save
+  @roldepeliculas = Rol.where(pelicula_id: t.id)
+    if value["Response"]== "True"
+    if value["Director"] != "N/A"
+      value["Director"].split(",").each do |dir|
       dire = I18n.transliterate(dir).upcase
-    pe = Personaje.create(name: dire)
-    da = Rol.create(name: "Direccion")
-    da.pelicula = p2
-    da.personaje = pe
-    da.save
-     puts "agregando director@s #{da.personaje.name}"
+      @persona = Personaje.find_by(name: dire)
+      @rol= @roldepeliculas.where(name: "Direccion")
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{dire} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Direccion")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando *** nuevo rol a director@s #{da.personaje.name}"
+        else
+        pe = Personaje.create(name: dire)
+        da = Rol.create(name: "Direccion")
+        da.pelicula = t
+        da.personaje = pe
+        da.save
+         puts "agregando director@s #{da.personaje.name}"
+        end
         end
       end
-    if value2["Writer"] != "N/A"
-    value2["Writer"].split(",").each do |gu|
+      if value["Writer"] != "N/A"
+      value["Writer"].split(",").each do |gu|
       gui = I18n.transliterate(gu).upcase
-    pe2 = Personaje.create(name: gui)
-    da2 = Rol.create(name: "Guion")
-    da2.pelicula = p2
-    da2.personaje = pe2
-    da2.save
-     puts "agregando guion #{da2.personaje.name}"
+      @persona = Personaje.find_by(name: gui)
+      @rol= @roldepeliculas.where(name: "Guion")
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{gui} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Guion")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando ** nuevo rol a guion #{da.personaje.name}"
+        else
+          pe2 = Personaje.create(name: gui)
+          da2 = Rol.create(name: "Guion")
+          da2.pelicula = t
+          da2.personaje = pe2
+          da2.save
+           puts "agregando guion #{da2.personaje.name}"
+          end
+          end
         end
-      end
-    if value2["Actors"] != "N/A"
-    value2["Actors"].split(",").each do |ac|
+      if value["Actors"] != "N/A"
+      value["Actors"].split(",").each do |ac|
       act = I18n.transliterate(ac).upcase
-    pe3 = Personaje.create(name: act)
-    da3 = Rol.create(name: "Elenco")
-    da3.pelicula = p2
-    da3.personaje = pe3
-    da3.save
-     puts "agregando elenco #{da3.personaje.name}"
+      @persona = Personaje.find_by(name: act)
+      @rol= @roldepeliculas.where(name: "Elenco")
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{act} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Elenco")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando ** nuevo rol a elenco #{da.personaje.name}"
+        else
+      pe3 = Personaje.create(name: act)
+      da3 = Rol.create(name: "Elenco")
+      da3.pelicula = t
+      da3.personaje = pe3
+      da3.save
+       puts "agregando elenco #{da3.personaje.name}"
+          end
         end
       end
-    if value2["Production"] != nil && value2["Production"] != "N/A"
-      value2["Production"].split(",").each do |po|
+      if value["Production"] != nil && value["Production"] != "N/A"
+        value["Production"].split(",").each do |po|
         pro = I18n.transliterate(po).upcase
-      pe4 = Personaje.create(name: pro)
-      da4 = Rol.create(name: "Casa Productora")
-      da4.pelicula = p2
-      da4.personaje = pe4
-      da4.save
-       puts "agregando productora #{da4.personaje.name}"
-        end
+        @persona = Personaje.find_by(name: pro)
+        @rol= @roldepeliculas.where(name: "Casa Productora")
+        if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{pro} ya existe "
+        elsif @persona
+          da = Rol.create(name: "Casa Productora")
+          da.pelicula = t
+          da.personaje = @persona
+          da.save
+           puts "** agregando ** nuevo rol a productora #{da.personaje.name}"
+        else
+        pe4 = Personaje.create(name: pro)
+        da4 = Rol.create(name: "Casa Productora")
+        da4.pelicula = t
+        da4.personaje = pe4
+        da4.save
+         puts "agregando productora #{da4.personaje.name}"
+          end
+      end
     end
     else
-      puts "esto no se que es #{value2["Title"]}"
-      puts "#{p2.titulo}"
+      puts "esto no se que es #{value["Title"]}"
+      puts "#{t.titulo}"
     end
   else
   @count2 = @count2+1
   end
  end
 
-puts @directores
-puts @count2
-puts sinficha2
+puts "total de directores #{@directores}"
+puts "total de #{@count2}"
+puts "total de #{sinficha2}"
 puts "este es el numero de peliculas sin imbd #{sinficha2.count}"
 
 puts "ahora agregamos director@s /////////////////
@@ -189,42 +280,41 @@ csvd.each do |row|
  data << row.to_h
 end
 
-@rol= Rol.all
-@directors = []
-@directors = Rol.where(name: "Direccion")
-puts @directors.count
-
 @count1 =0
 @existentes = 0
 @nuevos = 0
+@nuevorol =0
+
  data.each do |data|
   nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
-  puts cinechile.id
-  @rol = Rol.where(pelicula_id: cinechile.id)
-  @persona = Personaje.where(name: nombre)
-
-  if @rol.any?{|rol| @persona.include? (rol.personaje)}
-      puts " #{nombre} ya existe ///////
-      //////"
-      @existentes = @existentes +1
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Direccion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Direccion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a director #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
   else
-   puts  "#{nombre} no existe asi que lo agregamos como"
-      pe3 = Personaje.create(name: nombre)
-      da3 = Rol.create(name: "Direccion")
-      da3.pelicula = cinechile
-      da3.personaje = pe3
-      da3.save
-       puts " nuevo director #{da3.personaje.name}/////
-       /////"
-       @nuevos =@nuevos + 1
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Direccion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Direccion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
     end
 end
 
-puts "directores nuevoc #{@nuevos}"
+puts "directores nuevos #{@nuevos}"
 puts "directores @existentes #{@existentes}"
-puts "cantidad directores #{@directors.count}"
-puts "cantidad peliculas #{Pelicula.count}"
+puts "cantidad nuevos roles #{@nuevorol}"
 
 # # #arte
 
@@ -235,30 +325,40 @@ csvd.each do |row|
   dataart << row.to_h
  end
 
-@artes= []
-@artes = Rol.where(name: "Arte")
- dataart.each do |data2|
-  nombre2 = I18n.transliterate(data2[:nombre_personaje]).upcase
-  cinechile2 = Pelicula.find_by(idcinechile: data2[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile2.id)
-  @personart = Personaje.where(name: nombre2)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@artes.any?{|rol| @personart.include? (rol.personaje)})
-        puts " #{nombre2} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        pear3 = Personaje.create(name: nombre2)
-        daar3 = Rol.create(name: "Arte")
-        daar3.pelicula = cinechile2
-        daar3.personaje = pear3
-        daar3.save
-         puts " nuevo arte #{daar3.personaje.name}/////
-         /////"
-      end
+ dataart.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Arte")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Arte")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Arte #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Arte")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Arte #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @artes.count
+puts "Arte nuevos #{@nuevos}"
+puts "Arte @existentes #{@existentes}"
+puts "cantidad nuevos Arte #{@nuevorol}"
 
 
 # #productor
@@ -269,30 +369,40 @@ csvd.each do |row|
   datapro  << row.to_h
  end
 
-@productore= []
-@productore = Rol.where(name: "Produccion")
- datapro.each do |data3|
-  nombre3 = I18n.transliterate(data3[:nombre_personaje]).upcase
-  cinechile3 = Pelicula.find_by(idcinechile: data3[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile3.id)
-  @personpro = Personaje.where(name: nombre3)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@productore.any?{|rol| @personpro.include? (rol.personaje)})
-        puts " #{nombre3} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        pepro = Personaje.create(name: nombre3)
-        dapro = Rol.create(name: "Produccion")
-        dapro.pelicula = cinechile3
-        dapro.personaje = pepro
-        dapro.save
-         puts " nuevo productor #{dapro.personaje.name}/////
-         /////"
-      end
+ datapro.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Produccion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Produccion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Produccion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Produccion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Produccion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @productore.count
+puts "Produccion nuevos #{@nuevos}"
+puts "Produccion @existentes #{@existentes}"
+puts "cantidad nuevos Produccion #{@nuevorol}"
 
 # # asistente de direc
 asistentedire = Array.new
@@ -302,30 +412,40 @@ csvd2.each do |row|
   asistentedire  << row.to_h
  end
 
-@asistente= []
-@asistente = Rol.where(name: "Asistente de Direccion")
- asistentedire.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@asistente.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Asistente de Direccion")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo asistente de direccions #{dasist.personaje.name}/////
-         /////"
-      end
+ asistentedire.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Asistente Direccion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Asistente Direccion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Asistente Direccion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Asistente Direccion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Asistente Direccion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @asistente.count
+puts "Asistente Direccion nuevos #{@nuevos}"
+puts "Asistente Direccion @existentes #{@existentes}"
+puts "cantidad nuevos Asistente Direccion #{@nuevorol}"
 
 # #director de foto
 direfoto = Array.new
@@ -335,30 +455,40 @@ csvd.each do |row|
   direfoto  << row.to_h
  end
 
-@direfotos= []
-@direfotos = Rol.where(name: "Direccion de Fotografia")
- direfoto.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@direfotos.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Direccion de Fotografia")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo direfotos  #{dasist.personaje.name}/////
-         /////"
-      end
+ direfoto.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Direccion Fotografia")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Direccion Fotografia")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Direccion Fotografia #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Direccion Fotografia")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Direccion Fotografia #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @direfotos.count
+puts "Direccion Fotografia nuevos #{@nuevos}"
+puts "Direccion Fotografia @existentes #{@existentes}"
+puts "cantidad nuevos Direccion Fotografia #{@nuevorol}"
 
 # #efectos
 efectosa = Array.new
@@ -368,30 +498,40 @@ csvd.each do |row|
   efectosa  << row.to_h
  end
 
-@efectos= []
-@efectos = Rol.where(name: "Efectos")
- efectosa.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@efectos.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Efectos")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo efectos #{dasist.personaje.name}/////
-         /////"
-      end
+ efectosa.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Efectos Especiales")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Efectos Especiales")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Efectos Especiales #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Efectos Especiales")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Efectos Especiales #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @efectos.count
+puts "Efectos Especiales nuevos #{@nuevos}"
+puts "Efectos Especiales @existentes #{@existentes}"
+puts "cantidad nuevos Efectos Especiales #{@nuevorol}"
 
 # #guion
 dataguion = Array.new
@@ -400,43 +540,40 @@ csvd = CSV.parse(csv_text_guion, headers: true, header_converters: :symbol, conv
 csvd.each do |row|
   dataguion  << row.to_h
  end
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-@rol= Rol.all
-@guions = []
-@guions = Rol.where(name: "Guion")
-puts @guions.count
-
-@count1g =0
-@existentesg = 0
-@nuevosg = 0
  dataguion.each do |data|
   nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile.id)
-  @persona = Personaje.where(name: nombre)
-
-  if @rol.any?{|rol| @persona.include? (rol.personaje)}
-      puts " #{nombre} ya existe ///////
-      //////"
-      @existentesg = @existentesg +1
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Guion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Guion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Guion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
   else
-   puts  "#{nombre} no existe asi que lo agregamos como"
-      pe3 = Personaje.create(name: nombre)
-      da3 = Rol.create(name: "Guion")
-      da3.pelicula = cinechile
-      da3.personaje = pe3
-      da3.save
-       puts " nuevo guion #{da3.personaje.name}/////
-       /////"
-       @nuevosg =@nuevosg + 1
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Guion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Guion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
     end
 end
 
-puts "guiones nuevos #{@nuevosg}"
-puts "guiones @existentes #{@existentesg}"
-puts "cantidad guiones #{@guions.count}"
-puts "cantidad peliculas #{Pelicula.count}"
-
+puts "Guion nuevos #{@nuevos}"
+puts "Guion @existentes #{@existentes}"
+puts "cantidad nuevos Guion #{@nuevorol}"
 
 
 # # #jefedeproduccion
@@ -447,31 +584,40 @@ csvd.each do |row|
   jefedeproduccion  << row.to_h
  end
 
- @jefeprod= []
-@jefeprod = Rol.where(name: "Jefatura de Produccion")
- jefedeproduccion.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@jefeprod.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Jefatura de Produccion")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo jefeprod #{dasist.personaje.name}/////
-         /////"
-      end
+ jefedeproduccion.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Jefe de Produccion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Jefe de Produccion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Jefe de Produccion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Jefe de Produccion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Jefe de Produccion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @jefeprod.count
-
+puts "Jefe de Produccion nuevos #{@nuevos}"
+puts "Jefe de Produccion @existentes #{@existentes}"
+puts "cantidad nuevos Jefe de Produccion #{@nuevorol}"
 
 # # montaje
 montaje = Array.new
@@ -481,30 +627,41 @@ csvd.each do |row|
   montaje  << row.to_h
  end
 
- @montajes= []
-@montajes = Rol.where(name: "Montaje")
- montaje.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@montajes.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Montaje")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo montajes #{dasist.personaje.name}/////
-         /////"
-      end
+ montaje.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Montaje")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Montaje")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Montaje #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Montaje")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Montaje #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @montajes.count
+puts "Montaje nuevos #{@nuevos}"
+puts "Montaje @existentes #{@existentes}"
+puts "cantidad nuevos Montaje #{@nuevorol}"
+
 
 # # musica
 musica = Array.new
@@ -514,30 +671,41 @@ csvd.each do |row|
   musica  << row.to_h
  end
 
- @musicas= []
-@musicas = Rol.where(name: "Musica")
- musica.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@musicas.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Musica")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo musicas #{dasist.personaje.name}/////
-         /////"
-      end
+ musica.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Musica")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Musica")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Musica #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Musica")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Musica #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @musicas.count
+puts "Musica nuevos #{@nuevos}"
+puts "Musica @existentes #{@existentes}"
+puts "cantidad nuevos Musica #{@nuevorol}"
+
 
 # # # maquillaje
 maquillaje = Array.new
@@ -547,31 +715,41 @@ csvd.each do |row|
   maquillaje  << row.to_h
  end
 
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
- @maquillajes= []
-@maquillajes = Rol.where(name: "Maquillaje")
- maquillaje.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
-
-   if(@maquillajes.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Maquillaje")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo maquillajes #{dasist.personaje.name}/////
-         /////"
-      end
+ maquillaje.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Maquillaje")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Maquillaje")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Maquillaje #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Maquillaje")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Maquillaje #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @maquillajes.count
+puts "Maquillaje nuevos #{@nuevos}"
+puts "Maquillaje @existentes #{@existentes}"
+puts "cantidad nuevos Maquillaje #{@nuevorol}"
+
 
 # # productora
 productora = Array.new
@@ -581,41 +759,40 @@ csvd.each do |row|
   productora  << row.to_h
  end
 
-@rol= Rol.all
-@casaproduct = []
-@casaproduct = Rol.where(name: "Casa Productora")
-puts @casaproduct.count
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-@count1cp =0
-@existentescp = 0
-@nuevoscp = 0
  productora.each do |data|
   nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile.id)
-  @persona = Personaje.where(name: nombre)
-
-  if @rol.any?{|rol| @persona.include? (rol.personaje)}
-      puts " #{nombre} ya existe ///////
-      //////"
-      @existentescp = @existentescp +1
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Casa Productora")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Casa Productora")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Casa Productora #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
   else
-   puts  "#{nombre} no existe asi que lo agregamos como"
-      pe3 = Personaje.create(name: nombre)
-      da3 = Rol.create(name: "Casa Productora")
-      da3.pelicula = cinechile
-      da3.personaje = pe3
-      da3.save
-       puts " nuevo casa productora #{da3.personaje.name}/////
-       /////"
-       @nuevoscp =@nuevoscp + 1
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Casa Productora")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Casa Productora #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
     end
 end
 
-puts "casa productora nuevos #{@nuevoscp}"
-puts "casa productora @existentes #{@existentescp}"
-puts "cantidad casa productora #{@casaproduct.count}"
-puts "cantidad peliculas #{Pelicula.count}"
+puts "Casa Productora nuevos #{@nuevos}"
+puts "Casa Productora @existentes #{@existentes}"
+puts "cantidad nuevos Casa Productora #{@nuevorol}"
 
 
 # #productorasociado
@@ -626,30 +803,41 @@ csvd.each do |row|
   productorasociado  << row.to_h
  end
 
- @prodcasoci= []
-@prodcasoci = Rol.where(name: "Produccion Asociada")
- productorasociado.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@prodcasoci.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Produccion Asociada")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo prodcasoci #{dasist.personaje.name}/////
-         /////"
-      end
+ productorasociado.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Produccion Asociada")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Produccion Asociada")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Produccion Asociada #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Produccion Asociada")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Produccion Asociada #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @prodcasoci.count
+puts "Produccion Asociada nuevos #{@nuevos}"
+puts "Produccion Asociada @existentes #{@existentes}"
+puts "cantidad nuevos Produccion Asociada #{@nuevorol}"
+
 
 # #productorejecutivo
 productorejecutivo = Array.new
@@ -659,30 +847,41 @@ csvd.each do |row|
   productorejecutivo  << row.to_h
  end
 
- @prodeject= []
-@prodeject = Rol.where(name: "Produccion Ejecutiva")
- productorejecutivo.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+ @existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@prodeject.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Produccion Ejecutiva")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo prodeject #{dasist.personaje.name}/////
-         /////"
-      end
+ productorejecutivo.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Produccion Ejecutiva")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Produccion Ejecutiva")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Produccion Ejecutiva #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Produccion Ejecutiva")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Produccion Ejecutiva #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @prodeject.count
+puts "Produccion Ejecutiva nuevos #{@nuevos}"
+puts "Produccion Ejecutiva @existentes #{@existentes}"
+puts "cantidad nuevos Produccion Ejecutiva #{@nuevorol}"
+
 
 # # # realizacion
 realizacion = Array.new
@@ -692,30 +891,41 @@ csvd.each do |row|
   realizacion  << row.to_h
  end
 
- @realizacions= []
-@realizacions = Rol.where(name: "Produccion")
- realizacion.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@realizacions.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Produccion")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo realizacions #{dasist.personaje.name}/////
-         /////"
-      end
+ realizacion.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Produccion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Produccion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Produccion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Produccion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Produccion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @realizacions.count
+puts "Produccion nuevos #{@nuevos}"
+puts "Produccion @existentes #{@existentes}"
+puts "cantidad nuevos Produccion #{@nuevorol}"
+
 
 # #sonido
 sonido = Array.new
@@ -725,30 +935,40 @@ csvd.each do |row|
   sonido  << row.to_h
  end
 
- @sonidos= []
-@sonidos = Rol.where(name: "Sonido")
- sonido.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@sonidos.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Sonido")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo sonidos #{dasist.personaje.name}/////
-         /////"
-      end
+ sonido.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Sonido")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Sonido")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Sonido #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Sonido")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Sonido #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @sonidos.count
+puts "Sonido nuevos #{@nuevos}"
+puts "Sonido @existentes #{@existentes}"
+puts "cantidad nuevos Sonido #{@nuevorol}"
 
 # # #vestuario
 vestuario = Array.new
@@ -758,30 +978,41 @@ csvd.each do |row|
   vestuario  << row.to_h
  end
 
- @vestuarios= []
-@vestuarios = Rol.where(name: "Vestuario")
- vestuario.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@vestuarios.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Vestuario")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo vestuarios #{dasist.personaje.name}/////
-         /////"
-      end
+ vestuario.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Vestuario")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Vestuario")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Vestuario #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Vestuario")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Vestuario #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @vestuarios.count
+puts "Vestuario nuevos #{@nuevos}"
+puts "Vestuario @existentes #{@existentes}"
+puts "cantidad nuevos Vestuario #{@nuevorol}"
+
 
 # # #vozenoff
   vozenoff = Array.new
@@ -791,30 +1022,40 @@ puts @vestuarios.count
     vozenoff  << row.to_h
    end
 
- @vozenoff= []
-@vozenoff = Rol.where(name: "Voz en Off")
- vozenoff.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@vozenoff.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Voz en Off")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo vozenoff #{dasist.personaje.name}/////
-         /////"
-      end
+ vozenoff.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Voz en Off")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Voz en Off")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Voz en Off #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Voz en Off")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Voz en Off #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @vozenoff.count
+puts "Voz en Off nuevos #{@nuevos}"
+puts "Voz en Off @existentes #{@existentes}"
+puts "cantidad nuevos Voz en Off #{@nuevorol}"
 
 # # #animacion
   animacion = Array.new
@@ -823,31 +1064,41 @@ puts @vozenoff.count
   csvd.each do |row|
     animacion  << row.to_h
    end
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
- @animacion= []
-@animacion = Rol.where(name: "Animacion")
- animacion.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
-
-   if(@animacion.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Animacion")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo animacion #{dasist.personaje.name}/////
-         /////"
-      end
+ animacion.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Animacion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Animacion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Animacion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Animacion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Animacion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @animacion.count
+puts "Animacion nuevos #{@nuevos}"
+puts "Animacion @existentes #{@existentes}"
+puts "cantidad nuevos Animacion #{@nuevorol}"
+
 
 # # #decoracion
   decoracion = Array.new
@@ -857,30 +1108,41 @@ puts @animacion.count
     decoracion  << row.to_h
    end
 
- @decoracion= []
-@decoracion = Rol.where(name: "Decoracion")
- decoracion.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
-   if(@decoracion.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Decoracion")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo decoracion #{dasist.personaje.name}/////
-         /////"
-      end
+ decoracion.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Decoracion")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Decoracion")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Decoracion #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Decoracion")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Decoracion #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @decoracion.count
+puts "Decoracion nuevos #{@nuevos}"
+puts "Decoracion @existentes #{@existentes}"
+puts "cantidad nuevos Decoracion #{@nuevorol}"
+
 
 # # #elenco2
   elenco2 = Array.new
@@ -889,31 +1151,40 @@ puts @decoracion.count
   csvd.each do |row|
     elenco2  << row.to_h
    end
+@existentes = 0
+@nuevos = 0
+@nuevorol =0
 
- @elenco2= []
-@elenco2 = Rol.where(name: "Elenco")
- elenco2.each do |data4|
-  nombre4 = I18n.transliterate(data4[:nombre_personaje]).upcase
-  cinechile4 = Pelicula.find_by(idcinechile: data4[:pelicula_id])
-  @rol = Rol.where(pelicula_id: cinechile4.id)
-  @personasi = Personaje.where(name: nombre4)
-
-   if(@elenco2.any?{|rol| @personasi.include? (rol.personaje)})
-        puts " #{nombre4} ya existe ///////
-        //////"
-    else
-     puts  "no existe asi que lo agregamos como"
-        peasist = Personaje.create(name: nombre4)
-        dasist = Rol.create(name: "Elenco")
-        dasist.pelicula = cinechile4
-        dasist.personaje = peasist
-        dasist.save
-         puts " nuevo elenco2 #{dasist.personaje.name}/////
-         /////"
-      end
+ elenco2.each do |data|
+  nombre = I18n.transliterate(data[:nombre_personaje]).upcase
+  cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
+  @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+  @rol= @roldepeliculas.where(name: "Elenco")
+  @persona = Personaje.find_by(name: nombre)
+  if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts " #{nombre} ya existe "
+        @existentes= @existentes +1
+  elsif @persona
+    da = Rol.create(name: "Elenco")
+    da.pelicula = cinechile
+    da.personaje = @persona
+    da.save
+    puts "agregando ** nuevo rol a Elenco #{da.personaje.name}"
+    @nuevorol = @nuevorol +1
+  else
+    pe3 = Personaje.create(name: nombre)
+    da3 = Rol.create(name: "Elenco")
+    da3.pelicula = cinechile
+    da3.personaje = pe3
+    da3.save
+   puts " nuevo Elenco #{da3.personaje.name}"
+   @nuevos =@nuevos + 1
+    end
 end
 
-puts @elenco2.count
+puts "Elenco nuevos #{@nuevos}"
+puts "Elenco @existentes #{@existentes}"
+puts "cantidad nuevos rol Elenco #{@nuevorol}"
 
 # # # #premios
 #   premios = Array.new
