@@ -1,6 +1,7 @@
 class RolsController < ApplicationController
   def index
      @rols= Rol.all
+     @personajes = Personaje.all
      @directors = Rol.where(name: "Direccion")
      @artes = Rol.where(name: "Arte")
      @asistentdires = Rol.where(name: "Asistente de Direccion")

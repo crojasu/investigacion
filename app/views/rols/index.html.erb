@@ -1,1 +1,27 @@
-index.html.erb
+
+  <table border = "1" bordercolor = "green" bgcolor = "">
+    <tr>
+      <th>Numero</th>
+      <th>Nombre</th>
+      <th>otro</th>
+   </tr>
+      <tr>
+        <% @personajes2 = @personajes.sort_by(&:name) %>
+        <% @personajes2.each_with_index do |per, index| %>
+        <th><%= index %></th>
+        <th><%= per.name %></th>
+        <%  @rol= Rol.where(personaje_id: per.id) %>
+        <th><ul><li> <% @rol.each do |rol| %>
+        <%= rol.name %></li></ul></th>
+        <th><%= rol.pelicula.titulo%></th><% end %>
+        <th><%= link_to "doble", personaje_path(per), class: 'btn btn-warning', method: :delete, remote: true %>
+          <% if per.genero == true %>
+            <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
+            <% end %>
+            <% if per.genero == false %>
+            <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
+            method: :patch , remote: true %>
+            <% end %></th>
+         </tr>
+  <% end %>
+  </table>
