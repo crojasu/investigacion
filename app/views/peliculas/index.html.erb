@@ -1,40 +1,62 @@
-<div class="container">
-<div class="col-sm">
-  <table border = "1" bordercolor = "green" bgcolor = "">
-    <tr>
-      <th>Título</th>
-      <th>Dirección</th>
-      <th>CineChile</th>
-      <th>Imbd</th>
-    </tr>
-    <tr>
+  <div class="container-fluid inner">
+  <table class="tableizer-table" id= "simple">
+  <tr class="tableizer-firstrow">
+    <th>Direccion== M / H</th>
+    <th>Año</th>
+    <th>Título</th>
+    <th>Dirección</th>
+    <th>CineChile</th>
+    <th>Imbd</th>
+    <th>Fondo Adjudicado</th>
+    <th>Otro</th></tr>
       <% @peliculas.each do |peli| %>
       <% @r = peli.imbd %>
       <% @f= JSON.parse @r.gsub('=>', ':')%>
+      <% direccion = Rol.where(pelicula_id: peli.id, name: "Direccion") %>
+       <% @hombre = []%>
+        <% @mujer = []%>
+      <% direccion.each do |dire|%>
+          <% if dire.personaje.genero == true %>
+          <% @mujer << dire %>
+          <% else %>
+          <% @hombre << dire %>
+          <% end%>
+          <% end %>
+   <tr>
+      <td> <%= @mujer.count %> // <%= @hombre.count %></td>
       <td><%=  peli.titulo %></td>
-      <% direccion= Rol.where(pelicula_id: peli.id, name: "Direccion") %>
-      <td>
-        <ul>
-          <% direccion.each do |dire|%>
-          <% @nombre = Personaje.find(dire.personaje_id) %>
-          <li data-dire-id="<%= @nombre.id %>"><%= @nombre.name %>
-          <%= link_to "doble", personaje_path(@nombre), class: 'btn btn-warning', method: :delete, remote: true %>
-          <% if @nombre.genero == true %>
-            <%= link_to 'mujer', deactivate_personaje_path(@nombre), class: 'btn btn-danger', method: :patch , remote: true %>
+      <td><%= peli.agno %></td>
+      <td><ul>
+        <% direccion.each do |dire|%>
+        <li data-dire-id="<%= dire.personaje.id %>"><%= dire.personaje.name %>
+            <%= link_to personaje_path(dire.personaje), method: :delete, remote: true do %>
+            <i class="fa fa-users" aria-hidden="true"></i>
             <% end %>
-            <% if @nombre.genero == false %>
-            <%= link_to 'hombre', activate_personaje_path(@nombre), class: 'btn btn-primary',
-            method: :patch , remote: true %>
-            <% end %>
-             <% end %>
+              <% if dire.personaje.genero == true %>
+              <%= link_to 'mujer', deactivate_personaje_path(dire.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
+              <% elsif dire.personaje.genero == false %>
+              <%= link_to 'hombre', activate_personaje_path(dire.personaje), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+              <% end %>
+           </li>
+           <% end %>
         <ul>
-
-        </td>
+      </td>
       <td><%= peli.idcinechile %></td>
       <td><%= @f["imdbID"]%></td>
-      <td><%= link_to "Ver Ficha Tecnica", pelicula_path(peli), class: 'btn btn-info' %> </td>
+      <% @fondos = Fondo.where(pelicula_id: peli.id) %>
+      <td><ul>
+          <% @fondos.each do |fondo| %>
+              <li><%= fondo.tipo%></li>
+          <% end %>
+      </ul></td>
+      <td><%= link_to pelicula_path(peli) do %>
+          <i class="fa fa-id-card-o" aria-hidden="true">ficha</i>
+        <% end %></td>
+            <% end %>
     </tr>
-    <% end %>
+
   </table>
-</div>
-</div>
+
+  </div>
+
