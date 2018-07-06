@@ -8,8 +8,11 @@
     <th>CineChile</th>
     <th>Imbd</th>
     <th>Fondo Adjudicado</th>
-    <th>Otro</th></tr>
+    <th>Ficha Técnica Completa</th></tr>
       <% @peliculas.each do |peli| %>
+      <% @personas= peli.personajes %>
+      <% totalmujerespeli = @personas.where(genero: true) %>
+      <% totalhombrespeli = @personas.where(genero: false) %>
       <% @r = peli.imbd %>
       <% @f= JSON.parse @r.gsub('=>', ':')%>
       <% direccion = Rol.where(pelicula_id: peli.id, name: "Direccion") %>
@@ -23,7 +26,7 @@
           <% end%>
           <% end %>
    <tr>
-      <td> <%= @mujer.count %> // <%= @hombre.count %></td>
+      <td> <%= @mujer.count %> <%= totalmujerespeli.count %>// <%= @hombre.count %> <%= totalhombrespeli.count %></td>
       <td><%=  peli.titulo %></td>
       <td><%= peli.agno %></td>
       <td><ul>
@@ -42,8 +45,8 @@
            <% end %>
         <ul>
       </td>
-      <td><%= peli.idcinechile %></td>
-      <td><%= @f["imdbID"]%></td>
+      <td><%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{peli.idcinechile}" , target: :_blank %></td>
+      <td><%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %></td>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
       <td><ul>
           <% @fondos.each do |fondo| %>
@@ -51,7 +54,7 @@
           <% end %>
       </ul></td>
       <td><%= link_to pelicula_path(peli) do %>
-          <i class="fa fa-id-card-o" aria-hidden="true">ficha</i>
+          <i class="fa fa-heart" aria-hidden="true"></i>Ficha Técnica Completa</i>
         <% end %></td>
             <% end %>
     </tr>

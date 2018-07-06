@@ -31,6 +31,9 @@ class PeliculasController < ApplicationController
      @agno13= Pelicula.where(agno: 2013)
      @agno14= Pelicula.where(agno: 2014)
      @agno15= Pelicula.where(agno: 2014)
+     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje"
+     "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido"
+     "Direccion", "Voz en off", "Elenco", "Casa Productora"]
   end
 
   def show
