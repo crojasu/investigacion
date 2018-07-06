@@ -1,9 +1,4 @@
-
-<% @rols.each do |rol| %>
-<%= link_to "#{rol.name}" , rols_path , remote: true %>
-<% end %>
-
-  <div class="container-fluid inner">
+ <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <th>Numero</th>
@@ -16,7 +11,7 @@
         <td><%= index+1 %></td>
         <td><%= per.name %></td>
          <td> <ul>
-          <%  @rol= Rol.where(personaje_id: per.id) %>
+          <%  @rol= Rol.where(personaje_id: per.id, name:"@nombre") %>
            <% @rol.each do |rol| %>
         <li><%= rol.name %> // <%= rol.pelicula.titulo%></li>
           </ul><% end %>

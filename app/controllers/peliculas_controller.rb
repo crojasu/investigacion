@@ -20,6 +20,17 @@ class PeliculasController < ApplicationController
      @vozenoffs = Rol.where(name: "Voz en off")
      @elenco = Rol.where(name: "Elenco")
      @casaprod = Rol.where(name: "Casa Productora")
+     @agno5 = Pelicula.where(agno: 2005)
+     @agno6 = Pelicula.where(agno: 2006)
+     @agno7 = Pelicula.where(agno: 2007)
+     @agno8 = Pelicula.where(agno: 2008)
+     @agno9 = Pelicula.where(agno: 2009)
+     @agno10 = Pelicula.where(agno: 2010)
+     @agno11 = Pelicula.where(agno: 2011)
+     @agno12 = Pelicula.where(agno: 2012)
+     @agno13= Pelicula.where(agno: 2013)
+     @agno14= Pelicula.where(agno: 2014)
+     @agno15= Pelicula.where(agno: 2014)
   end
 
   def show
