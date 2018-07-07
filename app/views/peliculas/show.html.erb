@@ -36,180 +36,70 @@
         </tr>
       <tr>
         <th>Monto Adjudicado</th>
-        <td><%=  %></td>
+        <% @fondo.each do |fondo| %>
+        <td><%= fondo.monto %></td>
+        <% end %>
         </tr>
       <tr>
         <th>Institución</th>
-        <td><%=  %></td>
+        <% @fondo.each do |fondo| %>
+        <td><%= fondo.tipo %></td>
+        <% end %>
         </tr>
       <tr>
         <th>Cantidad de Mujeres</th>
-        <td><%= @mujeres.count %></td>
+        <td><%= @mujer.count %></td>
         </tr>
       <tr>
         <th>Cantidad de Hombres</th>
-         <td><%= @hombres.count %></td>
+         <td><%= @hombre.count %></td>
          </tr>
       <tr>
+        <% if @mujer.count != nil  %>
+           <% @total = @mujer.count + @hombre.count%>
+          <%  @porcentaje = (@mujer.count * 100)/@total %>
         <th>Total</th>
         <td><%= @total %></td>
         </tr>
       <tr>
         <th>Porcentaje de Participación </th>
-        <td><%= @porcentaje_mujeres %></td>
+        <td><%= @porcentaje %></td>
         </tr>
+        <% end %>
       <tr>
       </table>
 <br>
-        <table border = "1" bordercolor = "green" bgcolor = "">
-        <tr>
-          <th>Ficha Técnica</th>
-        </tr>
-        <tr>
-          <th>Cargo</th>
-          <th>Nombre</th>
-        </tr>
-        <tr>
-          <th>Dirección Arte</th>
-           <% @artes.each do |dir|%>
-           <% pe= Personaje.find(dir.personaje_id)  %>
-             <td><%= pe.name %></td>
-              <td id= "reviews" >
-                <% if pe.genero == true %>
-                  <%= link_to 'cambia a Hombre', deactivate_personaje_path(pe), class: 'btn btn-primary',
-                  method: :patch , remote: true %>
-                  <% end %>
-                  <% if pe.genero == false %>
-                  <%= link_to 'Mujer', activate_personaje_path(pe), class: 'btn btn-danger',
-                  method: :patch , remote: true %>
-                  <% end %>
-              </td>
-                  <% end %>
-            </tr>
-             <tr>
-          <th>Asistente de Dirección</th>
-          <% @asistentdires.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
+  <div class="container-fluid inner">
+  <table class="tableizer-table" id= "simple">
+  <tr class="tableizer-firstrow">
+<tr>
+  <th>Número </th>
+  <th>Título de película</th>
+  <th>Nombre</th>
+</tr>
+<tr>
+    <% @rols.each_with_index do |rol, index| %>
+    <%= rol %>
+  <th><%= index +1 %></th>
+  <th><%= rol.pelicula.titulo %></th>
+  <th><ul>
+        <li data-rol-id="<%= rol.personaje.id %>"><%= rol.personaje.name %>
+            <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>
+            <i class="fa fa-users" aria-hidden="true"></i>
             <% end %>
-            </tr>
-        <tr>
-          <th>Dirección de Fotografía</th>
-          <% @direfotos.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Producción</th>
-          <% @productors.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Empresa Productora</th>
-          <% @casaprod.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Producción Ejecutiva</th>
-          <% @productorejecutivos.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Producción Asociada</th>
-          <% @productorasociados.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Jefatura de Producción</th>
-          <% @jefedeproduccion.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Guión</th>
-          <% @guiones.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Montaje</th>
-           <% @montajistas.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Efectos Especiales</th>
-          <% @efectoss.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Voz en off</th>
-          <% @vozenoffs.each do |dir|%>
-           <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Vestuario</th>
-          <% @vestuarios.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Sonido</th>
-          <% @sonidos.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Realización</th>
-          <% @realizacions.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Maquillaje</th>
-          <% @maquillajes.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-        <tr>
-          <th>Música</th>
-          <% @musicas.each do |dir|%>
-            <td><%= Personaje.find(dir.personaje_id).name %></td>
-            <% end %>
-            </tr>
-      </table>
-<br>
-     <div class="col-sm">
-        <table border = "1" bordercolor = "green" bgcolor = "">
-        <tr>
-          <th>Ficha Artística</th>
+              <% if rol.personaje.genero == true %>
+              <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
+              <% elsif rol.personaje.genero == false %>
+              <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+              <% end %>
+           </li>
 
-        </tr>
-        <tr>
-          <th>Nombre</th>
-          </tr>
-        <tr>
-          <% @elenco.each do |dir|%>
-          </tr>
-            <td><% pe= Personaje.find(dir.personaje_id) %></td>
-            <td><%= pe.name %></td>
-              <td id= "reviews" >
-                <% if pe.genero == true %>
-                  <%= link_to 'cambia a Hombre', deactivate_personaje_path(pe), class: 'btn btn-primary',
-                  method: :patch , remote: true %>
-                  <% end %>
-                  <% if pe.genero == false %>
-                  <%= link_to 'Mujer', activate_personaje_path(pe), class: 'btn btn-danger',
-                  method: :patch , remote: true %>
-                  <% end %>
-              </td>
-            <% end %>
-        </table>
+        <ul>
+    </th>
+</tr>
+ <% end %>
+ </table>
     </div>
     <div class="">
     <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>

@@ -46,7 +46,14 @@
         <ul>
       </td>
       <td><%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{peli.idcinechile}" , target: :_blank %></td>
-      <td><%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %></td>
+      <td>
+          <%= form_for(peli) do |f| %>
+            <%= f.text_field :imbd , placeholder: "Nuevo imdbID"  %>
+            <%= f.submit %>
+          <% end %>
+      <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
+      </td>
+      <% @fondos = Fondo.where(pelicula_id: peli.id) %>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
       <td><ul>
           <% @fondos.each do |fondo| %>

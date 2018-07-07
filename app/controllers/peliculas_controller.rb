@@ -1,76 +1,38 @@
+require 'csv'
+require 'json'
+require 'open-uri'
+require 'i18n'
+
 class PeliculasController < ApplicationController
+  before_action :generales
+
   def index
-     @peliculas = Pelicula.all
-     @directors = Rol.where(name: "Direccion")
-     @artes = Rol.where(name: "Arte")
-     @asistentdires = Rol.where(name: "Asistente de Direccion")
-     @direfotos = Rol.where(name: "Direccion de Fotografia")
-     @efectoss = Rol.where(name: "Efectos")
-     @guiones = Rol.where(name: "Guion")
-     @jefedeproduccion = Rol.where(name: "Jefatura de Produccion")
-     @maquillajes = Rol.where(name: "Maquillaje")
-     @montajistas = Rol.where(name: "Montaje")
-     @musicas = Rol.where(name: "Musica")
-     @productors = Rol.where(name: "Produccion")
-     @productorasociados = Rol.where(name: "Produccion Asociada")
-     @productorejecutivos = Rol.where(name: "Produccion Ejecutiva")
-     @realizacions = Rol.where(name: "Realizacion")
-     @sonidos = Rol.where(name: "Sonido")
-     @vestuarios = Rol.where(name: "Direccion")
-     @vozenoffs = Rol.where(name: "Voz en off")
-     @elenco = Rol.where(name: "Elenco")
-     @casaprod = Rol.where(name: "Casa Productora")
-     @agno5 = Pelicula.where(agno: 2005)
-     @agno6 = Pelicula.where(agno: 2006)
-     @agno7 = Pelicula.where(agno: 2007)
-     @agno8 = Pelicula.where(agno: 2008)
-     @agno9 = Pelicula.where(agno: 2009)
-     @agno10 = Pelicula.where(agno: 2010)
-     @agno11 = Pelicula.where(agno: 2011)
-     @agno12 = Pelicula.where(agno: 2012)
-     @agno13= Pelicula.where(agno: 2013)
-     @agno14= Pelicula.where(agno: 2014)
-     @agno15= Pelicula.where(agno: 2014)
-     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje"
-     "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido"
-     "Direccion", "Voz en off", "Elenco", "Casa Productora"]
+    @peliculas = Pelicula.all
+     @rols = Rol.all
+     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje","Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido", "Voz en off", "Elenco", "Casa Productora"]
+    @todorol.each do |rol|
+      @rol = Rol.where(name: rol)
+    end
   end
 
   def show
     @personas =[]
+    @mujer=[]
+    @hombre =[]
     @pelicula = Pelicula.find(params[:id])
-    @rols = Rol.where(pelicula_id: params[:id])
+    @fondo = Fondo.where(pelicula_id: @pelicula.id)
+    @fondos_corfo = Fondo.where(pelicula_id: @pelicula.id, tipo: "corfo")
+    @fondos_fondart = Fondo.where(pelicula_id: @pelicula.id, tipo: "fondart")
+    @rols = Rol.where(pelicula_id: @pelicula.id)
+    @directors = Rol.where(pelicula_id: @pelicula.id, name: "Direccion")
     @rols.each do |rol|
-      @personas << Personaje.where(id: rol.personaje_id)
+      if rol.personaje.genero == true
+      @mujer << rol
+      elsif rol.personaje.genero == false
+      @hombre << rol
+      end
     end
-    @personas.count
-    @mujeres = @personas
-    @hombres = @personas
-    @total = @personas.count
-    @porcentaje_mujeres= (100* (@mujeres.count))/@total
-
-     @directors = @rols.where(name: "Direccion")
-     @artes = @rols.where(name: "Arte")
-     @asistentdires = @rols.where(name: "Asistente de Direccion")
-     @direfotos = @rols.where(name: "Direccion de Fotografia")
-     @efectoss = @rols.where(name: "Efectos")
-     @guiones = @rols.where(name: "Guion")
-     @jefedeproduccion = @rols.where(name: "Jefatura de Produccion")
-     @maquillajes = @rols.where(name: "Maquillaje")
-     @montajistas = @rols.where(name: "Montaje")
-     @musicas = @rols.where(name: "Musica")
-     @productors = @rols.where(name: "Produccion")
-     @productorasociados = @rols.where(name: "Produccion Asociada")
-     @productorejecutivos = @rols.where(name: "Produccion Ejecutiva")
-     @realizacions = @rols.where(name: "Realizacion")
-     @sonidos = @rols.where(name: "Sonido")
-     @vestuarios = @rols.where(name: "Direccion")
-     @vozenoffs = @rols.where(name: "Voz en off")
-     @elenco = @rols.where(name: "Elenco")
-     @casaprod = @rols.where(name: "Casa Productora")
-
-
-end
+  end
 
   def new
     @pelicula = Pelicula.new
@@ -95,17 +57,113 @@ end
     @pelicula = Pelicula.find(params[:id])
   end
 
-  def update
-    @pelicula = Pelicula.find(params[:id])
-    @pelicula.update(pelicula_params)
-    redirect_to pelicula_path(@pelicula)
+  def matchs(rol)
+    t = Pelicula.find(params[:id])
+    @roldepeliculas = Rol.where(pelicula_id: t.id)
+    value2 = t.imbd
+    value = JSON.parse value2.gsub('=>', ':')
+    if value[rol] != "N/A" && value[rol] != nil
+        value[rol].split(",").each do |dir|
+        dire = I18n.transliterate(dir).upcase
+        @persona = Personaje.find_by(name: dire)
+        if rol == "Director"
+          @uni = "Direccion"
+          elsif rol == "Writer"
+          @uni = "Guion"
+          elsif rol == "Actors"
+          @uni = "Elenco"
+          elsif rol == "Production"
+          @uni = "Casa Productora"
+        end
+        @rol= @roldepeliculas.where(name: @uni)
+          if @persona
+            @borrar = @rol.select {|rol| rol.personaje_id = @persona.id}
+              @borrar.each do |b|
+                b.destroy
+              end
+            end
+          end
+        end
   end
 
-  def destroy
-    raise
+  def update
+    t = Pelicula.find(params[:id])
+    @r = t.imbd
+    @f= JSON.parse @r.gsub('=>', ':')
+    imbd = @f["imdbID"]
+    url = "http://www.omdbapi.com/?i=#{imbd}&apikey=e91b7024"
+    user_serialized = open(url).read
+    value = JSON.parse(user_serialized)
+#Borramos los que existen
+    t.imbd = value
+    t.save
+    @roldepeliculas = Rol.where(pelicula_id: t.id)
+    if value["Response"]== "True"
+    self.matchs("Director")
+    self.matchs("Writer")
+    self.matchs("Actors")
+    self.matchs("Production")
+    end
+#agregamos los nuevos
+    imbd2 = params[:pelicula][:imbd]
+    url2 = "http://www.omdbapi.com/?i=#{imbd2}&apikey=e91b7024"
+    user_serialized2 = open(url2).read
+    value = JSON.parse(user_serialized2)
+    t.imbd = value
+    t.save
+  @roldepeliculas = Rol.where(pelicula_id: t.id)
+    if value["Response"]== "True"
+    self.add("Director")
+    self.add("Writer")
+    self.add("Actors")
+    self.add("Production")
+    end
+        redirect_to peliculas_path
   end
+
+  def add(rol)
+    t = Pelicula.find(params[:id])
+    @roldepeliculas = Rol.where(pelicula_id: t.id)
+    value2 = t.imbd
+    value = JSON.parse value2.gsub('=>', ':')
+      if rol == "Director"
+          @uni = "Direccion"
+          elsif rol == "Writer"
+          @uni = "Guion"
+          elsif rol == "Actors"
+          @uni = "Elenco"
+          elsif rol == "Production"
+          @uni = "Casa Productora"
+        end
+    if value[rol] != "N/A"
+      value[rol].split(",").each do |dir|
+      dire = I18n.transliterate(dir).upcase
+      @persona = Personaje.find_by(name: dire)
+      @rol= @roldepeliculas.where(name: @uni)
+        if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+          elsif @persona
+            da = Rol.create(name: @uni)
+            da.pelicula = t
+            da.personaje = @persona
+            da.save
+          else
+          pe = Personaje.create(name: dire)
+          da = Rol.create(name: @uni)
+          da.pelicula = t
+          da.personaje = pe
+          da.save
+        end
+        end
+      end
+    end
 
   private
+
+  def generales
+     @peliculas = Pelicula.all
+     @rols = Rol.all
+     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje","Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido", "Voz en off", "Elenco", "Casa Productora"]
+  end
 
   def pelicula_params
     params.require(:pelicula).permit(:agno, :titulo, :responsable, :monto, :institucion, :imbd, :idcinechile, :contacto)

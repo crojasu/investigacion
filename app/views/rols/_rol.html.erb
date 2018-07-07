@@ -1,17 +1,11 @@
   <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
+    <% @rols = methrols(rol) %>
+    <% @rols.each do |rol| %>
 <tr>
-  <th>Número </th>
-  <th>Título de película</th>
   <th>Nombre</th>
-</tr>
-<tr>
-    <% @rols.each_with_index do |rol, index| %>
-    <%= rol %>
-  <th><%= index +1 %></th>
-  <th><%= rol.pelicula.titulo %></th>
-  <th><ul>
+  <th><td><ul>
         <li data-rol-id="<%= rol.personaje.id %>"><%= rol.personaje.name %>
             <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>
             <i class="fa fa-users" aria-hidden="true"></i>
@@ -23,9 +17,8 @@
               method: :patch , remote: true %>
               <% end %>
            </li>
-
+           <% end %>
         <ul>
-    </th>
+        </th>
 </tr>
- <% end %>
- </table>
+

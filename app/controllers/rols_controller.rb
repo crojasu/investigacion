@@ -1,35 +1,28 @@
 class RolsController < ApplicationController
+ helper_method :methrols
+ before_action :generales
   def index
-     @rols= Rol.all
-     @personajes = Personaje.all
-     @directors = Rol.where(name: "Direccion")
-     @artes = Rol.where(name: "Arte")
-     @asistentdires = Rol.where(name: "Asistente de Direccion")
-     @direfotos = Rol.where(name: "Direccion de Fotografia")
-     @efectoss = Rol.where(name: "Efectos")
-     @guiones = Rol.where(name: "Guion")
-     @jefedeproduccion = Rol.where(name: "Jefatura de Produccion")
-     @maquillajes = Rol.where(name: "Maquillaje")
-     @montajistas = Rol.where(name: "Montaje")
-     @musicas = Rol.where(name: "Musica")
-     @productors = Rol.where(name: "Produccion")
-     @productorasociados = Rol.where(name: "Produccion Asociada")
-     @productorejecutivos = Rol.where(name: "Produccion Ejecutiva")
-     @realizacions = Rol.where(name: "Realizacion")
-     @sonidos = Rol.where(name: "Sonido")
-     @vestuarios = Rol.where(name: "Direccion")
-     @vozenoffs = Rol.where(name: "Voz en off")
-     @elenco = Rol.where(name: "Elenco")
-     @casaprod = Rol.where(name: "Casa Productora")
+
   end
 
   def show
-    @rol = Rol.find(params[:id])
+   @rols = Rol.where(name: rol)
+  end
+
+ def methrols(rol)
+   @rol = Rol.where(name: rol)
+   return @rol
   end
 
   private
 
+  def generales
+     @peliculas = Pelicula.all
+     @rols = Rol.all
+     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido","Voz en off", "Elenco", "Casa Productora"]
+  end
+
   def allowed_params
-    params.require(:rol).permit(:name, :personaje_id, :pelicula_id)
+    params.require(:rol).permit(:name)
   end
 end

@@ -4,8 +4,8 @@ class PagesController < ApplicationController
   helper_method :hombre
 
   def home
-  @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido", "Direccion", "Voz en off", "Elenco", "Casa Productora"]
-    #  @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
+  @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en off", "Elenco", "Casa Productora"]
+  @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   end
 
  def mujer(ano, rol)
@@ -34,5 +34,17 @@ class PagesController < ApplicationController
     end
     end
     return @hombre.count
+  end
+
+  def graficos(ano)
+    #m y h por rol
+    @todorol.each do |rol, ano|
+      rol
+      while i < 16 do
+        mujer(ano, rol)
+        hombre(ano, rol)
+        i= i+1
+      end
+    end
   end
 end
