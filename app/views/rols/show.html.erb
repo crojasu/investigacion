@@ -4,13 +4,15 @@
 <tr>
   <th>Número </th>
   <th>Título de película</th>
+  <th>Cargo</th>
   <th>Nombre</th>
 </tr>
 <tr>
     <% @rols.each_with_index do |rol, index| %>
-    <%= rol %>
+    <% rol %>
   <th><%= index +1 %></th>
   <th><%= rol.pelicula.titulo %></th>
+  <th><%= rol.name %></th>
   <th><ul>
         <li data-rol-id="<%= rol.personaje.id %>"><%= rol.personaje.name %>
             <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>

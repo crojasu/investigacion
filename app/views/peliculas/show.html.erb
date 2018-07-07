@@ -65,6 +65,18 @@
         <th>Porcentaje de Participación </th>
         <td><%= @porcentaje %></td>
         </tr>
+      <tr>
+         <tr>
+        <th>Cantidad de Semanas </th>
+        <td><%= @pelicula.salas %></td>
+        </tr>
+        <tr>
+        <th>Cantidad de Copias </th>
+        <td><%= @pelicula.copias %></td>
+        </tr>
+        <th> Publico </th>
+        <td><%= @pelicula.publico %></td>
+        </tr>
         <% end %>
       <tr>
       </table>
@@ -82,6 +94,7 @@
     <%= rol %>
   <th><%= index +1 %></th>
   <th><%= rol.pelicula.titulo %></th>
+  <th><%= rol.name%></th>
   <th><ul>
         <li data-rol-id="<%= rol.personaje.id %>"><%= rol.personaje.name %>
             <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>

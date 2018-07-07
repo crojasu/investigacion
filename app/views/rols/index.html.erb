@@ -4,6 +4,11 @@
     <% @todorol.each do |rol| %>
      <th><%= rol %></th>
      <td><%= link_to "#{rol}", rol_path(rol) %></td>
+     <th><%= form_tag import_rols_path, multipart: true do %>
+       <%= file_field_tag :file %>
+       <%= submit_tag "#{rol}" %>
+       <% end %>
+     </th>
          </tr>
          <% end %>
   </table>

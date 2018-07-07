@@ -1,17 +1,23 @@
-class RolsController < ApplicationController
- helper_method :methrols
- before_action :generales
-  def index
+require 'csv'
+require 'json'
+require 'open-uri'
+require 'i18n'
 
+class RolsController < ApplicationController
+ helper_method :import
+ before_action :generales
+
+  def index
+    @rols= Rol.all
   end
 
   def show
-   @rols = Rol.where(name: rol)
+   @rols = Rol.where(name: params[:id])
   end
 
- def methrols(rol)
-   @rol = Rol.where(name: rol)
-   return @rol
+  def import
+   Rol.import(params[:file])
+   redirect_to rols_path , notice: "importados"
   end
 
   private

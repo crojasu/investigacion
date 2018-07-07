@@ -58,6 +58,7 @@
       <td><ul>
           <% @fondos.each do |fondo| %>
               <li><%= fondo.tipo%></li>
+              <li><%= fondo.monto%></li>
           <% end %>
       </ul></td>
       <td><%= link_to pelicula_path(peli) do %>

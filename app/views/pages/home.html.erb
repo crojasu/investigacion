@@ -2,7 +2,7 @@
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <% @todorol.each do |rol| %>
-  <th><%= rol %></th>
+  <th><%= link_to rol , rol_path(rol) %></th>
     <% i= 5 %>
     <%  while i < 16 %>
     <% ano= 2000 +i %>

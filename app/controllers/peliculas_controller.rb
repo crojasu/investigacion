@@ -10,8 +10,8 @@ class PeliculasController < ApplicationController
     @peliculas = Pelicula.all
      @rols = Rol.all
      @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje","Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido", "Voz en off", "Elenco", "Casa Productora"]
-    @todorol.each do |rol|
-      @rol = Rol.where(name: rol)
+      @todorol.each do |rol|
+      rol = Rol.where(name: rol)
     end
   end
 
@@ -75,16 +75,16 @@ class PeliculasController < ApplicationController
           elsif rol == "Production"
           @uni = "Casa Productora"
         end
-        @rol= @roldepeliculas.where(name: @uni)
+        @rol= @roldepeliculas.where(name: @uni, pelicula_id: t.id)
           if @persona
             @borrar = @rol.select {|rol| rol.personaje_id = @persona.id}
               @borrar.each do |b|
                 b.destroy
               end
-            end
           end
         end
-  end
+      end
+    end
 
   def update
     t = Pelicula.find(params[:id])
@@ -111,7 +111,6 @@ class PeliculasController < ApplicationController
     value = JSON.parse(user_serialized2)
     t.imbd = value
     t.save
-  @roldepeliculas = Rol.where(pelicula_id: t.id)
     if value["Response"]== "True"
     self.add("Director")
     self.add("Writer")
@@ -139,8 +138,9 @@ class PeliculasController < ApplicationController
       value[rol].split(",").each do |dir|
       dire = I18n.transliterate(dir).upcase
       @persona = Personaje.find_by(name: dire)
-      @rol= @roldepeliculas.where(name: @uni)
+      @rol= @roldepeliculas.where(name: @uni, pelicula_id: t.id)
         if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+          puts "hoola"
           elsif @persona
             da = Rol.create(name: @uni)
             da.pelicula = t
@@ -156,6 +156,44 @@ class PeliculasController < ApplicationController
         end
       end
     end
+
+  def import(peliculas)
+    sinficha =[]
+    csv_text = File.read(peliculas)
+    csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+    csv.each do |row|
+      tit = I18n.transliterate(row["titulo"]).upcase
+      if Pelicula.find_by(idcinechile: row["idcinechile"])
+        peli = Pelicula.find_by(idcinechile: row["idcinechile"])
+        fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+        fond.pelicula_id = peli.id
+        fond.save
+      else
+        t = Pelicula.create(idcinechile: row["idcinechile"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
+        fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+        fond.pelicula_id = t.id
+        t.save
+        fond.save
+      # #matching database from imdb
+        imbd  = I18n.transliterate(t.titulo).split.join('+')
+        url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
+        user_serialized = open(url).read
+        value = JSON.parse(user_serialized)
+        t.imbd = value
+        t.save
+        @roldepeliculas = Rol.where(pelicula_id: t.id)
+          if value["Response"]== "True"
+          self.add("Director")
+          self.add("Writer")
+          self.add("Actors")
+          self.add("Production")
+          else
+            sinficha << ("#{t.titulo}")
+          end
+        end
+      end
+  end
 
   private
 
