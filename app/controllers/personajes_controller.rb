@@ -12,17 +12,25 @@ class PersonajesController < ApplicationController
 
   def deactivate
    @r = Personaje.find(params[:id])
-   @r.genero = false
+   @r.genero = "Hombre"
    @r.save
    redirect_to personajes_path
   end
 
   def activate
   @r = Personaje.find(params[:id])
-   @r.genero = true
+   @r.genero = "Mujer"
    @r.save
    redirect_to personajes_path
   end
+
+def empresa
+  @r = Personaje.find(params[:id])
+   @r.genero = "Empresa"
+   @r.save
+   redirect_to personajes_path
+  end
+
 
   def destroy
     @nombre = Personaje.find(params[:id])

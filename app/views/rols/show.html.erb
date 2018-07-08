@@ -18,11 +18,19 @@
             <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>
             <i class="fa fa-users" aria-hidden="true"></i>
             <% end %>
-              <% if rol.personaje.genero == true %>
+        <% if rol.personaje.genero == "Mujer" %>
               <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
-              <% elsif rol.personaje.genero == false %>
+               <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+              <% elsif rol.personaje.genero == "Hombre" %>
               <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
               method: :patch , remote: true %>
+               <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-warning',
+              method: :patch , remote: true %>
+               <% elsif rol.personaje.genero == "Empresa" %>
+                <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+               <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
               <% end %>
            </li>
 

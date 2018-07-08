@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   helper_method :hombre
 
   def home
-  @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en off", "Elenco", "Casa Productora"]
+  @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
   @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   end
 
@@ -14,7 +14,7 @@ class PagesController < ApplicationController
     @peliculas.each do |peli|
     @rols = Rol.where(pelicula_id: peli.id, name:rol)
       @rols.each do |rol|
-    if rol.personaje.genero == true
+    if rol.personaje.genero == "Mujer"
     @mujer << rol
     end
     end
@@ -28,7 +28,7 @@ class PagesController < ApplicationController
     @peliculas.each do |peli|
     @rols = Rol.where(pelicula_id: peli.id, name: rol)
       @rols.each do |rol|
-    if rol.personaje.genero == false
+    if rol.personaje.genero == "Hombre"
     @hombre << rol
       end
     end
@@ -36,15 +36,8 @@ class PagesController < ApplicationController
     return @hombre.count
   end
 
-  def graficos(ano)
-    #m y h por rol
-    @todorol.each do |rol, ano|
-      rol
-      while i < 16 do
-        mujer(ano, rol)
-        hombre(ano, rol)
-        i= i+1
-      end
-    end
+  def graficos
+  @rols= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en Off", "Elenco", "Casa Productora", "Animacion", "Decoracion", "Vestuario"]
+  @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   end
 end

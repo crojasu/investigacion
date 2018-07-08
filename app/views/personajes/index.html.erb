@@ -22,12 +22,20 @@
           </ul><% end %>
          </td>
         <td><%= link_to "doble", personaje_path(per), class: 'btn btn-warning', method: :delete, remote: true %>
-          <% if per.genero == true %>
-            <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
-            <% elsif per.genero == false %>
-            <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
-            method: :patch , remote: true %>
-            <% end %>
+      <% if per.genero == "Mujer" %>
+              <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
+               <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+              <% elsif per.genero == "Hombre" %>
+              <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+               <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-warning',
+              method: :patch , remote: true %>
+               <% elsif per.genero == "Empresa" %>
+                <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+               <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
+              <% end %>
             </td>
          </tr>
          <% end %>

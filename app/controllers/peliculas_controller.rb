@@ -4,12 +4,10 @@ require 'open-uri'
 require 'i18n'
 
 class PeliculasController < ApplicationController
-  before_action :generales
-
   def index
     @peliculas = Pelicula.all
      @rols = Rol.all
-     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje","Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido", "Voz en off", "Elenco", "Casa Productora"]
+  @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en Off", "Elenco", "Casa Productora", "Animacion", "Decoracion", "Vestuario"]
       @todorol.each do |rol|
       rol = Rol.where(name: rol)
     end
@@ -26,9 +24,9 @@ class PeliculasController < ApplicationController
     @rols = Rol.where(pelicula_id: @pelicula.id)
     @directors = Rol.where(pelicula_id: @pelicula.id, name: "Direccion")
     @rols.each do |rol|
-      if rol.personaje.genero == true
+      if rol.personaje.genero == "Mujer"
       @mujer << rol
-      elsif rol.personaje.genero == false
+      elsif rol.personaje.genero == "Hombre"
       @hombre << rol
       end
     end
@@ -196,12 +194,6 @@ class PeliculasController < ApplicationController
   end
 
   private
-
-  def generales
-     @peliculas = Pelicula.all
-     @rols = Rol.all
-     @todorol= [ "Direccion", "Arte", "Asistente de Direccion", "Direccion de Fotografia", "Efectos", "Guion", "Jefatura de Produccion", "Maquillaje","Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Realizacion", "Sonido", "Voz en off", "Elenco", "Casa Productora"]
-  end
 
   def pelicula_params
     params.require(:pelicula).permit(:agno, :titulo, :responsable, :monto, :institucion, :imbd, :idcinechile, :contacto)

@@ -592,13 +592,13 @@ csvd.each do |row|
   nombre = I18n.transliterate(data[:nombre_personaje]).upcase
   cinechile = Pelicula.find_by(idcinechile: data[:pelicula_id])
   @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
-  @rol= @roldepeliculas.where(name: "Jefe de Produccion")
+  @rol= @roldepeliculas.where(name: "Jefatura de Produccion")
   @persona = Personaje.find_by(name: nombre)
   if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
         puts " #{nombre} ya existe "
         @existentes= @existentes +1
   elsif @persona
-    da = Rol.create(name: "Jefe de Produccion")
+    da = Rol.create(name: "Jefatura de Produccion")
     da.pelicula = cinechile
     da.personaje = @persona
     da.save
@@ -606,7 +606,7 @@ csvd.each do |row|
     @nuevorol = @nuevorol +1
   else
     pe3 = Personaje.create(name: nombre)
-    da3 = Rol.create(name: "Jefe de Produccion")
+    da3 = Rol.create(name: "Jefatura de Produccion")
     da3.pelicula = cinechile
     da3.personaje = pe3
     da3.save

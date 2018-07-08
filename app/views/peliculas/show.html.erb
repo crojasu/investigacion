@@ -5,13 +5,13 @@
      <%= link_to "<< #{@pelicula.prev.titulo}", @pelicula.prev %>
      <% end %>
     </div>
-    <div class="col-sm">
-      <table border = "1" bordercolor = "green" bgcolor = "">
-        <tr>
+  <div class="container-fluid inner">
+  <table class="tableizer-table" id= "simple">
+  <tr class="tableizer-firstrow">
           <th>Título</th>
           <th>Dirección</th>
           <th>Observar Imdb</th>
-          <th>Otra Observacion</th>
+          <th>Observar Cinechile</th>
         </tr>
         <tr>
           <td><%= @pelicula.titulo %></td>
@@ -22,10 +22,29 @@
             </li></ul>
             <% end %>
             </td>
+            <td>
+            <%= form_for(@pelicula) do |f| %>
+            <%= f.text_field :idcinechile , :placeholder => "Nuevo Cinechile"  %>
+            <%= f.submit %>
+          <% end %>
+      <%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{@pelicula.idcinechile}" , target: :_blank %>
+        </td>
+        <td>
+            <%= form_for(@pelicula) do |f| %>
+            <%= f.text_field :imbd , :placeholder => "Nuevo imbd"  %>
+            <%= f.submit %>
+          <% end %>
+          <% @f= JSON.parse @pelicula.imbd.gsub('=>', ':') %>
+      <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
+        </td>
+        <td></td>
         </tr>
-      </table>
 
-      <table border = "1" bordercolor = "green" bgcolor = "">
+
+      </table>
+  <div class="container-fluid inner">
+  <table class="tableizer-table" id= "simple">
+  <tr class="tableizer-firstrowr ">
       <tr>
         <th>Año</th>
         <td><%= @pelicula.agno %></td>
@@ -34,17 +53,14 @@
         <th>Responsable de Proyecto</th>
         <td><%= @pelicula.responsable %></td>
         </tr>
-      <tr>
-        <th>Monto Adjudicado</th>
-        <% @fondo.each do |fondo| %>
-        <td><%= fondo.monto %></td>
-        <% end %>
-        </tr>
-      <tr>
-        <th>Institución</th>
-        <% @fondo.each do |fondo| %>
-        <td><%= fondo.tipo %></td>
-        <% end %>
+        <tr>
+        <th>Institución // Monto Adjudicado</th>
+
+        <td><ul> <% @fondo.each do |fondo| %><li>
+           <%= fondo.tipo %> // <%= fondo.monto %>
+        </li></ul>
+                <% end %>
+        </td>
         </tr>
       <tr>
         <th>Cantidad de Mujeres</th>
@@ -83,39 +99,59 @@
 <br>
   <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
-  <tr class="tableizer-firstrow">
+  <tr class="tableizer-firstrowr ">
 <tr>
   <th>Número </th>
   <th>Título de película</th>
+  <th>Rol</th>
+  <th>ID Personaje</th>
   <th>Nombre</th>
+  <th>Roles de Personaje</th>
 </tr>
 <tr>
-    <% @rols.each_with_index do |rol, index| %>
-    <%= rol %>
+  <% @rol2 = @rols.sort_by(&:name) %>
+    <% @rol2.each_with_index do |rol, index| %>
+    <% rol %>
   <th><%= index +1 %></th>
   <th><%= rol.pelicula.titulo %></th>
   <th><%= rol.name%></th>
+  <th><%= rol.personaje.id %></th>
   <th><ul>
         <li data-rol-id="<%= rol.personaje.id %>"><%= rol.personaje.name %>
             <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>
             <i class="fa fa-users" aria-hidden="true"></i>
             <% end %>
-              <% if rol.personaje.genero == true %>
+              <% if rol.personaje.genero == "Mujer" %>
               <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
-              <% elsif rol.personaje.genero == false %>
+               <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+              <% elsif rol.personaje.genero == "Hombre" %>
               <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
               method: :patch , remote: true %>
+               <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-warning',
+              method: :patch , remote: true %>
+               <% elsif rol.personaje.genero == "Empresa" %>
+                <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
+              method: :patch , remote: true %>
+               <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
               <% end %>
            </li>
-
         <ul>
     </th>
+    <th><% @rolpersonaje= Rol.where(personaje_id: rol.personaje.id)%>
+      <% @rolpersonaje.each do |rol| %>
+      <ul>
+       <li> <%= rol.name %>= <%= rol.pelicula.titulo %></li>
+      <% end %>
+    </ul></th>
 </tr>
  <% end %>
  </table>
     </div>
-    <div class="">
+  </div>
+
+</div>
+<div class=".col-sm">
     <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>
     </div>
-  </div>
-</div>
+
