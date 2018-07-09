@@ -1,18 +1,45 @@
-  <div class="container-fluid inner">
-  <table class="tableizer-table" id= "simple">
-  <tr class="tableizer-firstrow">
-    <% @todorol.each do |rol| %>
-  <th><%= link_to rol , rol_path(rol) %></th>
-    <% i= 5 %>
-    <%  while i < 16 %>
-    <% ano= 2000 +i %>
-    <td>  <%= ano %> </td>
-    <td><%= mujer(ano, rol) %></td>
-    <td><%= hombre(ano, rol) %></td>
-    <% i= i+1 %>
-    <% end %>
-</tr>
-<% end %>
+<div>
+<h1>Cantidad de peliculas/ Direccion</h1>
+<%= render 'graficopeli' %>
+</div>
+<div>
+<h1>Participantes / Tecnicos y Elenco</h1>
+<%= render 'grafico' %>
+</div>
 
+<div id='dashboard3'>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<h1>Peliculas Financiadas por Institucion</h1>
+<%= render 'graficofondo' %>
+</div>
+<!--
+cantidad de peliculas dirigidas
+hombre(ano, rol direccion)
+mujer(ano, rol direccion)
+
+cantidad de personas por ano
+hombre(ano)
+mujer(ano)
+
+cantidad de pelculas financiadas por f
+hombre(ano, rol direccion, fondo )
+mujer(ano, rol direccion, fondo)
+
+promedio de salas
+hombre(ano, rol direccion, salas )
+mujer(ano, rol direccion, salas)
+
+promedio de copias
+hombre(ano, rol direccion, publico )
+mujer(ano, rol direccion, publico)
+
+promedio de publico
+hombre(ano, rol direccion, salas )
+mujer(ano, rol direccion, salas)
+
+promedios de fondos
+mujer(ano, suma de fondos)
+hombre(ano, suma de fondos)
+ -->
 
 

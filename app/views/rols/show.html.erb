@@ -8,6 +8,7 @@
   <th>Nombre</th>
 </tr>
 <tr>
+  <% @rols.sort_by(&:personaje) %>
     <% @rols.each_with_index do |rol, index| %>
     <% rol %>
   <th><%= index +1 %></th>
