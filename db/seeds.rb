@@ -6,20 +6,20 @@ require 'i18n'
 #total de peliculas
 @count=0
 sinficha =[]
-csv_text = File.read(Rails.root.join('lib', 'seeds', 'compilado.csv'))
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'compiladofinal.csv'))
 csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
 csv.each do |row|
   tit = I18n.transliterate(row["titulo"]).upcase
   if Pelicula.find_by(idcinechile: row["idcinechile"])
     peli = Pelicula.find_by(idcinechile: row["idcinechile"])
-    fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+    fond = Fondo.create(monto: row["monto"], tipo: row["institucion"], agno: row["agno"])
     fond.pelicula_id = peli.id
     fond.save
     puts "se agrega un segundo fondo a #{peli.titulo} de #{fond.tipo}"
   else
     t = Pelicula.create(idcinechile: row["idcinechile"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
-    fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
+    fond = Fondo.create(monto: row["monto"], tipo: row["institucion"], agno: row["agno"])
     fond.pelicula_id = t.id
     t.save
     fond.save
@@ -1186,4 +1186,15 @@ puts "Elenco nuevos #{@nuevos}"
 puts "Elenco @existentes #{@existentes}"
 puts "cantidad nuevos rol Elenco #{@nuevorol}"
 
+#declarar sin director como otro
 
+@peliculas = Pelicula.all
+@peliculas.each do |peli|
+  if peli.rols.empty?
+    pe3 = Personaje.create(genero: "Otro")
+    da3 = Rol.create(name: "Direccion", pelicula_id: peli.id)
+    da3.personaje = pe3
+    da3.save
+   puts " agregando otro a sin director #{da3.personaje.name} para #{peli.titulo}"
+ end
+end

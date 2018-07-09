@@ -12,6 +12,9 @@ class PagesController < ApplicationController
   helper_method :fondosmujer
   helper_method :corfomujer
   helper_method :corfohombre
+  helper_method :corfootro
+  helper_method :peliculasotro
+  helper_method :fondosyotro
 
   def home
   @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
@@ -29,15 +32,21 @@ class PagesController < ApplicationController
       end
     end
     end
-    if item == nil
     return @hombre
-    else
-      @hombre.each do |pel|
-        @fondo = Fondo.where(tipo: item, pelicula_id: pel.id)
-      end
-          raise
-    return @fondo
   end
+
+def peliculasotro(ano, rol, item)
+    @peliculas = Pelicula.where(agno: ano)
+    @otro = []
+    @peliculas.each do |peli|
+    @rols = Rol.where(pelicula_id: peli.id, name: rol)
+      @rols.each do |rol|
+    if rol.personaje.genero == "Otro"
+    @otro << peli
+      end
+    end
+    end
+    return @otro
   end
 
  def peliculasmujer(ano, rol, item)
@@ -145,6 +154,20 @@ def fondosymujer(ano)
     return @mujer.count
   end
 
+def fondosyotro(ano)
+  @peliculas = Pelicula.where(agno: ano)
+  @otro = []
+  @peliculas.each do |peli|
+   @rols= peli.rols
+   @rols.each do |rol|
+    if rol.personaje.genero == "Otro"
+    @otro << rol.personaje
+      end
+    end
+    end
+    return @otro.count
+  end
+
   def tablas
     @todorols= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en Off", "Elenco", "Casa Productora", "Animacion", "Decoracion", "Vestuario"]
   end
@@ -174,14 +197,14 @@ def fondosymujer(ano)
     return @hombre
   end
 
-    def corfomujer(ano, item)
+  def corfomujer(ano, item)
     @peliculas = Pelicula.where(agno: ano)
       @mujer = []
     @peliculas.each do |peli|
       @rol =Rol.where(name: "Direccion", pelicula_id: peli)
       @rol.each do |rol|
         if  rol.personaje.genero == "Mujer"
-          @fondo= Fondo.where(tipo: item, pelicula_id: peli)
+          @fondo= Fondo.where(tipo: item, pelicula_id: peli, agno: ano)
           if @fondo != []
         @mujer << Fondo.find_by(tipo: item, pelicula_id: peli)
       end
@@ -190,4 +213,18 @@ def fondosymujer(ano)
     end
     return @mujer
   end
+
+  def corfootro(ano, item)
+    @peliculas = Pelicula.where(agno: ano)
+      @Empresa = []
+    @peliculas.each do |peli|
+      @rol =Rol.where(name: "Direccion", pelicula_id: peli)
+      @rol.each do |rol|
+        if  rol.personaje.genero == "Otro"
+          @Empresa <<  Fondo.where(tipo: item, pelicula_id: peli, agno: ano)
+        end
+      end
+  end
+  return @Empresa
+end
 end

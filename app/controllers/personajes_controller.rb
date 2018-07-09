@@ -26,7 +26,7 @@ class PersonajesController < ApplicationController
 
 def empresa
   @r = Personaje.find(params[:id])
-   @r.genero = "Empresa"
+   @r.genero = "Otro"
    @r.save
    redirect_to personajes_path
   end
