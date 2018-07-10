@@ -187,10 +187,7 @@ def fondosyotro(ano)
       @rol =Rol.where(name: "Direccion", pelicula_id: peli)
       @rol.each do |rol|
        if  rol.personaje.genero == "Hombre"
-          @fondo= Fondo.where(tipo: item, pelicula_id: peli)
-          if @fondo != []
-        @hombre << Fondo.find_by(tipo: item, pelicula_id: peli)
-      end
+          @hombre << Fondo.where(tipo: item, pelicula_id: peli)
         end
       end
     end
@@ -204,10 +201,7 @@ def fondosyotro(ano)
       @rol =Rol.where(name: "Direccion", pelicula_id: peli)
       @rol.each do |rol|
         if  rol.personaje.genero == "Mujer"
-          @fondo= Fondo.where(tipo: item, pelicula_id: peli, agno: ano)
-          if @fondo != []
-        @mujer << Fondo.find_by(tipo: item, pelicula_id: peli)
-      end
+          @mujer << Fondo.where(tipo: item, pelicula_id: peli, agno: ano)
         end
       end
     end

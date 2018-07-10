@@ -11,6 +11,15 @@ class RolsController < ApplicationController
     @rols= Rol.all
   end
 
+  def todos
+  @personajes= Personaje.all
+  @personajes.map do |rol|
+    if rol.name== nil
+      rol.name = "ninguno"
+   end
+ end
+  end
+
   def show
    @rols = Rol.where(name: params[:id])
   end

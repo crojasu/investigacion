@@ -1,0 +1,49 @@
+  <div class="container-fluid inner">
+  <table class="tableizer-table" id= "simple">
+  <tr class="tableizer-firstrow">
+<tr>
+  <th>Número </th>
+  <th>Id </th>
+  <th>Título de película</th>
+  <th>Cargo</th>
+  <th>Nombre</th>
+</tr>
+<tr>
+  <% @personajes.sort_by(&:name) %>
+    <% @personajes.each_with_index do |rol, index| %>
+    <% rol %>
+  <th><%= index +1 %></th>
+  <th><%= rol.id %></th>
+     <% @rols =Rol.where(personaje_id: rol) %>
+     <% @rols.each do |pe| %>
+     <th><%= pe.name %></th>
+      <th><%= pe.pelicula.titulo %></th>
+               <% end %>
+      <th><ul>
+            <li data-rol-id="<%= rol.id %>"><%= rol.name %>
+                <%= link_to personaje_path(rol), method: :delete, remote: true do %>
+                <i class="fa fa-users" aria-hidden="true"></i>
+                <% end %>
+            <% if rol.genero == "Mujer" %>
+                  <%= link_to 'mujer', deactivate_personaje_path(rol), class: 'btn btn-danger', method: :patch , remote: true %>
+                   <%= link_to 'Otro', empresa_personaje_path(rol), class: 'btn btn-primary',
+                  method: :patch , remote: true %>
+                  <% elsif rol.genero == "Hombre" %>
+                  <%= link_to 'hombre', activate_personaje_path(rol), class: 'btn btn-primary',
+                  method: :patch , remote: true %>
+                   <%= link_to 'Otro', empresa_personaje_path(rol), class: 'btn btn-warning',
+                  method: :patch , remote: true %>
+                   <% elsif rol.genero == "Empresa" %>
+                    <%= link_to 'hombre', activate_personaje_path(rol), class: 'btn btn-primary',
+                  method: :patch , remote: true %>
+                   <%= link_to 'mujer', deactivate_personaje_path(rol), class: 'btn btn-danger', method: :patch , remote: true %>
+                  <% end %>
+               </li>
+
+            <ul>
+        </th>
+
+    </tr>
+
+ <% end %>
+ </table>

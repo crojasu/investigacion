@@ -1,14 +1,10 @@
 
-<% @rol.each do |rol| %>
-<%= link_to "#{rol.name}" , rols_path, remote: true %>
-<% end %>
-
   <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <th>Numero</th>
     <th>Nombre</th>
-    <th>otro</th>
+    <th>rol//pelicula</th>
   </tr>
       <tr>
         <% @personajes2 = @personajes.sort_by(&:name) %>
@@ -21,7 +17,7 @@
         <li><%= rol.name %> // <%= rol.pelicula.titulo%></li>
           </ul><% end %>
          </td>
-        <td><%= link_to "doble", personaje_path(per), class: 'btn btn-warning', method: :delete, remote: true %>
+        <td><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
       <% if per.genero == "Mujer" %>
               <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
                <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-primary',
@@ -31,7 +27,7 @@
               method: :patch , remote: true %>
                <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-warning',
               method: :patch , remote: true %>
-               <% elsif per.genero == "Empresa" %>
+               <% elsif per.genero == "Otro" %>
                 <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
               method: :patch , remote: true %>
                <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>

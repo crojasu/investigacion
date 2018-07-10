@@ -1,6 +1,9 @@
    <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
+   <td><%= link_to "Todos", todos_path%></td>
+    </tr>
+    <tr>
     <% @todorol.each do |rol| %>
      <th><%= rol %></th>
      <td><%= link_to "#{rol}", rol_path(rol) %></td>
@@ -9,6 +12,6 @@
        <%= submit_tag "#{rol}" %>
        <% end %>
      </th>
-         </tr>
+    </tr>
          <% end %>
   </table>

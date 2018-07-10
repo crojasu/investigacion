@@ -1189,9 +1189,9 @@ puts "cantidad nuevos rol Elenco #{@nuevorol}"
 #declarar sin director como otro
 
 @peliculas = Pelicula.all
-@peliculas.each do |peli|
+@peliculas.each do |peli, index|
   if peli.rols.empty?
-    pe3 = Personaje.create(genero: "Otro")
+    pe3 = Personaje.create(genero: "Otro", name: "ninguno#{index}")
     da3 = Rol.create(name: "Direccion", pelicula_id: peli.id)
     da3.personaje = pe3
     da3.save

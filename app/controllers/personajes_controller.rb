@@ -1,10 +1,16 @@
 class PersonajesController < ApplicationController
   def index
-    @persona = Personaje.all
+    @personaje = Personaje.all
     @mujeres = Personaje.where(genero: true)
     @hombres = Personaje.where(genero: false)
-    @total = @persona.count
+    @total = @personaje.count
     @porcentaje_mujeres= (100* (@mujeres.count))/@total
+    @personaje.map do |rol|
+    if rol.name== nil
+      rol.name = "ninguno"
+   end
+   @personajes = @personaje.sort_by(&:name)
+ end
   end
 
   def show
