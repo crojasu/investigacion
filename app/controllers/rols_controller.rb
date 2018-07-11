@@ -25,6 +25,8 @@ def import
   parse_csv_rol(params[:file]).each_with_index do |row, index|
     cinechile = Pelicula.find_by(idcinechile: row[:pelicula_id])
     @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
+    @rol= @roldepeliculas.where(name: params[:commit])
+    @persona = Personaje.find_by(name: row[:name])
     if @rol.nil? || @persona.nil?
       pe3 = Personaje.create(name: row[:name])
       da3 = Rol.create(name: params[:commit])
@@ -32,8 +34,6 @@ def import
       da3.personaje = pe3
       da3.save
     else
-      @rol= @roldepeliculas.where(name: params[:commit])
-      @persona = Personaje.find_by(name: row[:name])
       if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
         puts "nada"
       elsif @persona
