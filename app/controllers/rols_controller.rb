@@ -27,25 +27,25 @@ def import
     @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
     @rol= @roldepeliculas.where(name: params[:commit])
     @persona = Personaje.find_by(name: row[:name])
-    if @rol.nil? || @persona.nil?
+    if @rol.nil?
       pe3 = Personaje.create(name: row[:name])
       da3 = Rol.create(name: params[:commit])
       da3.pelicula = cinechile
       da3.personaje = pe3
       da3.save
-    else
-      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+    elsif @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
         puts "nada"
-      elsif @persona
+    elsif @persona
         da = Rol.create(name: params[:commit])
         da.pelicula = cinechile
         da.personaje = @persona
         da.save
       elsif @rol
         @rol.each do |rol|
-          rol.personaje.genero == "Otro"
-        actualizar = rol.personaje
-        actualizar.update(name:row[:name], genero: "Hombre")
+          if rol.personaje.genero == "Otro"
+            actualizar = rol.personaje
+            actualizar.update(name:row[:name], genero: "Hombre")
+          end
         end
       else
         pe3 = Personaje.create(name: row[:name])
@@ -54,7 +54,6 @@ def import
         da3.personaje = pe3
         da3.save
         end
-    end
   end
 redirect_to rols_path
 end
