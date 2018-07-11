@@ -25,28 +25,36 @@ def import
   parse_csv_rol(params[:file]).each_with_index do |row, index|
     cinechile = Pelicula.find_by(idcinechile: row[:pelicula_id])
     @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
-    @rol= @roldepeliculas.where(name: params[:commit])
-    @persona = Personaje.find_by(name: row[:name])
-    if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
-      puts "nada"
-    elsif
-      @rol.each do |rol|
-        rol.personaje.genero == "Otro"
-      actualizar = rol.personaje
-      actualizar.update(name:row[:name], genero: "Hombre")
-    end
-  elsif @persona
-      da = Rol.create(name: params[:commit])
-      da.pelicula = cinechile
-      da.personaje = @persona
-      da.save
-    else
+    if @rol.nil? || @persona.nil?
       pe3 = Personaje.create(name: row[:name])
       da3 = Rol.create(name: params[:commit])
       da3.pelicula = cinechile
       da3.personaje = pe3
       da3.save
-      end
+    else
+      @rol= @roldepeliculas.where(name: params[:commit])
+      @persona = Personaje.find_by(name: row[:name])
+      if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+        puts "nada"
+      elsif @persona
+        da = Rol.create(name: params[:commit])
+        da.pelicula = cinechile
+        da.personaje = @persona
+        da.save
+      elsif @rol
+        @rol.each do |rol|
+          rol.personaje.genero == "Otro"
+        actualizar = rol.personaje
+        actualizar.update(name:row[:name], genero: "Hombre")
+        end
+      else
+        pe3 = Personaje.create(name: row[:name])
+        da3 = Rol.create(name: params[:commit])
+        da3.pelicula = cinechile
+        da3.personaje = pe3
+        da3.save
+        end
+    end
   end
 redirect_to rols_path
 end
