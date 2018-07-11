@@ -1,3 +1,3 @@
 class Fondo < ApplicationRecord
-  has_many :peliculas
+  has_many :peliculas, dependent: :destroy
 end

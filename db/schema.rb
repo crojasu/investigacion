@@ -14,7 +14,6 @@ ActiveRecord::Schema.define(version: 2018_07_09_194525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "unaccent"
 
   create_table "fondos", force: :cascade do |t|
     t.string "tipo"
@@ -48,14 +47,6 @@ ActiveRecord::Schema.define(version: 2018_07_09_194525) do
     t.string "genero", default: "Hombre"
   end
 
-  create_table "premios", force: :cascade do |t|
-    t.string "premios"
-    t.bigint "pelicula_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["pelicula_id"], name: "index_premios_on_pelicula_id"
-  end
-
   create_table "rols", force: :cascade do |t|
     t.string "name"
     t.bigint "personaje_id"
@@ -84,7 +75,6 @@ ActiveRecord::Schema.define(version: 2018_07_09_194525) do
   end
 
   add_foreign_key "fondos", "peliculas"
-  add_foreign_key "premios", "peliculas"
   add_foreign_key "rols", "peliculas"
   add_foreign_key "rols", "personajes"
 end

@@ -4,12 +4,15 @@ require 'open-uri'
 require 'i18n'
 
 class PeliculasController < ApplicationController
+  skip_before_action :authenticate_user!
+  helper_method :match_imbd
+
   def index
     @peliculas = Pelicula.all
-     @rols = Rol.all
-  @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Direccion", "Voz en Off", "Elenco", "Casa Productora", "Animacion", "Decoracion", "Vestuario"]
-      @todorol.each do |rol|
-      rol = Rol.where(name: rol)
+    @rols = Rol.all
+    @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
+    @todorol.each do |rol|
+    rol = Rol.where(name: rol)
     end
   end
 
@@ -17,6 +20,7 @@ class PeliculasController < ApplicationController
     @personas =[]
     @mujer=[]
     @hombre =[]
+    @otro =[]
     @pelicula = Pelicula.find(params[:id])
     @fondo = Fondo.where(pelicula_id: @pelicula.id)
     @fondos_corfo = Fondo.where(pelicula_id: @pelicula.id, tipo: "corfo")
@@ -28,61 +32,97 @@ class PeliculasController < ApplicationController
       @mujer << rol
       elsif rol.personaje.genero == "Hombre"
       @hombre << rol
+      elsif rol.personaje.genero == "Otro"
+      @otro << rol
       end
     end
   end
 
-  def new
-    @pelicula = Pelicula.new
-  end
-
-  def create
-    @pelicula = Pelicula.new(pelicula_params)
-    if @pelicula.save
-      redirect_to pelicula_path(@pelicula)
-    else
-      render :new
+  def import
+    parse_csv_peliculas(params[:file]).each_with_index do |row, index|
+      tit = I18n.transliterate(row[:titulo]).upcase
+      busca= Pelicula.find_by(idcinechile: row[:idcinechile])
+      if busca
+        h = Rol.find_by(name: "Direccion" , pelicula_id: busca.id)
+          if h.nil?
+            r = Rol.create(name: "Direccion")
+            p = Personaje.create(genero: "Otro" , name: "#{index+1}")
+          r.pelicula = busca
+          r.personaje = p
+          r.save
+         end
+      else
+        t = Pelicula.create(idcinechile: row[:idcinechile], agno: row[:agno], responsable: row[:responsable], tipo: row[:tipo], titulo: tit , salas: row[:salas], copias: row[:copias], publico: row[:publico])
+        match_imbd(t)
+        t.save
+        h = Rol.find_by(name: "Direccion" , pelicula_id: t.id)
+          if h.nil?
+            r = Rol.create(name: "Direccion")
+            p = Personaje.create(genero: "Otro" , name: "#{index+1}")
+          r.pelicula = t
+          r.personaje = p
+          r.save
+          end
+        t.save
+      end
     end
-  end
-
-  def destroy
-    @pelicula = Pelicula.find(params[:id])
-    @pelicula.destroy
+    parse_csv_fondos(params[:file])
     redirect_to peliculas_path
   end
 
-  def edit
-    @pelicula = Pelicula.find(params[:id])
+  def match_imbd(t)
+    sinficha =[]
+    imbd  = I18n.transliterate(t.titulo).split.join('+')
+    url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
+    user_serialized = open(url).read
+    value = JSON.parse(user_serialized)
+    t.imbd = value
+    t.save
+    if value["Response"]== "True"
+    self.add("Director", t)
+    self.add("Writer", t)
+    self.add("Actors", t)
+    self.add("Production", t)
+    else
+      sinficha << ("#{t.titulo}")
+    end
   end
 
-  def matchs(rol)
-    t = Pelicula.find(params[:id])
+  def add(rol, t)
     @roldepeliculas = Rol.where(pelicula_id: t.id)
     value2 = t.imbd
     value = JSON.parse value2.gsub('=>', ':')
+      if rol == "Director"
+        @uni = "Direccion"
+        elsif rol == "Writer"
+        @uni = "Guion"
+        elsif rol == "Actors"
+        @uni = "Elenco"
+        elsif rol == "Production"
+        @uni = "Casa Productora"
+      end
     if value[rol] != "N/A" && value[rol] != nil
-        value[rol].split(",").each do |dir|
+      value[rol].split(",").each do |dir|
         dire = I18n.transliterate(dir).upcase
         @persona = Personaje.find_by(name: dire)
-        if rol == "Director"
-          @uni = "Direccion"
-          elsif rol == "Writer"
-          @uni = "Guion"
-          elsif rol == "Actors"
-          @uni = "Elenco"
-          elsif rol == "Production"
-          @uni = "Casa Productora"
-        end
         @rol= @roldepeliculas.where(name: @uni, pelicula_id: t.id)
-          if @persona
-            @borrar = @rol.select {|rol| rol.personaje_id = @persona.id}
-              @borrar.each do |b|
-                b.destroy
-              end
+          if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+            puts "hoola"
+            elsif @persona
+            da = Rol.create(name: @uni)
+            da.pelicula = t
+            da.personaje = @persona
+            da.save
+            else
+            pe = Personaje.create(name: dire)
+            da = Rol.create(name: @uni)
+            da.pelicula = t
+            da.personaje = pe
+            da.save
           end
         end
-      end
     end
+  end
 
   def update
     t = Pelicula.find(params[:id])
@@ -118,84 +158,29 @@ class PeliculasController < ApplicationController
         redirect_to peliculas_path
   end
 
-  def add(rol)
-    t = Pelicula.find(params[:id])
-    @roldepeliculas = Rol.where(pelicula_id: t.id)
-    value2 = t.imbd
-    value = JSON.parse value2.gsub('=>', ':')
-      if rol == "Director"
-          @uni = "Direccion"
-          elsif rol == "Writer"
-          @uni = "Guion"
-          elsif rol == "Actors"
-          @uni = "Elenco"
-          elsif rol == "Production"
-          @uni = "Casa Productora"
-        end
-    if value[rol] != "N/A"
-      value[rol].split(",").each do |dir|
-      dire = I18n.transliterate(dir).upcase
-      @persona = Personaje.find_by(name: dire)
-      @rol= @roldepeliculas.where(name: @uni, pelicula_id: t.id)
-        if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
-          puts "hoola"
-          elsif @persona
-            da = Rol.create(name: @uni)
-            da.pelicula = t
-            da.personaje = @persona
-            da.save
-          else
-          pe = Personaje.create(name: dire)
-          da = Rol.create(name: @uni)
-          da.pelicula = t
-          da.personaje = pe
-          da.save
-        end
-        end
-      end
-    end
+private
 
-  def import(peliculas)
-    sinficha =[]
-    csv_text = File.read(peliculas)
-    csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-
-    csv.each do |row|
+  def parse_csv_peliculas(file)
+    csv_options = { col_sep: ',', headers: :first_row }
+    peliculas = []
+    CSV.foreach(file.path, csv_options) do |row|
       tit = I18n.transliterate(row["titulo"]).upcase
-      if Pelicula.find_by(idcinechile: row["idcinechile"])
-        peli = Pelicula.find_by(idcinechile: row["idcinechile"])
-        fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
-        fond.pelicula_id = peli.id
-        fond.save
-      else
-        t = Pelicula.create(idcinechile: row["idcinechile"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"])
-        fond = Fondo.create(monto: row["monto"], tipo: row["institucion"])
-        fond.pelicula_id = t.id
-        t.save
-        fond.save
-      # #matching database from imdb
-        imbd  = I18n.transliterate(t.titulo).split.join('+')
-        url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
-        user_serialized = open(url).read
-        value = JSON.parse(user_serialized)
-        t.imbd = value
-        t.save
-        @roldepeliculas = Rol.where(pelicula_id: t.id)
-          if value["Response"]== "True"
-          self.add("Director")
-          self.add("Writer")
-          self.add("Actors")
-          self.add("Production")
-          else
-            sinficha << ("#{t.titulo}")
-          end
-        end
-      end
+      peliculas << {idcinechile: row["idcinechile"], agno: row["ano"], responsable: row["responsable"], tipo: row["tipo"], titulo: tit , salas: row["salas"], copias: row["copias"], publico: row["publico"]}
+    end
+    peliculas
   end
 
-  private
+  def parse_csv_fondos(file)
+    csv_options = { col_sep: ',', headers: :first_row }
+    fondos = []
+    CSV.foreach(file.path, csv_options) do |row|
+      pelicula = Pelicula.find_by(idcinechile: row["idcinechile"])
+      Fondo.create(monto: row["monto"], tipo: row["institucion"], pelicula_id: pelicula.id)
+    end
+    fondos
+  end
 
   def pelicula_params
-    params.require(:pelicula).permit(:agno, :titulo, :responsable, :monto, :institucion, :imbd, :idcinechile, :contacto)
+    params.require(:pelicula).permit(:idcinechile, :agno, :responsable, :tipo, :titulo , :salas, :copias, :publico)
   end
 end

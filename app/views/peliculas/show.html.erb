@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
     <div class="">
-      <% if @pelicula.prev !=nil %>
+      <% if @pelicula.prev != nil %>
      <%= link_to "<< #{@pelicula.prev.titulo}", @pelicula.prev %>
      <% end %>
     </div>
@@ -34,8 +34,10 @@
             <%= f.text_field :imbd , :placeholder => "Nuevo imbd"  %>
             <%= f.submit %>
           <% end %>
+          <% if @pelicula.imbd != nil %>
           <% @f= JSON.parse @pelicula.imbd.gsub('=>', ':') %>
       <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
+      <% end %>
         </td>
         <td></td>
         </tr>
@@ -74,10 +76,17 @@
          <td><%= @hombre.count %></td>
          </tr>
            <tr>
+        <th>OTRO</th>
+         <td><%= @otro.count %></td>
+         </tr>
       <tr>
-        <% if @mujer.count != nil  %>
-           <% @total = @mujer.count + @hombre.count%>
+         <% if @mujer = 0  %>
+           <% @total = @hombre.count + @otro.count %>
+          <%  @porcentaje = 0 %>
+          <% else %>
+          <% @total = @hombre.count + @otro.count %>
           <%  @porcentaje = (@mujer.count * 100)/@total %>
+          <% end %>
         <th>Total</th>
         <td><%= @total %></td>
         </tr>
@@ -87,18 +96,17 @@
         </tr>
       <tr>
         <% if @pelicula.salas != nil || @pelicula.publico !=nil %>
-         <tr>
-        <th>Cantidad de Semanas </th>
-        <td><%= @pelicula.salas %></td>
-        </tr>
-        <tr>
-        <th>Cantidad de Copias </th>
-        <td><%= @pelicula.copias %></td>
-        </tr>
-        <th> Publico </th>
-        <td><%= @pelicula.publico %></td>
-        </tr>
-        <% end %>
+           <tr>
+          <th>Cantidad de Semanas </th>
+          <td><%= @pelicula.salas %></td>
+          </tr>
+          <tr>
+          <th>Cantidad de Copias </th>
+          <td><%= @pelicula.copias %></td>
+          </tr>
+          <th> Publico </th>
+          <td><%= @pelicula.publico %></td>
+          </tr>
         <% end %>
       <tr>
       </table>
@@ -139,7 +147,7 @@
               method: :patch , remote: true %>
                <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-warning',
               method: :patch , remote: true %>
-               <% elsif rol.personaje.genero == "Empresa" %>
+               <% elsif rol.personaje.genero == "Otro" %>
                 <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
               method: :patch , remote: true %>
                <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
@@ -160,7 +168,9 @@
   </div>
 
 </div>
+<% if @pelicula.next != nil %>
 <div class=".col-sm">
     <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>
     </div>
+    <% end %>
 

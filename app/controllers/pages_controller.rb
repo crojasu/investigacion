@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:home]
+  skip_before_action :authenticate_user!
   helper_method :mujer
   helper_method :hombre
   helper_method :fondosyhombre
@@ -71,7 +71,7 @@ def fondosmujer(ano, item)
     @fondos.each do |fondo|
       @rol =Rol.where(name: "Direccion", pelicula_id: peli)
       @rol.each do |rol|
-        if  rol.personaje.genero == "mujer"
+        if  rol.personaje.genero == "Mujer"
         @mujer << fondo
         end
       end
@@ -87,7 +87,7 @@ def fondoshombre(ano, item)
     @fondos.each do |fondo|
       @rol =Rol.where(name: "Direccion", pelicula_id: peli)
       @rol.each do |rol|
-        if  rol.personaje.genero == "hombre"
+        if  rol.personaje.genero == "Hombre"
         @hombre << fondo
         end
       end

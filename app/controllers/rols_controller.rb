@@ -4,6 +4,7 @@ require 'open-uri'
 require 'i18n'
 
 class RolsController < ApplicationController
+skip_before_action :authenticate_user!
  helper_method :import
  before_action :generales
 

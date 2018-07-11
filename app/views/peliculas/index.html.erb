@@ -1,4 +1,10 @@
   <div class="container-fluid inner">
+     <h4>Import data!</h4>
+        <%= form_tag import_peliculas_path, multipart:true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "importar csv" %>
+        <% end %>
+    <th><%= (Pelicula.all).count %></th>
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <th>Direccion== M / H</th>
@@ -14,6 +20,7 @@
       <% @personas= peli.personajes %>
       <% totalmujerespeli = @personas.where(genero: "Mujer") %>
       <% totalhombrespeli = @personas.where(genero: "Hombre") %>
+      <% if peli.imbd != nil %>
       <% @r = peli.imbd %>
       <% @f= JSON.parse @r.gsub('=>', ':')%>
       <% @direccion = Rol.where(pelicula_id: peli.id, name: "Direccion") %>
@@ -26,12 +33,14 @@
           <% @hombre << dire %>
           <% end%>
           <% end %>
+        <% end %>
    <tr>
       <td>
       </td>
       <td><%= link_to "#{peli.titulo}", pelicula_path(peli) %></td>
       <td><%= peli.agno %></td>
-      <td><ul>
+      <td><% if @direccion != nil %>
+        <ul>
         <% @direccion.each do |dire|%>
         <li data-dire-id="<%= dire.personaje.id %>"><%= dire.personaje.name %>
             <%= link_to personaje_path(dire.personaje), method: :delete, remote: true do %>
@@ -46,7 +55,7 @@
               method: :patch , remote: true %>
                <%= link_to 'Otro', empresa_personaje_path(dire.personaje), class: 'btn btn-warning',
               method: :patch , remote: true %>
-               <% elsif dire.personaje.genero == "Empresa" %>
+               <% elsif dire.personaje.genero == "Otro" %>
                 <%= link_to 'hombre', activate_personaje_path(dire.personaje), class: 'btn btn-primary',
               method: :patch , remote: true %>
                <%= link_to 'mujer', deactivate_personaje_path(dire.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
@@ -54,6 +63,7 @@
            </li>
            <% end %>
         <ul>
+          <% end %>
       </td>
       <td><%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{peli.idcinechile}" , target: :_blank %></td>
       <td>
@@ -61,7 +71,9 @@
             <%= f.text_field :imbd , placeholder: "Nuevo imdbID"  %>
             <%= f.submit %>
           <% end %>
+          <% if peli.imbd != nil %>
       <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
+      <% end %>
       </td>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
