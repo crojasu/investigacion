@@ -202,9 +202,11 @@ function dashboard(id, fData){
 var freqData=[
 <% @anos.each do |ano| %>
 <% rol= "Direccion" %>
-<% item= nil %>
-<% if  peliculashombre(ano, rol, item) != 0 %>
-{State:'<%= ano %>',freq:{Hombres:<%= (peliculashombre(ano,rol, item)).count %>, Mujeres:<%= (peliculasmujer(ano, rol, item)).count %>, Otro:<%= (peliculasotro(ano,rol, item)).count %>}},
+<% hombre="hombre" %>
+<% mujer="mujer" %>
+<% otro="otro" %>
+<% if  peliculas(ano, rol, hombre) != 0 %>
+{State:'<%= ano %>',freq:{Hombres:<%= (peliculas(ano,rol, hombre)).count %>, Mujeres:<%= (peliculas(ano, rol, mujer)).count %>, Otro:<%= (peliculas(ano,rol, otro)).count %>}},
 <% end %>
 <% end %>
 ];

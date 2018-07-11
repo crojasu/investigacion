@@ -26,11 +26,14 @@
       <% @direccion = Rol.where(pelicula_id: peli.id, name: "Direccion") %>
        <% @hombre = []%>
         <% @mujer = []%>
+        <% @otro = []%>
       <% @direccion.each do |dire|%>
           <% if dire.personaje.genero == "Mujer" %>
           <% @mujer << dire %>
           <% elsif dire.personaje.genero == "Hombre" %>
           <% @hombre << dire %>
+           <% elsif dire.personaje.genero == "Otro" %>
+          <% @otro << dire %>
           <% end%>
           <% end %>
         <% end %>

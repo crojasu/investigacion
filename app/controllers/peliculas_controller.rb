@@ -175,7 +175,7 @@ private
     fondos = []
     CSV.foreach(file.path, csv_options) do |row|
       pelicula = Pelicula.find_by(idcinechile: row["idcinechile"])
-      Fondo.create(monto: row["monto"], tipo: row["institucion"], pelicula_id: pelicula.id)
+      Fondo.create(monto: row["monto"], tipo: row["institucion"], pelicula_id: pelicula.id, agno: pelicula.agno)
     end
     fondos
   end

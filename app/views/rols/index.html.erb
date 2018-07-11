@@ -12,6 +12,7 @@
        <%= submit_tag "#{rol}" %>
        <% end %>
      </th>
+     <th><%= (Rol.where(name: rol)).count %></th>
     </tr>
          <% end %>
   </table>
