@@ -75,7 +75,7 @@ end
     rol = []
     CSV.foreach(file.path, csv_options) do |row|
       nombre = I18n.transliterate(row["nombre_personaje"]).upcase
-      rol << {name: row["nombre_personaje"], pelicula_id: row["pelicula_id"]}
+      rol << {name: nombre, pelicula_id: row["pelicula_id"]}
   end
     rol
   end
