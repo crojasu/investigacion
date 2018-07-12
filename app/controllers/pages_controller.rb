@@ -63,7 +63,7 @@ def personas(ano, gen)
   end
 
   # def tablas
-  #   @todorols= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
+  #   @todorols= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Producción", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
   # end
 
   def graficos
@@ -197,10 +197,10 @@ end
   private
 
   def generales
-  @rols= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
+  @rols= [ "Dirección", "Arte", "Asistente Dirección", "Dirección Fotografía", "Efectos Especiales", "Guión", "Jefatura de Producción", "Maquillaje", "Montaje", "Música", "Producción", "Producción Asociada", "Producción Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animación", "Decoración", "Vestuario"]
   @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   @peliculas =Pelicula.all
-  @corfo = Fondo.where(tipo: "corfo")
+  @corfo = Fondo.where(tipo: "orfo")
   @fondart = Fondo.where(tipo: "fondart")
   end
 end

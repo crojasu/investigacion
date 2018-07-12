@@ -10,7 +10,7 @@ class PeliculasController < ApplicationController
   def index
     @peliculas = Pelicula.all
     @rols = Rol.all
-    @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
+    @todorol= [ "Dirección", "Arte", "Asistente Dirección", "Dirección Fotografía", "Efectos Especiales", "Guión", "Jefatura de Producción", "Maquillaje", "Montaje", "Música", "Producción", "Producción Asociada", "Producción Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animación", "Decoración", "Vestuario"]
     @todorol.each do |rol|
     rol = Rol.where(name: rol)
     end
@@ -26,7 +26,7 @@ class PeliculasController < ApplicationController
     @fondos_corfo = Fondo.where(pelicula_id: @pelicula.id, tipo: "corfo")
     @fondos_fondart = Fondo.where(pelicula_id: @pelicula.id, tipo: "fondart")
     @rols = Rol.where(pelicula_id: @pelicula.id)
-    @directors = Rol.where(pelicula_id: @pelicula.id, name: "Direccion")
+    @directors = Rol.where(pelicula_id: @pelicula.id, name: "Dirección")
     @rols.each do |rol|
       if rol.personaje.genero == "Mujer"
       @mujer << rol
@@ -43,9 +43,9 @@ class PeliculasController < ApplicationController
       tit = I18n.transliterate(row[:titulo]).upcase
       busca= Pelicula.find_by(idcinechile: row[:idcinechile])
       if busca
-        h = Rol.find_by(name: "Direccion" , pelicula_id: busca.id)
+        h = Rol.find_by(name: "Dirección" , pelicula_id: busca.id)
           if h.nil?
-            r = Rol.create(name: "Direccion")
+            r = Rol.create(name: "Dirección")
             p = Personaje.create(genero: "Otro" , name: "#{index+1}")
           r.pelicula = busca
           r.personaje = p
@@ -55,9 +55,9 @@ class PeliculasController < ApplicationController
         t = Pelicula.create(idcinechile: row[:idcinechile], agno: row[:agno], responsable: row[:responsable], tipo: row[:tipo], titulo: tit , salas: row[:salas], copias: row[:copias], publico: row[:publico])
         match_imbd(t)
         t.save
-        h = Rol.find_by(name: "Direccion" , pelicula_id: t.id)
+        h = Rol.find_by(name: "Dirección" , pelicula_id: t.id)
           if h.nil?
-            r = Rol.create(name: "Direccion")
+            r = Rol.create(name: "Dirección")
             p = Personaje.create(genero: "Otro" , name: "#{index+1}")
           r.pelicula = t
           r.personaje = p
@@ -93,7 +93,7 @@ class PeliculasController < ApplicationController
     value2 = t.imbd
     value = JSON.parse value2.gsub('=>', ':')
       if rol == "Director"
-        @uni = "Direccion"
+        @uni = "Dirección"
         elsif rol == "Writer"
         @uni = "Guion"
         elsif rol == "Actors"
@@ -121,7 +121,7 @@ class PeliculasController < ApplicationController
     value2 = t.imbd
     value = JSON.parse value2.gsub('=>', ':')
       if rol == "Director"
-        @uni = "Direccion"
+        @uni = "Dirección"
         elsif rol == "Writer"
         @uni = "Guion"
         elsif rol == "Actors"

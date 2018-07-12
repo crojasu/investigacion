@@ -27,29 +27,19 @@ def import
     @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
     @rol= @roldepeliculas.where(name: params[:commit])
     @persona = Personaje.find_by(name: row[:name])
-    if @rol.nil?
-      pe3 = Personaje.create(name: row[:name])
-      da3 = Rol.create(name: params[:commit])
-      da3.pelicula = cinechile
-      da3.personaje = pe3
-      da3.save
-      raise
-    elsif @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
+   if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
         puts "nada"
-        raise
     elsif @persona
         da = Rol.create(name: params[:commit])
         da.pelicula = cinechile
         da.personaje = @persona
         da.save
-              raise
-      elsif @rol
+      elsif @rol.empty? == false
         @rol.each do |rol|
           if rol.personaje.genero == "Otro"
             actualizar = rol.personaje
             actualizar.update(name:row[:name], genero: "Hombre")
           end
-          raise
         end
       else
         pe3 = Personaje.create(name: row[:name])
@@ -58,9 +48,7 @@ def import
         da3.personaje = pe3
         da3.save
         pe3.save
-              raise
         end
-        raise
   end
 redirect_to rols_path
 end
@@ -74,7 +62,7 @@ end
   def generales
     @peliculas = Pelicula.all
     @rols = Rol.all
-    @todorol= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Produccion", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
+    @todorol= [ "Dirección", "Arte", "Asistente Dirección", "Dirección Fotografía", "Efectos Especiales", "Guión", "Jefatura de Producción", "Maquillaje", "Montaje", "Música", "Producción", "Producción Asociada", "Producción Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animación", "Decoración", "Vestuario"]
   end
 
  def parse_csv_rol(file)
