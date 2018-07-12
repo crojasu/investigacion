@@ -1,11 +1,13 @@
 <div class="container">
-  <div class="row">
-    <div class="">
+  <div class= "row">
+  <div class="col-sm-2">
       <% if @pelicula.prev != nil %>
      <%= link_to "<< #{@pelicula.prev.titulo}", @pelicula.prev %>
      <% end %>
-    </div>
+  </div>
+  <div class= "col-sm-8">
   <div class="container-fluid inner">
+
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
           <th>Título</th>
@@ -41,31 +43,27 @@
         </td>
         <td></td>
         </tr>
-
-
       </table>
       <div>
-        <div class="container-fluid inner">
+
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <th>Participé en esta Película</th>
     <td><%= link_to "Editar, Agregar o Cambiar Información"%></td>
-  </tr>
-</table>
-</div>
-  <div class="container-fluid inner">
+    </tr>
+  </table>
+
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrowr ">
-      <tr>
         <th>Año</th>
         <td><%= @pelicula.agno %></td>
-        </tr>
+      </tr>
       <tr>
         <th>Responsable de Proyecto</th>
         <td><%= @pelicula.responsable %></td>
-        </tr>
-        <tr>
-          <th>Responsable</th>
+      </tr>
+      <tr>
+        <th>Responsable</th>
          <td><%= @pelicula.contacto %></td>
          </tr>
         <th>Institución // Monto Adjudicado</th>
@@ -74,20 +72,20 @@
         </li></ul>
                 <% end %>
         </td>
-        </tr>
+      </tr>
       <tr>
         <th>Cantidad de Mujeres</th>
         <td><%= @mujer.count %></td>
-        </tr>
+      </tr>
       <tr>
         <th>Cantidad de Hombres</th>
          <td><%= @hombre.count %></td>
-         </tr>
-           <tr>
-        <th>OTRO</th>
-         <td><%= @otro.count %></td>
-         </tr>
-      <tr>
+        </tr>
+        <tr>
+          <th>OTRO</th>
+           <td><%= @otro.count %></td>
+        </tr>
+        <tr>
          <% if @mujer = 0  %>
            <% @total = @hombre.count + @otro.count %>
           <%  @porcentaje = 0 %>
@@ -95,16 +93,15 @@
           <% @total = @hombre.count + @otro.count %>
           <%  @porcentaje = (@mujer.count * 100)/@total %>
           <% end %>
-        <th>Total</th>
-        <td><%= @total %></td>
+          <th>Total</th>
+          <td><%= @total %></td>
         </tr>
-      <tr>
-        <th>Porcentaje de Participación </th>
-        <td><%= @porcentaje %></td>
+        <tr>
+          <th>Porcentaje de Participación </th>
+          <td><%= @porcentaje %></td>
         </tr>
-      <tr>
-        <% if @pelicula.salas != nil || @pelicula.publico !=nil %>
-           <tr>
+         <% if @pelicula.salas != nil || @pelicula.publico !=nil %>
+        <tr>
           <th>Cantidad de Semanas </th>
           <td><%= @pelicula.salas %></td>
           </tr>
@@ -114,71 +111,58 @@
           </tr>
           <th> Publico </th>
           <td><%= @pelicula.publico %></td>
-          </tr>
+        </tr>
         <% end %>
-      <tr>
       </table>
-      </div>
-      <div>
-      </div>
 <br>
-  <div class="container-fluid inner">
+
   <table class="tableizer-table" id= "simple">
-  <tr class="tableizer-firstrowr ">
-<tr>
-  <th>Número </th>
-  <th>Título de película</th>
-  <th>Rol</th>
-  <th>ID Personaje</th>
-  <th>Nombre</th>
-  <th>Roles de Personaje</th>
-</tr>
-<tr>
-  <% @rol2 = @rols.sort_by(&:name) %>
-    <% @rol2.each_with_index do |rol, index| %>
-    <% rol %>
-  <th><%= index +1 %></th>
-  <th><%= rol.pelicula.titulo %></th>
-  <th><%= rol.name%></th>
-  <th><%= rol.personaje.id %></th>
-  <th><ul>
-        <li data-rol-id="<%= rol.personaje.id %>"><%= rol.personaje.name %>
-            <%= link_to personaje_path(rol.personaje), method: :delete, remote: true do %>
-            <i class="fa fa-users" aria-hidden="true"></i>
-            <% end %>
-              <% if rol.personaje.genero == "Mujer" %>
-              <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
-               <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-primary',
-              method: :patch , remote: true %>
-              <% elsif rol.personaje.genero == "Hombre" %>
-              <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
-              method: :patch , remote: true %>
-               <%= link_to 'Otro', empresa_personaje_path(rol.personaje), class: 'btn btn-warning',
-              method: :patch , remote: true %>
-               <% elsif rol.personaje.genero == "Otro" %>
-                <%= link_to 'hombre', activate_personaje_path(rol.personaje), class: 'btn btn-primary',
-              method: :patch , remote: true %>
-               <%= link_to 'mujer', deactivate_personaje_path(rol.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
+  <tr class="tableizer-firstrow">
+    <th>Número</th>
+    <th>Nombre</th>
+    <th>ID</th>
+    <th>Rol//Película</th>
+    <th>Edita</th>
+  </tr>
+  <tr>
+        <% @personajes2 = @personajes.sort_by(&:name) %>
+        <% @personajes2.each_with_index do |per, index| %>
+        <td><%= index+1 %></td>
+        <td><%= per.name %></td>
+        <td><%= per.id %></td>
+         <td> <ul>
+        <li><%= Rol.find_by(pelicula_id: @pelicula, personaje_id: per).name
+ %> </li>
+          </ul>
+         </td>
+        <td><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
+      <% if per.genero == "Mujer" %>
+        <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
+         <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-primary',
+        method: :patch , remote: true %>
+      <% elsif per.genero == "Hombre" %>
+          <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
+          method: :patch , remote: true %>
+           <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-warning',
+          method: :patch , remote: true %>
+      <% elsif per.genero == "Otro" %>
+          <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
+        method: :patch , remote: true %>
+         <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
               <% end %>
-           </li>
-        <ul>
-    </th>
-    <th><% @rolpersonaje= Rol.where(personaje_id: rol.personaje.id)%>
-      <% @rolpersonaje.each do |rol| %>
-      <ul>
-       <li> <%= rol.name %>= <%= rol.pelicula.titulo %></li>
-      <% end %>
-    </ul></th>
-</tr>
- <% end %>
- </table>
-    </div>
-  </div>
+            </td>
+      </tr>
+         <% end %>
+  </table>
 
 </div>
-<% if @pelicula.next != nil %>
-<div class=".col-sm">
-    <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>
-    </div>
+</div>
+
+</div>
+<div class="col-sm-2">
+    <% if @pelicula.next != nil %>
+      <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>
     <% end %>
+</div>
+</div>
 

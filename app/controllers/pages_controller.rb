@@ -69,6 +69,9 @@ def personas(ano, gen)
   def graficos
   end
 
+  def graficosgenerales
+  end
+
 def sum(ano, tipo, gen)
   @fondos = Fondo.where(agno: ano, tipo: tipo)
     @hombre =[]

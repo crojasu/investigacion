@@ -17,7 +17,7 @@ class PeliculasController < ApplicationController
   end
 
   def show
-    @personas =[]
+    @personajes =[]
     @mujer=[]
     @hombre =[]
     @otro =[]
@@ -35,6 +35,9 @@ class PeliculasController < ApplicationController
       elsif rol.personaje.genero == "Otro"
       @otro << rol
       end
+    end
+    @rols.each do |rol|
+    @personajes << rol.personaje
     end
   end
 
