@@ -92,13 +92,14 @@
           <% else %>
           <% @total = @hombre.count + @otro.count %>
           <%  @porcentaje = (@mujer.count * 100)/@total %>
-          <% end %>
+
           <th>Total</th>
           <td><%= @total %></td>
         </tr>
         <tr>
           <th>Porcentaje de Participación </th>
           <td><%= @porcentaje %></td>
+          <% end %>
         </tr>
          <% if @pelicula.salas != nil || @pelicula.publico !=nil %>
         <tr>

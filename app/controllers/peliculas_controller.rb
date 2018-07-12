@@ -210,7 +210,7 @@ class PeliculasController < ApplicationController
       r.save
     end
 
-        redirect_to peliculas_path
+        redirect_to pelicula_path(t)
   end
 
 private
