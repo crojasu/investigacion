@@ -55,6 +55,10 @@ end
 
   def show
    @rols = Rol.where(name: params[:id])
+   @personajes=[]
+   @rols.each do |rol|
+    @personajes<< rol.personaje
+  end
   end
 
   private

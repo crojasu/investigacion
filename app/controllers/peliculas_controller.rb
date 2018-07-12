@@ -199,7 +199,7 @@ class PeliculasController < ApplicationController
     end
     if t.rols.where(name: "Direccion").empty?
       r = Rol.create(name: "Dirección")
-      p = Personaje.create(genero: "Otro" , name: "#{rand(5..30)}")
+      p = Personaje.create(genero: "Otro" , name: "#{rand(500..630)}")
       r.pelicula = t
       r.personaje = p
       r.save
