@@ -79,13 +79,41 @@ class PeliculasController < ApplicationController
     t.imbd = value
     t.save
     if value["Response"]== "True"
-    self.add("Director", t)
-    self.add("Writer", t)
-    self.add("Actors", t)
-    self.add("Production", t)
+    self.rest("Director", t)
+    self.rest("Writer", t)
+    self.rest("Actors", t)
+    self.rest("Production", t)
     else
       sinficha << ("#{t.titulo}")
     end
+  end
+
+ def rest(rol, t)
+    @roldepeliculas = Rol.where(pelicula_id: t.id)
+    value2 = t.imbd
+    value = JSON.parse value2.gsub('=>', ':')
+      if rol == "Director"
+        @uni = "Direccion"
+        elsif rol == "Writer"
+        @uni = "Guion"
+        elsif rol == "Actors"
+        @uni = "Elenco"
+        elsif rol == "Production"
+        @uni = "Casa Productora"
+      end
+    if value[rol] != "N/A" && value[rol] != nil
+      value[rol].split(",").each do |dir|
+        dire = I18n.transliterate(dir).upcase
+        @persona = Personaje.find_by(name: dire)
+        if @persona
+        @roles = @persona.rols.where(pelicula_id: t)
+        @roles.destroy_all
+        if @persona.rols.empty?
+          @persona.destroy
+            end
+          end
+          end
+        end
   end
 
   def add(rol, t)
@@ -135,12 +163,11 @@ class PeliculasController < ApplicationController
 #Borramos los que existen
     t.imbd = value
     t.save
-    @roldepeliculas = Rol.where(pelicula_id: t.id)
     if value["Response"]== "True"
-    self. match_imbd("Director")
-    self.match_imbd("Writer")
-    self.match_imbd("Actors")
-    self.match_imbd("Production")
+    self.rest("Director", t)
+    self.rest("Writer", t)
+    self.rest("Actors", t)
+    self.rest("Production", t)
     end
 #agregamos los nuevos
     imbd2 = params[:pelicula][:imbd]
@@ -150,10 +177,10 @@ class PeliculasController < ApplicationController
     t.imbd = value
     t.save
     if value["Response"]== "True"
-    self.add("Director")
-    self.add("Writer")
-    self.add("Actors")
-    self.add("Production")
+    self.add("Director", t)
+    self.add("Writer", t)
+    self.add("Actors", t)
+    self.add("Production", t)
     end
         redirect_to peliculas_path
   end
