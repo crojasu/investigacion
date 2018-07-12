@@ -2,10 +2,11 @@ class PagesController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :generales
   helper_method :peliculas
-  helper_method :fondo
   helper_method :personas
   helper_method :tecnico
+  helper_method :suma
   helper_method :sum
+  helper_method :salas
   def home
   end
 
@@ -68,34 +69,6 @@ def personas(ano, gen)
   def graficos
   end
 
-  def fondo(ano, item, gen)
-    @fondos = Fondo.where(agno: ano, tipo: item)
-     @peliculas = Pelicula.where(agno: ano)
-    @hombre = []
-     @mujer = []
-     @otro = []
-    @peliculas.each do |peli|
-      @rols =Rol.where(name: "Direccion", pelicula_id: peli.id)
-      @rols.each do |rol|
-       if  rol.personaje.genero == "Hombre"
-          @hombre << Fondo.where(tipo: item, pelicula_id: peli.id)
-        elsif  rol.personaje.genero == "Mujer"
-          @mujer << Fondo.where(tipo: item, pelicula_id: peli.id)
-        elsif  rol.personaje.genero == "Otro"
-          raise
-          @otro <<  Fondo.where(tipo: item, pelicula_id: peli)
-        end
-      end
-    end
-    if gen == "mujer"
-      return @mujer.count
-    elsif gen == "hombre"
-      return @hombre.count
-    elsif gen == "otro"
-      return @otro.count
-    end
-  end
-
 def sum(ano, tipo, gen)
   @fondos = Fondo.where(agno: ano, tipo: tipo)
     @hombre =[]
@@ -121,6 +94,77 @@ def sum(ano, tipo, gen)
     elsif gen == "otro"
       return @otro.count
     end
+end
+
+def suma(ano, tipo, gen)
+  @fondos = Fondo.where(agno: ano, tipo: tipo)
+    @hombre =[]
+    @mujer = []
+    @otro =[]
+  @fondos.each do |f|
+  @rols = (Pelicula.find(f.pelicula_id)).rols
+   @rold= @rols.where(name: "Direccion")
+   @rold.each do |rol|
+       if  rol.personaje.genero == "Hombre"
+          @hombre << f
+        elsif  rol.personaje.genero == "Mujer"
+          @mujer << f
+        elsif  rol.personaje.genero == "Otro"
+          @otro <<  f
+        end
+      end
+    end
+    if gen == "mujer"
+      return (@mujer.map(&:monto).sum(&:to_i))/650
+    elsif gen == "hombre"
+      return (@hombre.map(&:monto).sum(&:to_i))/650
+    elsif gen == "otro"
+      return (@otro.map(&:monto).sum(&:to_i))/650
+    end
+end
+
+def salas(ano, item, gen, rol)
+  @peliculas = Pelicula.where(agno: ano)
+    @hombre = []
+    @mujer =[]
+    @otro =[]
+    @peliculas.each do |peli|
+    @rols = Rol.where(pelicula_id: peli.id, name: rol)
+      @rols.each do |rol|
+        if rol.personaje.genero == "Hombre"
+          @hombre << peli
+        elsif  rol.personaje.genero == "Mujer"
+          @mujer << peli
+        elsif  rol.personaje.genero == "Otro"
+          @otro <<  peli
+        end
+      end
+    end
+  if item == "salas"
+    if gen == "mujer"
+      return @mujer.map(&:salas).sum(&:to_i)
+    elsif gen == "hombre"
+      return @hombre.map(&:salas).sum(&:to_i)
+    elsif gen == "otro"
+      return @otro.map(&:salas).sum(&:to_i)
+    end
+  elsif item == "publico"
+       if gen == "mujer"
+      return @mujer.map(&:publico).sum(&:to_i)
+    elsif gen == "hombre"
+      return @hombre.map(&:publico).sum(&:to_i)
+    elsif gen == "otro"
+      return @otro.map(&:publico).sum(&:to_i)
+    end
+  elsif item == "copias"
+       if gen == "mujer"
+      return @mujer.map(&:copias).sum(&:to_i)
+    elsif gen == "hombre"
+      return @hombre.map(&:copias).sum(&:to_i)
+    elsif gen == "otro"
+      return @otro.map(&:copias).sum(&:to_i)
+    end
+  end
 end
 
   def tecnico(ano, rol, gen)
