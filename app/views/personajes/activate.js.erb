@@ -1,0 +1,12 @@
+// Here you generate *JavaScript* that would be executed in the browser
+
+  function addMujer(atri) {
+    document.querySelector("[hombre-id='<%= per.id %>']")
+  .remove();
+  const mujer = document.getElementById("[hombre-id='<%= per.id %>']");
+  mujer.insertAdjacentHTML('beforeend', atri);
+
+}
+
+
+addMujer('<span mujer-id="<%= per.id %>"> <% if per.genero == "Mujer" %><%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %> <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-primary', method: :patch , remote: true %></span>');

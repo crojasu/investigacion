@@ -29,7 +29,11 @@ class PersonajesController < ApplicationController
   @r = Personaje.find(params[:id])
    @r.genero = "Mujer"
    @r.save
-   redirect_to personajes_path
+
+  respond_to do |format|
+        format.html { redirect_to restaurant_path(@restaurant) }
+        format.js  # <-- will render `app/views/reviews/create.js.erb`
+      end
   end
 
 def empresa

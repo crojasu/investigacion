@@ -17,10 +17,11 @@
       <%= link_to "Personajes", personajes_path, class: "navbar-wagon-item navbar-wagon-link" %>
       <%= link_to "Edita", "#", class: "navbar-wagon-item navbar-wagon-link" %>
       <%= link_to "Información/ Tablas", tablas_path, class: "navbar-wagon-item navbar-wagon-link" %>
-
-
+      <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
 
   </div>
+     <!-- Login link (when logged out) -->
+
 
   <!-- Dropdown list appearing on mobile only -->
   <div class="navbar-wagon-item hidden-md hidden-lg">

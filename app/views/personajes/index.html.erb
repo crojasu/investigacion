@@ -20,20 +20,20 @@
         <li><%= rol.name %> //  <%= link_to "#{rol.pelicula.titulo}", pelicula_path(peli) %></li>
           </ul><% end %>
          </td>
-        <td><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
-      <% if per.genero == "Mujer" %>
+        <td data-index-id="<%= per.id %>"><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
+      <span mujer-id="<%= per.id %>"> <% if per.genero == "Mujer" %>
         <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
          <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-primary',
-        method: :patch , remote: true %>
-      <% elsif per.genero == "Hombre" %>
+        method: :patch , remote: true %></span>
+      <span hombre-id="<%= per.id %>"> <% elsif per.genero == "Hombre" %>
           <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
-          method: :patch , remote: true %>
+          method: :patch , remote: true %> </span>
            <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-warning',
           method: :patch , remote: true %>
-      <% elsif per.genero == "Otro" %>
+      <span otro-id="<%= per.id %>"> <% elsif per.genero == "Otro" %>
           <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
         method: :patch , remote: true %>
-         <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
+         <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %></span>
               <% end %>
             </td>
          </tr>
