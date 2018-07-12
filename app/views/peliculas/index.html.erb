@@ -12,7 +12,7 @@
     <th><%= (Pelicula.all).count %></th>
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-    <th>Direccion== M / H</th>
+    <th>numero</th>
     <th>Título</th>
     <th>Año</th>
     <th>Dirección</th>
@@ -21,7 +21,7 @@
     <th>Fondo Adjudicado</th>
     <th>Ficha Técnica Completa</th></tr>
      <% @peliculas2 = @peliculas.sort_by(&:titulo) %>
-      <% @peliculas2.each do |peli| %>
+      <% @peliculas2.each_with_index do |peli, index| %>
       <% @personas= peli.personajes %>
       <% totalmujerespeli = @personas.where(genero: "Mujer") %>
       <% totalhombrespeli = @personas.where(genero: "Hombre") %>
@@ -45,6 +45,7 @@
    <tr>
       <td>
       </td>
+      <td><%= index+1 %></td>
       <td><%= link_to "#{peli.titulo}", pelicula_path(peli) %></td>
       <td><%= peli.agno %></td>
       <td><% if @direccion != nil %>
