@@ -182,6 +182,14 @@ class PeliculasController < ApplicationController
     self.add("Actors", t)
     self.add("Production", t)
     end
+    if t.rols.where(name: "Direccion").empty?
+      r = Rol.create(name: "Dirección")
+      p = Personaje.create(genero: "Otro" , name: "#{rand(5..30)}")
+      r.pelicula = t
+      r.personaje = p
+      r.save
+    end
+
         redirect_to peliculas_path
   end
 
