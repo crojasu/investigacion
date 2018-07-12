@@ -40,7 +40,7 @@ class PeliculasController < ApplicationController
     @rols.each do |rol|
     @personaje << rol.personaje
     end
-    @personajes = @personaje.uniq!
+    @personajes = @personaje.uniq
   end
 
   def import

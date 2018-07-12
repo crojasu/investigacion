@@ -125,6 +125,7 @@
     <th>Edita</th>
   </tr>
   <tr>
+    <% if @personajes != nil %>
         <% @personajes2 = @personajes.sort_by(&:name) %>
         <% @personajes2.each_with_index do |per, index| %>
         <td><%= index+1 %></td>
@@ -150,8 +151,10 @@
         method: :patch , remote: true %>
          <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
               <% end %>
+
             </td>
       </tr>
+         <% end %>
          <% end %>
   </table>
 
