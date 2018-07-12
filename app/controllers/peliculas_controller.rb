@@ -17,7 +17,8 @@ class PeliculasController < ApplicationController
   end
 
   def show
-    @personajes =[]
+    @personaje =[]
+
     @mujer=[]
     @hombre =[]
     @otro =[]
@@ -37,8 +38,9 @@ class PeliculasController < ApplicationController
       end
     end
     @rols.each do |rol|
-    @personajes << rol.personaje
+    @personaje << rol.personaje
     end
+    @personajes = @personaje.uniq!
   end
 
   def import

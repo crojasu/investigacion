@@ -55,10 +55,11 @@ end
 
   def show
    @rols = Rol.where(name: params[:id])
-   @personajes=[]
+   @personaje=[]
    @rols.each do |rol|
-    @personajes<< rol.personaje
+    @personaje<< rol.personaje
   end
+  @personajes = @personaje.uniq!
   end
 
   private

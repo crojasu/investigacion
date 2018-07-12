@@ -11,7 +11,7 @@ class PersonajesController < ApplicationController
     if rol.name== nil
       rol.name = "ninguno"
    end
-   @personajes = @personaje.sort_by(&:name)
+   @personajes = (@personaje.uniq).sort_by(&:name)
  end
   end
 
