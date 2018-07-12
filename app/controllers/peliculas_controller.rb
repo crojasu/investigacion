@@ -53,7 +53,21 @@ class PeliculasController < ApplicationController
          end
       else
         t = Pelicula.create(idcinechile: row[:idcinechile], agno: row[:agno], responsable: row[:responsable], tipo: row[:tipo], titulo: tit , salas: row[:salas], copias: row[:copias], publico: row[:publico])
-        match_imbd(t)
+         sinficha =[]
+          imbd  = I18n.transliterate(t.titulo).split.join('+')
+          url = "http://www.omdbapi.com/?t=#{imbd}&apikey=e91b7024"
+          user_serialized = open(url).read
+          value = JSON.parse(user_serialized)
+          t.imbd = value
+          t.save
+          if value["Response"]== "True"
+          self.add("Director", t)
+          self.add("Writer", t)
+          self.add("Actors", t)
+          self.add("Production", t)
+          else
+            sinficha << ("#{t.titulo}")
+          end
         t.save
         h = Rol.find_by(name: "Dirección" , pelicula_id: t.id)
           if h.nil?
@@ -87,6 +101,7 @@ class PeliculasController < ApplicationController
       sinficha << ("#{t.titulo}")
     end
   end
+
 
  def rest(rol, t)
     @roldepeliculas = Rol.where(pelicula_id: t.id)
