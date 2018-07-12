@@ -20,7 +20,7 @@
     <th>Imbd</th>
     <th>Fondo Adjudicado</th>
     <th>Ficha Técnica Completa</th></tr>
-     <% @peliculas2 = @peliculas.sort_by(&:agno) %>
+     <% @peliculas2 = @peliculas.sort_by(&:titulo) %>
       <% @peliculas2.each do |peli| %>
       <% @personas= peli.personajes %>
       <% totalmujerespeli = @personas.where(genero: "Mujer") %>
