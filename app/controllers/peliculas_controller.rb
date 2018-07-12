@@ -18,7 +18,6 @@ class PeliculasController < ApplicationController
 
   def show
     @personaje =[]
-
     @mujer=[]
     @hombre =[]
     @otro =[]
@@ -230,6 +229,12 @@ def import_imbd
     value = JSON.parse(user_serialized2)
     t.imbd = value
     t.save
+    @f = t.rols.where(name: "Dirección")
+      @f.each do |f|
+        if f.personaje.genero == "Otro"
+          f.destroy
+        end
+        end
     @roldepeliculas = Rol.where(pelicula_id: t.id)
       if value["Response"]== "True"
       self.add("Director", t)
@@ -268,7 +273,10 @@ end
     fondos = []
     CSV.foreach(file.path, csv_options) do |row|
       pelicula = Pelicula.find_by(idcinechile: row["idcinechile"])
+      @fondo = Fondo.find_by(pelicula_id: pelicula, tipo: row["institucion"], monto: row["monto"])
+     unless @fondo
       Fondo.create(monto: row["monto"], tipo: row["institucion"], pelicula_id: pelicula.id, agno: pelicula.agno)
+      end
     end
     fondos
   end
