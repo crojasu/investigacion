@@ -202,18 +202,56 @@ class PeliculasController < ApplicationController
     self.add("Actors", t)
     self.add("Production", t)
     end
-    if t.rols.where(name: "Direccion").empty?
+    if t.rols.where(name: "Dirección").empty?
       r = Rol.create(name: "Dirección")
       p = Personaje.create(genero: "Otro" , name: "#{rand(500..630)}")
       r.pelicula = t
       r.personaje = p
       r.save
-    end
+    elsif @f = t.rols.where(name: "Dirección")
+      @f.each do |f|
+        if f.personaje == "Otro"
+          f.destroy
+        end
+        end
+     end
 
         redirect_to pelicula_path(t)
   end
 
+def import_imbd
+  parse_imbd(params[:file]).each do |row|
+  tit = I18n.transliterate(row[:titulo]).upcase
+  t = Pelicula.find_by_titulo(tit)
+    if t && row[:im] != nil
+    imbd2  = row[:im]
+    url2 = "http://www.omdbapi.com/?i=#{imbd2}&apikey=e91b7024"
+    user_serialized2 = open(url2).read
+    value = JSON.parse(user_serialized2)
+    t.imbd = value
+    t.save
+    @roldepeliculas = Rol.where(pelicula_id: t.id)
+      if value["Response"]== "True"
+      self.add("Director", t)
+      self.add("Writer", t)
+      self.add("Actors", t)
+      self.add("Production", t)
+      end
+    end
+  end
+end
+
 private
+
+def parse_imbd(file)
+  csv_options = { col_sep: ',', headers: :first_row }
+    peliculas = []
+    CSV.foreach(file.path, csv_options) do |row|
+      tit = I18n.transliterate(row["titulo"]).upcase
+      peliculas << {titulo: row["titulo"], im: row["im"]}
+    end
+    peliculas
+end
 
   def parse_csv_peliculas(file)
     csv_options = { col_sep: ',', headers: :first_row }

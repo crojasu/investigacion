@@ -4,6 +4,11 @@
         <%= file_field_tag :file %>
         <%= submit_tag "importar csv" %>
         <% end %>
+        <h4>Importanding data!</h4>
+        <%= form_tag import_imbd_peliculas_path, multipart:true do %>
+        <%= file_field_tag :file %>
+        <%= submit_tag "importar imbd" %>
+        <% end %>
     <th><%= (Pelicula.all).count %></th>
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">

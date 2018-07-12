@@ -20,6 +20,7 @@ resources :peliculas
 
     resources :peliculas do
       collection {post :import}
+      collection {post :import_imbd}
     end
 
 end

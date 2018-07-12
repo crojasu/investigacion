@@ -28,7 +28,10 @@ def import
     @rol= @roldepeliculas.where(name: params[:commit])
     @persona = Personaje.find_by(name: row[:name])
    if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
-        puts "nada"
+        @r = @rol.select {|rol| rol.personaje_id = @persona.id}
+        @r.each do |r|
+          r.save
+        end
     elsif @persona
         da = Rol.create(name: params[:commit])
         da.pelicula = cinechile
@@ -72,12 +75,12 @@ end
 
  def parse_csv_rol(file)
     csv_options = { col_sep: ',', headers: :first_row }
-    rol = []
+    roli = []
     CSV.foreach(file.path, csv_options) do |row|
       nombre = I18n.transliterate(row["nombre_personaje"]).upcase
-      rol << {name: nombre, pelicula_id: row["pelicula_id"]}
+      roli << {name: nombre, pelicula_id: row["pelicula_id"]}
   end
-    rol
+    roli
   end
 
   def allowed_params
