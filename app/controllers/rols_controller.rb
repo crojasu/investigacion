@@ -33,19 +33,23 @@ def import
       da3.pelicula = cinechile
       da3.personaje = pe3
       da3.save
+      raise
     elsif @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
         puts "nada"
+        raise
     elsif @persona
         da = Rol.create(name: params[:commit])
         da.pelicula = cinechile
         da.personaje = @persona
         da.save
+              raise
       elsif @rol
         @rol.each do |rol|
           if rol.personaje.genero == "Otro"
             actualizar = rol.personaje
             actualizar.update(name:row[:name], genero: "Hombre")
           end
+          raise
         end
       else
         pe3 = Personaje.create(name: row[:name])
@@ -53,7 +57,10 @@ def import
         da3.pelicula = cinechile
         da3.personaje = pe3
         da3.save
+        pe3.save
+              raise
         end
+        raise
   end
 redirect_to rols_path
 end

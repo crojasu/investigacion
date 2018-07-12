@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   helper_method :fondo
   helper_method :personas
   helper_method :tecnico
-
+  helper_method :sum
   def home
   end
 
@@ -27,11 +27,11 @@ class PagesController < ApplicationController
       end
     end
     if gen == "mujer"
-      return @mujer
+      return @mujer.count
     elsif gen == "hombre"
-      return @hombre
+      return @hombre.count
     elsif gen == "otro"
-      return @otro
+      return @otro.count
     end
   end
 
@@ -53,11 +53,11 @@ def personas(ano, gen)
     end
   end
    if gen == "mujer"
-      return @mujer
+      return @mujer.count
     elsif gen  == "hombre"
-      return @hombre
+      return @hombre.count
     elsif gen  == "otro"
-      return @otro
+      return @otro.count
     end
   end
 
@@ -69,31 +69,59 @@ def personas(ano, gen)
   end
 
   def fondo(ano, item, gen)
-    @peliculas = Pelicula.where(agno: ano)
+    @fondos = Fondo.where(agno: ano, tipo: item)
+     @peliculas = Pelicula.where(agno: ano)
     @hombre = []
      @mujer = []
      @otro = []
     @peliculas.each do |peli|
-      @rol =Rol.where(name: "Direccion", pelicula_id: peli.id)
-      @rol.each do |rol|
+      @rols =Rol.where(name: "Direccion", pelicula_id: peli.id)
+      @rols.each do |rol|
        if  rol.personaje.genero == "Hombre"
           @hombre << Fondo.where(tipo: item, pelicula_id: peli.id)
         elsif  rol.personaje.genero == "Mujer"
           @mujer << Fondo.where(tipo: item, pelicula_id: peli.id)
         elsif  rol.personaje.genero == "Otro"
-          @otro <<  Fondo.where(tipo: item, pelicula_id: peli, agno: ano)
+          raise
+          @otro <<  Fondo.where(tipo: item, pelicula_id: peli)
         end
       end
     end
     if gen == "mujer"
-      return @mujer
+      return @mujer.count
     elsif gen == "hombre"
-      return @hombre
+      return @hombre.count
     elsif gen == "otro"
-      return @otro
+      return @otro.count
     end
   end
-  end
+
+def sum(ano, tipo, gen)
+  @fondos = Fondo.where(agno: ano, tipo: tipo)
+    @hombre =[]
+    @mujer = []
+    @otro =[]
+  @fondos.each do |f|
+  @rols = (Pelicula.find(f.pelicula_id)).rols
+   @rold= @rols.where(name: "Direccion")
+   @rold.each do |rol|
+       if  rol.personaje.genero == "Hombre"
+          @hombre << f
+        elsif  rol.personaje.genero == "Mujer"
+          @mujer << f
+        elsif  rol.personaje.genero == "Otro"
+          @otro <<  f
+        end
+      end
+    end
+    if gen == "mujer"
+      return @mujer.count
+    elsif gen == "hombre"
+      return @hombre.count
+    elsif gen == "otro"
+      return @otro.count
+    end
+end
 
   def tecnico(ano, rol, gen)
     @peliculas = Pelicula.where(agno: ano)
@@ -131,7 +159,7 @@ def personas(ano, gen)
   @corfo = Fondo.where(tipo: "corfo")
   @fondart = Fondo.where(tipo: "fondart")
   end
-
+end
 # def fondosymujer(ano)
 #   @peliculas = Pelicula.where(agno: ano)
 #   @mujer = []

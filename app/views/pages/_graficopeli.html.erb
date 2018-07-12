@@ -206,7 +206,7 @@ var freqData=[
 <% mujer="mujer" %>
 <% otro="otro" %>
 <% if  peliculas(ano, rol, hombre) != 0 %>
-{State:'<%= ano %>',freq:{Hombres:<%= (peliculas(ano,rol, hombre)).count %>, Mujeres:<%= (peliculas(ano, rol, mujer)).count %>, Otro:<%= (peliculas(ano,rol, otro)).count %>}},
+{State:'<%= ano %>',freq:{Hombres:<%= peliculas(ano,rol, hombre) %>, Mujeres:<%= peliculas(ano, rol, mujer) %>, Otro:<%= peliculas(ano,rol, otro) %>}},
 <% end %>
 <% end %>
 ];

@@ -137,10 +137,10 @@ class PeliculasController < ApplicationController
     t.save
     @roldepeliculas = Rol.where(pelicula_id: t.id)
     if value["Response"]== "True"
-    self.matchs("Director")
-    self.matchs("Writer")
-    self.matchs("Actors")
-    self.matchs("Production")
+    self. match_imbd("Director")
+    self.match_imbd("Writer")
+    self.match_imbd("Actors")
+    self.match_imbd("Production")
     end
 #agregamos los nuevos
     imbd2 = params[:pelicula][:imbd]

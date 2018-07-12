@@ -1,16 +1,25 @@
   <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-    <% @todorols.each do |rol| %>
+    <% @rols.each do |rol| %>
   <th><%= link_to rol , rol_path(rol) %></th>
     <% i= 5 %>
     <%  while i < 16 %>
     <% ano= 2000 +i %>
     <td>  <%= ano %> </td>
-    <td><%= mujer(ano, rol) %></td>
-    <td><%= hombre(ano, rol) %></td>
+    <% hombre="hombre" %>
+    <% mujer="mujer" %>
+    <% otro="otro" %>
+    <td><%= personas(ano, hombre) %></td>
+    <td><%= personas(ano, mujer)  %></td>
+    <td><%= personas(ano, otro)  %></td>
     <% i= i+1 %>
     <% end %>
 </tr>
 <% end %>
 </table>
+<p>Information courtesy of
+IMDb
+(http://www.imdb.com).
+Used with permission.
+</p>

@@ -1,5 +1,6 @@
 class PersonajesController < ApplicationController
   skip_before_action :authenticate_user!
+
   def index
     @personaje = Personaje.all
     @mujeres = Personaje.where(genero: true)

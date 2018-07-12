@@ -206,7 +206,7 @@ var freqData=[
 <% hombre="hombre" %>
 <% mujer="mujer" %>
 <% otro="otro" %>
-{State:'<%= ano %>',freq:{Hombres:<%= (personas(ano, hombre)).count %>, Mujeres:<%= (personas(ano, mujer)).count %>, Otros:<%= (personas(ano, otro)).count %> }},
+{State:'<%= ano %>',freq:{Hombres:<%= personas(ano, hombre)%>, Mujeres:<%= personas(ano, mujer)%>, Otros:<%= personas(ano, otro)%> }},
 <% end %>
 ];
 
