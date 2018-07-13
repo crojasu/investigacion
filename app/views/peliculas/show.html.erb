@@ -133,9 +133,10 @@
         <td><%= per.name %></td>
         <td><%= per.id %></td>
          <td> <ul>
-        <li><% @rols = Rol.where(pelicula_id: @pelicula, personaje_id: per).name
+        <li><% @rols = Rol.where(pelicula_id: @pelicula, personaje_id: per)
  %> <% @rols.each do |rol| %>
-   <%= rol.name %>
+   <%= rol.name %>//
+   <% end %>
  </li>
           </ul>
          </td>
