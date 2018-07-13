@@ -27,31 +27,27 @@ def import
     @roldepeliculas = Rol.where(pelicula_id: cinechile.id)
     @rol= @roldepeliculas.where(name: params[:commit])
     @persona = Personaje.find_by(name: row[:name])
-   if @persona && @rol.any? {|rol| rol.personaje_id = @persona.id}
-        @r = @rol.select {|rol| rol.personaje_id = @persona.id}
-        @r.each do |r|
-          r.save
-        end
-    elsif @persona
-        da = Rol.create(name: params[:commit])
-        da.pelicula = cinechile
-        da.personaje = @persona
-        da.save
-      elsif @rol.empty? == false
-        @rol.each do |rol|
-          if rol.personaje.genero == "Otro"
-            actualizar = rol.personaje
-            actualizar.update(name:row[:name], genero: "Hombre")
+    if @persona == nil
+      @persona = Personaje.create(name: row[:name])
+      @persona.save
+    end
+    @rols = @persona.rols
+    if @rols.any?{|rol| rol.name == params[:commit] }
+      sele = @rols.select {|rol| rol.name == params[:commit] }
+      if sele.any? {|rol| rol.pelicula_id == cinechile.id }
+        gen = sele.select {|rol| rol.pelicula_id == cinechile.id}
+          if gen.any?{|rol| rol.personaje.genero == "Otro"}
+            actualizar = (gen.select{|rol| rol.personaje.genero == "Otro"}).first
+            (actualizar.personaje).update(name:row[:name], genero: "Hombre")
           end
-        end
       else
-        pe3 = Personaje.create(name: row[:name])
-        da3 = Rol.create(name: params[:commit])
-        da3.pelicula = cinechile
-        da3.personaje = pe3
-        da3.save
-        pe3.save
-        end
+       r= Rol.create(name: params[:commit], pelicula_id: cinechile.id, personaje_id: @persona.id)
+      r.save
+    end
+    else
+      r= Rol.create(name: params[:commit], pelicula_id: cinechile.id, personaje_id: @persona.id)
+    r.save
+  end
   end
 redirect_to rols_path
 end

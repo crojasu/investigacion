@@ -29,7 +29,8 @@
       <% if peli.imbd != nil %>
       <% @r = peli.imbd %>
       <% @f= JSON.parse @r.gsub('=>', ':')%>
-      <% @direccion = Rol.where(pelicula_id: peli.id, name: "Dirección") %>
+      <% @direccio = Rol.where(pelicula_id: peli.id, name: "Dirección") %>
+      <% @direccion = @direccio.uniq %>
        <% @hombre = []%>
         <% @mujer = []%>
         <% @otro = []%>

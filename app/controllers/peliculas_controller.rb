@@ -26,7 +26,8 @@ class PeliculasController < ApplicationController
     @fondos_corfo = Fondo.where(pelicula_id: @pelicula.id, tipo: "corfo")
     @fondos_fondart = Fondo.where(pelicula_id: @pelicula.id, tipo: "fondart")
     @rols = Rol.where(pelicula_id: @pelicula.id)
-    @directors = Rol.where(pelicula_id: @pelicula.id, name: "Dirección")
+    @director = Rol.where(pelicula_id: @pelicula.id, name: "Dirección")
+    @directors = @director.uniq
     @rols.each do |rol|
       if rol.personaje.genero == "Mujer"
       @mujer << rol
