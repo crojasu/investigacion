@@ -133,8 +133,10 @@
         <td><%= per.name %></td>
         <td><%= per.id %></td>
          <td> <ul>
-        <li><%= Rol.find_by(pelicula_id: @pelicula, personaje_id: per).name
- %> </li>
+        <li><% @rols = Rol.where(pelicula_id: @pelicula, personaje_id: per).name
+ %> <% @rols.each do |rol| %>
+   <%= rol.name %>
+ </li>
           </ul>
          </td>
         <td><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
