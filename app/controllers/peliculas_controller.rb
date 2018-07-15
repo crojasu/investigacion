@@ -9,15 +9,15 @@ class PeliculasController < ApplicationController
 
   def index
     @peliculas = Pelicula.all
+    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
     @rols = Rol.all
-    @todorol= [ "Dirección", "Arte", "Asistente Dirección", "Dirección Fotografía", "Efectos Especiales", "Guión", "Jefatura de Producción", "Maquillaje", "Montaje", "Música", "Producción", "Producción Asociada", "Producción Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animación", "Decoración", "Vestuario"]
     @todorol.each do |rol|
     rol = Rol.where(name: rol)
     end
   end
 
   def show
-    @personaje =[]
+    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
     @mujer=[]
     @hombre =[]
     @otro =[]
@@ -37,10 +37,6 @@ class PeliculasController < ApplicationController
       @otro << rol
       end
     end
-    @rols.each do |rol|
-    @personaje << rol.personaje
-    end
-    @personajes = @personaje.uniq
   end
 
   def import
@@ -77,9 +73,9 @@ class PeliculasController < ApplicationController
         h = Rol.find_by(name: "Dirección" , pelicula_id: t.id)
           if h.nil?
             r = Rol.create(name: "Dirección")
-            p = Personaje.create(genero: "Otro" , name: "#{index+1}")
-          r.pelicula = t
-          r.personaje = p
+            per = Personaje.create(genero: "Otro" , name: "#{index+1}")
+          r.pelicula_id = t.id
+          r.personaje_id = per.id
           r.save
           end
         t.save
@@ -234,6 +230,8 @@ def import_imbd
       @f.each do |f|
         if f.personaje.genero == "Otro"
           f.destroy
+          r = f.personaje
+          r.destroy
         end
         end
     @roldepeliculas = Rol.where(pelicula_id: t.id)
