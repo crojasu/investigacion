@@ -88,11 +88,11 @@
            <td><%= @otro.count %></td>
         </tr>
         <tr>
-         <% if @mujer = 0  %>
-           <% @total = @hombre.count + @otro.count %>
+         <% if @mujer == nil  %>
+           <% @total = @hombre.count + @otro.count%>
           <%  @porcentaje = 0 %>
           <% else %>
-          <% @total = @hombre.count + @otro.count %>
+          <% @total = @hombre.count + @otro.count + @mujer.count%>
           <%  @porcentaje = (@mujer.count * 100)/@total %>
           <% end %>
           <th>Total</th>
