@@ -147,7 +147,11 @@ def salas(ano, item, gen, rol)
     end
   if item == "salas"
     if gen == "mujer"
-      return (@mujer.map(&:salas).sum(&:to_i))/@mujer.count
+      if @mujer.count == 0
+        return 0
+      else
+        return (@mujer.map(&:salas).sum(&:to_i))/@mujer.count
+      end
     elsif gen == "hombre"
       return (@hombre.map(&:salas).sum(&:to_i))/@hombre.count
     elsif gen == "otro"
@@ -155,7 +159,11 @@ def salas(ano, item, gen, rol)
     end
   elsif item == "publico"
        if gen == "mujer"
-      return (@mujer.map(&:publico).sum(&:to_i)/@mujer.count
+        if @mujer.count == 0
+        return 0
+      else
+      return (@mujer.map(&:publico).sum(&:to_i))/@mujer.count
+      end
     elsif gen == "hombre"
       return (@hombre.map(&:publico).sum(&:to_i))/@hombre.count
     elsif gen == "otro"
@@ -163,7 +171,11 @@ def salas(ano, item, gen, rol)
     end
   elsif item == "copias"
        if gen == "mujer"
-      return (@mujer.map(&:copias).sum(&:to_i)/@mujer.count
+            if @mujer.count == 0
+        return 0
+      else
+      return (@mujer.map(&:copias).sum(&:to_i))/@mujer.count
+    end
     elsif gen == "hombre"
       return (@hombre.map(&:copias).sum(&:to_i))/@hombre.count
     elsif gen == "otro"
