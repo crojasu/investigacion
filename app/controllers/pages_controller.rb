@@ -147,27 +147,27 @@ def salas(ano, item, gen, rol)
     end
   if item == "salas"
     if gen == "mujer"
-      return @mujer.map(&:salas).sum(&:to_i)
+      return (@mujer.map(&:salas).sum(&:to_i))/@mujer.count
     elsif gen == "hombre"
-      return @hombre.map(&:salas).sum(&:to_i)
+      return (@hombre.map(&:salas).sum(&:to_i))/@hombre.count
     elsif gen == "otro"
-      return @otro.map(&:salas).sum(&:to_i)
+      return (@otro.map(&:salas).sum(&:to_i))/@otro.count
     end
   elsif item == "publico"
        if gen == "mujer"
-      return @mujer.map(&:publico).sum(&:to_i)
+      return (@mujer.map(&:publico).sum(&:to_i)/@mujer.count
     elsif gen == "hombre"
-      return @hombre.map(&:publico).sum(&:to_i)
+      return (@hombre.map(&:publico).sum(&:to_i))/@hombre.count
     elsif gen == "otro"
-      return @otro.map(&:publico).sum(&:to_i)
+      return (@otro.map(&:publico).sum(&:to_i))/@otro.count
     end
   elsif item == "copias"
        if gen == "mujer"
-      return @mujer.map(&:copias).sum(&:to_i)
+      return (@mujer.map(&:copias).sum(&:to_i)/@mujer.count
     elsif gen == "hombre"
-      return @hombre.map(&:copias).sum(&:to_i)
+      return (@hombre.map(&:copias).sum(&:to_i))/@hombre.count
     elsif gen == "otro"
-      return @otro.map(&:copias).sum(&:to_i)
+      return (@otro.map(&:copias).sum(&:to_i))/@otro.count
     end
   end
 end
