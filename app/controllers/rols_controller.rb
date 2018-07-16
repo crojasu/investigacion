@@ -36,6 +36,7 @@ def import
     end
   end
 redirect_to rols_path
+Rol.dedupe
 end
 
   def show

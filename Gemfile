@@ -10,6 +10,7 @@ gem 'puma'
 gem 'rails', '5.2.0'
 gem 'redis'
 gem 'chart-js-rails'
+gem 'derailed', group: :development
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '~> 3.3'
