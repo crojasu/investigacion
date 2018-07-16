@@ -9,7 +9,7 @@ class PeliculasController < ApplicationController
 
   def index
     @peliculas = Pelicula.all
-    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
+    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción", "Casa Productora" "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
     @rols = Rol.all
     @todorol.each do |rol|
     rol = Rol.where(name: rol)
@@ -17,7 +17,7 @@ class PeliculasController < ApplicationController
   end
 
   def show
-    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
+    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción", "Casa Productora", "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
     @muje=[]
     @hombr =[]
     @otr =[]

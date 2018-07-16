@@ -52,7 +52,7 @@ end
   def generales
     @peliculas = Pelicula.all
     @rols = Rol.all
-    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
+    @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Casa Productora","Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
   end
 
  def parse_csv_rol(file)

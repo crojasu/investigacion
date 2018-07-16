@@ -202,7 +202,7 @@ end
   private
 
   def generales
-  @rols= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
+  @rols= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Casa Productora","Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
   @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   @peliculas =Pelicula.all
   @corfo = Fondo.where(tipo: "orfo")
