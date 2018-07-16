@@ -18,9 +18,9 @@ class PeliculasController < ApplicationController
 
   def show
     @todorol= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
-    @mujer=[]
-    @hombre =[]
-    @otro =[]
+    @muje=[]
+    @hombr =[]
+    @otr =[]
     @pelicula = Pelicula.find(params[:id])
     @fondo = Fondo.where(pelicula_id: @pelicula.id)
     @fondos_corfo = Fondo.where(pelicula_id: @pelicula.id, tipo: "corfo")
@@ -30,13 +30,16 @@ class PeliculasController < ApplicationController
     @directors = @director.uniq
     @rols.each do |rol|
       if rol.personaje.genero == "Mujer"
-      @mujer << rol
+      @muje << rol.personaje
       elsif rol.personaje.genero == "Hombre"
-      @hombre << rol
+      @hombr << rol.personaje
       elsif rol.personaje.genero == "Otro"
-      @otro << rol
+      @otr << rol.personaje
       end
     end
+    @mujer = @muje.uniq
+     @hombre= @hombr.uniq
+      @otro = @otr.uniq
   end
 
   def import
