@@ -120,11 +120,19 @@ def suma(ano, tipo, gen)
       end
     end
     if gen == "mujer"
-      return (@mujer.map(&:monto).sum(&:to_i))/650
+      if @mujer.count == 0
+        return 0
+      else
+      return ((@mujer.map(&:monto).sum(&:to_i))/@mujer.count)/650
+    end
     elsif gen == "hombre"
-      return (@hombre.map(&:monto).sum(&:to_i))/650
+      return ((@hombre.map(&:monto).sum(&:to_i))/@hombre.count)/650
     elsif gen == "otro"
-      return (@otro.map(&:monto).sum(&:to_i))/650
+      if @otro.count == 0
+        return 0
+      else
+      return ((@otro.map(&:monto).sum(&:to_i))/@otro.count)/650
+    end
     end
 end
 
