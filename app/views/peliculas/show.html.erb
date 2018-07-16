@@ -19,7 +19,7 @@
         <tr>
           <td><%= @pelicula.titulo %></td>
           <td>
-            <% @directors.each do |dir|%>
+            <% (@directors.uniq).each do |dir|%>
             <ul>
             <li><%= dir.personaje.name %>//<%= dir.personaje.id %>
             </li>
@@ -85,7 +85,7 @@
         </tr>
         <tr>
           <th>OTRO</th>
-           <td><%= @otro.count %> <%= @otro %></td>
+           <td><%= @otro.count %> </td>
         </tr>
         <tr>
          <% if @mujer == nil  %>
