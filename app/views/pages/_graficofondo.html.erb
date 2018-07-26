@@ -3,10 +3,10 @@
 <script>
 function dashboard(id, fData){
     var barColor = 'steelblue';
-    function segColor(c){ return {Hombres:"#807dba", Mujeres:"#e08214", Otros:"#32B796"}[c]; }
+    function segColor(c){ return {Hombres:"#807dba", Mujeres:"#e08214", Sin_información:"#32B796"}[c]; }
 
     // compute total for each state.
-    fData.forEach(function(d){d.total=d.freq.Hombres+d.freq.Mujeres+d.freq.Otros;});
+    fData.forEach(function(d){d.total=d.freq.Hombres+d.freq.Mujeres+d.freq.Sin_información;});
 
     // function to handle histogram.
     function histoGram(fD){
@@ -185,7 +185,7 @@ function dashboard(id, fData){
         return leg;
     }
     // calculate total frequency by segment for all state.
-    var tF = ['Hombres','Mujeres', 'Otros'].map(function(d){
+    var tF = ['Hombres','Mujeres', 'Sin_información'].map(function(d){
         return {type:d, freq: d3.sum(fData.map(function(t){ return t.freq[d];}))};
     });
 
@@ -205,7 +205,7 @@ var freqData=[
 <% hombre="hombre" %>
 <% mujer="mujer" %>
 <% otro="otro" %>
-{State:'<%= ano %>',freq:{Hombres:<%= sum(ano, fondi, hombre) %>, Mujeres:<%= sum(ano, fondi, mujer) %>, Otros:<%= sum(ano, fondi, otro) %>}},
+{State:'<%= ano %>',freq:{Hombres:<%= sum(ano, fondi, hombre) %>, Mujeres:<%= sum(ano, fondi, mujer) %>, Sin_información:<%= sum(ano, fondi, otro) %>}},
 <% end %>
 ];
 
