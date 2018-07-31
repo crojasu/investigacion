@@ -9,8 +9,8 @@ class PagesController < ApplicationController
   helper_method :salas
   helper_method :graficosgenerales
   before_action :peliculas
-   before_action :roles
-   before_action :roles_agnos
+   # before_action :roles
+   # before_action :roles_agnos
 
 def home
 end
@@ -118,29 +118,29 @@ def peliculas
     end
   end
 
-   def roles
-    @rol = Rol.all
-    @rol.each do |rol|
-      if rol.personaje.genero == "Hombre"
-        rol.sexo = "Hombre"
-        rol.save
-      elsif rol.personaje.genero == "Mujer"
-        rol.sexo = "Mujer"
-        rol.save
-      elsif rol.personaje.genero == "Otro"
-        rol.sexo = "Otro"
-        rol.save
-      end
-    end
-   end
+   # def roles
+   #  @rol = Rol.all
+   #  @rol.each do |rol|
+   #    if rol.personaje.genero == "Hombre"
+   #      rol.sexo = "Hombre"
+   #      rol.save
+   #    elsif rol.personaje.genero == "Mujer"
+   #      rol.sexo = "Mujer"
+   #      rol.save
+   #    elsif rol.personaje.genero == "Otro"
+   #      rol.sexo = "Otro"
+   #      rol.save
+   #    end
+   #  end
+   # end
 
-   def roles_agnos
-     @rol = Rol.all
-    @rol.each do |rol|
-      rol.ano = rol.pelicula.agno
-        rol.save
-      end
-   end
+   # def roles_agnos
+   #   @rol = Rol.all
+   #  @rol.each do |rol|
+   #    rol.ano = rol.pelicula.agno
+   #      rol.save
+   #    end
+   # end
 
 def generales
   @rols= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Casa Productora","Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
