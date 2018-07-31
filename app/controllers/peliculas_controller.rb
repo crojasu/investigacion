@@ -299,13 +299,13 @@ end
       @rols = Rol.where(pelicula_id: pel.id, name: "Dirección")
       @rols.each_with_index do |rol, index|
         if rol.personaje.genero == "Mujer"
-          pel.sexos[index] = "Mujer"
+          pel.sexos = {index => "Mujer"}
           pel.save
         elsif rol.personaje.genero == "Hombre"
-          pel.sexos[index] =  "Hombre"
+          pel.sexos= {index => "Hombre"}
             pel.save
         elsif rol.personaje.genero == "Otro"
-          pel.sexos[index] =   "Otro"
+          pel.sexos= {index => "Otro"}
             pel.save
         end
     end
