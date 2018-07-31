@@ -1,245 +1,154 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
   before_action :generales
-  helper_method :peliculas
+  helper_method :por_agnos
   helper_method :personas
   helper_method :tecnico
   helper_method :suma
   helper_method :sum
   helper_method :salas
   helper_method :graficosgenerales
+  before_action :peliculas
+   before_action :roles
+   before_action :roles_agnos
 
-  def home
-  end
+def home
+end
 
-  def peliculas(ano, rol, gen)
-    @peliculas = Pelicula.where(agno: ano)
-    @hombre = []
-    @mujer =[]
-    @otro =[]
-    @peliculas.each do |peli|
-    @rols = Rol.where(pelicula_id: peli.id, name: rol)
-      @rols.each do |rol|
-        if rol.personaje.genero == "Hombre"
-          @hombre << peli
-        elsif  rol.personaje.genero == "Mujer"
-          @mujer << peli
-        elsif  rol.personaje.genero == "Otro"
-          @otro <<  peli
-        end
-      end
-    end
-    if gen == "mujer"
-      return @mujer.count
+def por_agnos(ano, gen)
+   @agno =[]
+  if gen == "mujer"
+    @agno =[]
+      @mujer.each do |pel|
+       if pel.agno == ano.to_i
+         @agno << pel
+       end
+     end
+     return @agno.count
     elsif gen == "hombre"
-      return @hombre.count
+      @agno =[]
+      @hombre.each do |pel|
+       if pel.agno == ano.to_i
+         @agno << pel
+       end
+     end
+      return @agno.count
     elsif gen == "otro"
-      return @otro.count
+      @agno =[]
+      @otro.each do |pel|
+       if pel.agno == ano.to_i
+         @agno << pel
+       end
+     end
+      return @agno.count
     end
-  end
+end
 
 def personas(ano, gen)
-  @peliculas = Pelicula.where(agno: ano)
-  @hombre = []
-  @mujer = []
-  @otro = []
-  @peliculas.each do |peli|
-   @rols= peli.rols
-   @rols.each do |rol|
-      if rol.personaje.genero == "Hombre"
-        @hombre << rol.personaje
-      elsif rol.personaje.genero == "Mujer"
-        @mujer << rol.personaje
-      elsif rol.personaje.genero == "Otro"
-        @otro << rol.personaje
-      end
-    end
-  end
-   if gen == "mujer"
-      return @mujer.count
-    elsif gen  == "hombre"
-      return @hombre.count
-    elsif gen  == "otro"
-      return @otro.count
-    end
-  end
-
-  # def tablas
-  #   @todorols= [ "Direccion", "Arte", "Asistente Direccion", "Direccion Fotografia", "Efectos Especiales", "Guion", "Jefatura de Producción", "Maquillaje", "Montaje", "Musica", "Produccion", "Produccion Asociada", "Produccion Ejecutiva", "Sonido", "Voz en Off", "Elenco", "Animacion", "Decoracion", "Vestuario"]
-  # end
-
-  def graficos
-  end
-
-   def graficosgenerales
-  end
+  @e= Rol.where(sexo: gen , ano: ano )
+  return @e.count
+end
 
 def sum(ano, tipo, gen)
-  @fondos = Fondo.where(agno: ano, tipo: tipo)
-    @hombre =[]
-    @mujer = []
-    @otro =[]
-  @fondos.each do |f|
-  @rols = (Pelicula.find(f.pelicula_id)).rols
-   @rold= @rols.where(name: "Dirección")
-   @rold.each do |rol|
-       if  rol.personaje.genero == "Hombre"
-          @hombre << f
-        elsif  rol.personaje.genero == "Mujer"
-          @mujer << f
-        elsif  rol.personaje.genero == "Otro"
-          @otro <<  f
-        end
-      end
-    end
-    if gen == "mujer"
-      return @mujer.count
-    elsif gen == "hombre"
-      return @hombre.count
-    elsif gen == "otro"
-      return @otro.count
-    end
+  @e= Fondo.where(sexo: gen , agno: ano , tipo: tipo)
+  return @e.count
 end
 
 def suma(ano, tipo, gen)
-  @fondos = Fondo.where(agno: ano, tipo: tipo)
-    @hombre =[]
-    @mujer = []
-    @otro =[]
-  @fondos.each do |f|
-  @rols = (Pelicula.find(f.pelicula_id)).rols
-   @rold= @rols.where(name: "Dirección")
-   @rold.each do |rol|
-       if  rol.personaje.genero == "Hombre"
-          @hombre << f
-        elsif  rol.personaje.genero == "Mujer"
-          @mujer << f
-        elsif  rol.personaje.genero == "Otro"
-          @otro <<  f
-        end
-      end
-    end
-    if gen == "mujer"
-      if @mujer.count == 0
-        return 0
-      else
-      return ((@mujer.map(&:monto).sum(&:to_i))/@mujer.count)/650
-    end
-    elsif gen == "hombre"
-      return ((@hombre.map(&:monto).sum(&:to_i))/@hombre.count)/650
-    elsif gen == "otro"
-      if @otro.count == 0
-        return 0
-      else
-      return ((@otro.map(&:monto).sum(&:to_i))/@otro.count)/650
-    end
-    end
-end
-
-def salas(ano, item, gen, rol)
-  @peliculas = Pelicula.where(agno: ano)
-    @hombre = []
-    @mujer =[]
-    @otro =[]
-    @peliculas.each do |peli|
-    @rols = Rol.where(pelicula_id: peli.id, name: rol)
-      @rols.each do |rol|
-        if rol.personaje.genero == "Hombre"
-          @hombre << peli
-        elsif  rol.personaje.genero == "Mujer"
-          @mujer << peli
-        elsif  rol.personaje.genero == "Otro"
-          @otro <<  peli
-        end
-      end
-    end
-  if item == "salas"
-    if gen == "mujer"
-      if @mujer.count == 0
-        return 0
-      else
-        return (@mujer.map(&:salas).sum(&:to_i))/@mujer.count
-      end
-    elsif gen == "hombre"
-      return (@hombre.map(&:salas).sum(&:to_i))/@hombre.count
-    elsif gen == "otro"
-      if @otro.count == 0
-        return 0
-      else
-      return (@otro.map(&:salas).sum(&:to_i))/@otro.count
-    end
-    end
-  elsif item == "publico"
-       if gen == "mujer"
-        if @mujer.count == 0
-        return 0
-      else
-      return (@mujer.map(&:publico).sum(&:to_i))/@mujer.count
-      end
-    elsif gen == "hombre"
-      return (@hombre.map(&:publico).sum(&:to_i))/@hombre.count
-    elsif gen == "otro"
-      if @otro.count == 0
-        return 0
-      else
-      return (@otro.map(&:publico).sum(&:to_i))/@otro.count
-    end
-    end
-  elsif item == "copias"
-       if gen == "mujer"
-            if @mujer.count == 0
-        return 0
-      else
-      return (@mujer.map(&:copias).sum(&:to_i))/@mujer.count
-    end
-    elsif gen == "hombre"
-      return (@hombre.map(&:copias).sum(&:to_i))/@hombre.count
-    elsif gen == "otro"
-      if @otro.count == 0
-        return 0
-      else
-      return (@otro.map(&:copias).sum(&:to_i))/@otro.count
-    end
-    end
+  @fondos = Fondo.where(agno: ano, tipo: tipo, sexo: gen)
+  if @fondos.count == 0
+    return 0
+  else
+    return ((@fondos.map(&:monto).sum(&:to_i))/@fondos.count)/650
   end
 end
 
-  def tecnico(ano, rol, gen)
-    @peliculas = Pelicula.where(agno: ano)
-    @hombre = []
-    @otro = []
-    @mujer = []
-    @peliculas.each do |peli|
-    @rols = Rol.where(pelicula_id: peli.id, name: rol)
-      @rols.each do |rol|
-      if rol.personaje.genero == "Hombre"
-          @hombre << rol
-        elsif  rol.personaje.genero == "Mujer"
-          @mujer << rol
-        elsif  rol.personaje.genero == "Otro"
-          @otro <<  rol
-        end
+def salas(ano,item, gen, rol)
+  por_agnos(ano, gen)
+    if @agno.count == 0
+      return 0
+    else
+      if item == "Salas"
+        return (@agno.map(&:salas).sum(&:to_i))/@agno.count
+      elsif item == "Público"
+        return (@agno.map(&:publico).sum(&:to_i))/@agno.count
+      elsif item == "Copias"
+        return (@agno.map(&:copias).sum(&:to_i))/@agno.count
       end
     end
-    if gen == "mujer"
-      return @mujer.count
-    elsif gen == "hombre"
-      return @hombre.count
-       raise
-    elsif gen == "otro"
-      return @otro.count
-    end
-  end
+end
+
+def tecnico(ano, rol, gen)
+  @e= Rol.where(sexo: gen , ano: ano , name: rol)
+  return @e.count
+end
 
   private
 
-  def generales
+def peliculas
+    @hombre = []
+    @mujer =[]
+    @otro =[]
+    @fhombre =[]
+    @fmujer =[]
+    @fotro =[]
+    @hombre = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Hombre") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Hombre")
+    @mujer = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Mujer") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Mujer")
+    @otro =  Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Otro") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Otro")
+    @hombre.each do |pel|
+      (pel.fondos).each do |fx|
+        fx.sexo = "Hombre"
+        fx.save
+         @fhombre << fx
+      end
+    end
+     @mujer.each do |pel|
+      (pel.fondos).each do |fx|
+        fx.sexo = "Mujer"
+        fx.save
+        @fmujer << fx
+      end
+    end
+    @otro.each do |pel|
+      (pel.fondos).each do |fx|
+        fx.sexo = "Otro"
+        fx.save
+         @fotro << fx
+      end
+    end
+  end
+
+   def roles
+    @rol = Rol.all
+    @rol.each do |rol|
+      if rol.personaje.genero == "Hombre"
+        rol.sexo = "Hombre"
+        rol.save
+      elsif rol.personaje.genero == "Mujer"
+        rol.sexo = "Mujer"
+        rol.save
+      elsif rol.personaje.genero == "Otro"
+        rol.sexo = "Otro"
+        rol.save
+      end
+    end
+   end
+
+   def roles_agnos
+     @rol = Rol.all
+    @rol.each do |rol|
+      rol.ano = rol.pelicula.agno
+        rol.save
+      end
+   end
+
+def generales
   @rols= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Casa Productora","Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
   @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   @peliculas =Pelicula.all
-  @corfo = Fondo.where(tipo: "orfo")
+  @corfo = Fondo.where(tipo: "corfo")
   @fondart = Fondo.where(tipo: "fondart")
-  end
+end
 end
 
 

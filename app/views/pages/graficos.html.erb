@@ -202,9 +202,9 @@ function dashboard(id, fData){
 <script>
 var freqData=[
 <% @anos.each do |ano| %>
-<% hombre="hombre" %>
-<% mujer="mujer" %>
-<% otro="otro" %>
+<% hombre="Hombre" %>
+<% mujer="Mujer" %>
+<% otro="Otro" %>
 <% rol=  rolos%>
 {State:'<%= ano %>',freq:{Hombres:<%= tecnico(ano, rol, hombre) %>, Mujeres:<%= tecnico(ano, rol, mujer) %>, Sin_información:<%= tecnico(ano, rol, otro) %>}},
 <% end %>

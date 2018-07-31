@@ -10,9 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_09_194525) do
+ActiveRecord::Schema.define(version: 2018_07_31_111834) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "fondos", force: :cascade do |t|
@@ -22,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_07_09_194525) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "agno"
+    t.string "sexo"
     t.index ["pelicula_id"], name: "index_fondos_on_pelicula_id"
   end
 
@@ -38,6 +40,8 @@ ActiveRecord::Schema.define(version: 2018_07_09_194525) do
     t.integer "salas"
     t.integer "copias"
     t.integer "publico"
+    t.hstore "sexos"
+    t.index ["sexos"], name: "index_peliculas_on_sexos", using: :gin
   end
 
   create_table "personajes", force: :cascade do |t|
@@ -53,6 +57,8 @@ ActiveRecord::Schema.define(version: 2018_07_09_194525) do
     t.bigint "pelicula_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "sexo"
+    t.string "ano"
     t.index ["pelicula_id"], name: "index_rols_on_pelicula_id"
     t.index ["personaje_id"], name: "index_rols_on_personaje_id"
   end

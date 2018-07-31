@@ -3,16 +3,16 @@
   <tr class="tableizer-firstrow">
     <th>Número</th>
     <th>Nombre</th>
-    <th>ID</th>
+<!--     <th>ID</th> -->
     <th>Rol//Película</th>
-    <th>Edita</th>
+ <!--    <th>Edita</th> -->
   </tr>
       <tr>
         <% @personajes2 = @personajes.sort_by(&:name) %>
         <% @personajes2.each_with_index do |per, index| %>
         <td><%= index+1 %></td>
         <td><%= per.name %></td>
-        <td><%= per.id %></td>
+        <!-- <td><%= per.id %></td> -->
          <td> <ul>
           <%  @rol= Rol.where(personaje_id: per.id) %>
            <% @rol.each do |rol| %>
@@ -20,7 +20,7 @@
         <li><%= rol.name %> //  <%= link_to "#{rol.pelicula.titulo}", pelicula_path(peli) %></li>
           </ul><% end %>
          </td>
-        <td data-index-id="<%= per.id %>"><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
+    <!--     <td data-index-id="<%= per.id %>"><%= link_to "doble", personaje_path(per), class: 'btn btn-info', method: :delete, remote: true %>
       <span mujer-id="<%= per.id %>"> <% if per.genero == "Mujer" %>
         <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
          <%= link_to 'Otro', empresa_personaje_path(per), class: 'btn btn-primary',
@@ -35,7 +35,7 @@
         method: :patch , remote: true %>
          <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %></span>
               <% end %>
-            </td>
+            </td> -->
          </tr>
          <% end %>
   </table>

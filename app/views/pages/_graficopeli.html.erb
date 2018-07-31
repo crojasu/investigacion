@@ -205,12 +205,12 @@ var freqData=[
 <% hombre="hombre" %>
 <% mujer="mujer" %>
 <% otro="otro" %>
-<% if  peliculas(ano, rol, hombre) != 0 %>
-{State:'<%= ano %>',freq:{Hombres:<%= peliculas(ano,rol, hombre) %>, Mujeres:<%= peliculas(ano, rol, mujer) %>, Sin_información:<%= peliculas(ano,rol, otro) %>}},
+<% if por_agnos(ano, hombre) != 0 %>
+{State:'<%= ano %>',freq:{Hombres:<%= por_agnos(ano,hombre) %>, Mujeres:<%= por_agnos(ano, mujer) %>, Sin_información:<%= por_agnos(ano, otro) %>}},
 <% end %>
 <% end %>
-];
 
+];
 dashboard('#dashboard1',freqData);
 </script>
 </div>

@@ -6,6 +6,7 @@ require 'i18n'
 class PeliculasController < ApplicationController
   skip_before_action :authenticate_user!
   helper_method :match_imbd
+  before_action :sexo_pelicula
 
   def index
     @peliculas = Pelicula.all
@@ -286,4 +287,28 @@ end
   def pelicula_params
     params.require(:pelicula).permit(:idcinechile, :agno, :responsable, :tipo, :titulo , :salas, :copias, :publico)
   end
+
+  def sexo_pelicula
+    @peliculas = Pelicula.all
+    @peliculas.each do |pel|
+    #   pel.sexos.delete("0")
+    #pel.sexos.delete("sexo")
+    #   pel.sexos.delete(index)
+    #   pel.sexos.delete("1")
+    # #          raise
+      @rols = Rol.where(pelicula_id: pel.id, name: "Dirección")
+      @rols.each_with_index do |rol, index|
+        if rol.personaje.genero == "Mujer"
+          pel.sexos[index] = "Mujer"
+          pel.save
+        elsif rol.personaje.genero == "Hombre"
+          pel.sexos[index] =  "Hombre"
+            pel.save
+        elsif rol.personaje.genero == "Otro"
+          pel.sexos[index] =   "Otro"
+            pel.save
+        end
+    end
+  end
+end
 end

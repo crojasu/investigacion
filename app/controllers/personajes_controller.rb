@@ -7,12 +7,15 @@ class PersonajesController < ApplicationController
     @hombres = Personaje.where(genero: false)
     @total = @personaje.count
     @porcentaje_mujeres= (100* (@mujeres.count))/@total
-    @personaje.map do |rol|
-    if rol.name== nil
-      rol.name = "ninguno"
-   end
-   @personajes = (@personaje.uniq).sort_by(&:name)
- end
+    @personaje.each do |per|
+      if per.name == nil
+        per.name = "ninguno"
+      end
+      if (Rol.where(personaje_id: per.id)).empty?
+      per.destroy
+      end
+    end
+    @personajes = (@personaje.uniq).sort_by(&:name)
   end
 
   def show
