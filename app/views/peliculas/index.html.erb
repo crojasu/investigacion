@@ -1,5 +1,5 @@
   <div class="container-fluid inner">
-     <h4>Importanding data!</h4>
+     <!-- <h4>Importanding data!</h4>
         <%= form_tag import_peliculas_path, multipart:true do %>
         <%= file_field_tag :file %>
         <%= submit_tag "importar csv" %>
@@ -8,8 +8,8 @@
         <%= form_tag import_imbd_peliculas_path, multipart:true do %>
         <%= file_field_tag :file %>
         <%= submit_tag "importar imbd" %>
-        <% end %>
-    <th><%= (Pelicula.all).count %></th>
+        <% end %> -->
+    <!-- <th><%= (Pelicula.all).count %></th> -->
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <th>Otro</th>
@@ -54,10 +54,10 @@
         <ul>
         <% @direccion.each do |dire|%>
         <li data-dire-id="<%= dire.personaje.id %>"><%= dire.personaje.name %>
-            <%= link_to personaje_path(dire.personaje), method: :delete, remote: true do %>
+           <!--  <%= link_to personaje_path(dire.personaje), method: :delete, remote: true do %>
             <i class="fa fa-users" aria-hidden="true"></i>
-            <% end %>
-              <% if dire.personaje.genero == "Mujer" %>
+            <% end %> -->
+             <!--  <% if dire.personaje.genero == "Mujer" %>
               <%= link_to 'mujer', deactivate_personaje_path(dire.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
                <%= link_to 'Otro', empresa_personaje_path(dire.personaje), class: 'btn btn-primary',
               method: :patch , remote: true %>
@@ -70,7 +70,7 @@
                 <%= link_to 'hombre', activate_personaje_path(dire.personaje), class: 'btn btn-primary',
               method: :patch , remote: true %>
                <%= link_to 'mujer', deactivate_personaje_path(dire.personaje), class: 'btn btn-danger', method: :patch , remote: true %>
-              <% end %>
+              <% end %> -->
            </li>
            <% end %>
         <ul>
@@ -78,10 +78,10 @@
       </td>
       <td><%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{peli.idcinechile}" , target: :_blank %></td>
       <td>
-          <%= form_for(peli) do |f| %>
+         <!--  <%= form_for(peli) do |f| %>
             <%= f.text_field :imbd , placeholder: "Nuevo imdbID"  %>
             <%= f.submit %>
-          <% end %>
+          <% end %> -->
           <% if peli.imbd != nil %>
       <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
       <% end %>
