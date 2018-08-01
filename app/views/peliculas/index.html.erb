@@ -12,8 +12,7 @@
     <!-- <th><%= (Pelicula.all).count %></th> -->
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-    <th>Otro</th>
-    <th>Identificador</th>
+    <th>Sexo Dirección</th>
     <th>Título</th>
     <th>Año</th>
     <th>Dirección</th>
@@ -42,12 +41,37 @@
            <% elsif dire.personaje.genero == "Otro" %>
           <% @otro << dire %>
           <% end%>
-          <% end %>
-        <% end %>
    <tr>
       <td>
+        <script>
+          window.onload = function () {
+
+          var chart = new CanvasJS.Chart("#{peli}char", {
+            animationEnabled: true,
+            title:{
+            },
+            data: [{
+              type: "doughnut",
+              startAngle: 60,
+
+              dataPoints: [
+              <% hombre="Hombre" %>
+              <% mujer="Mujer" %>
+                { y: <%= @hombre.count %>, label: "Hombres" },
+                { y: <%= @mujer.count %>, label: "Mujeres" },
+                { y: <%= @otro.count %>, label: "Sin_información" },
+              ]
+            }]
+          });
+          chart.render();
+
+          }
+          </script>
+      <div id="#{peli}char" style="height: 150px; width: 150px;"></div>
+      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
       </td>
-      <td><%= index+1 %></td>
+                <% end %>
+                  <% end %>
       <td><%= link_to "#{peli.titulo}", pelicula_path(peli) %></td>
       <td><%= peli.agno %></td>
       <td><% if @direccion != nil %>

@@ -34,10 +34,10 @@
       <%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{@pelicula.idcinechile}" , target: :_blank %>
         </td>
         <td>
-          <!--   <%= form_for(@pelicula) do |f| %>
+        <%= form_for(@pelicula) do |f| %>
             <%= f.text_field :imbd , :placeholder => "Nuevo imbd"  %>
             <%= f.submit %>
-          <% end %> -->
+          <% end %>
           <% if @pelicula.imbd != nil %>
           <% @f= JSON.parse @pelicula.imbd.gsub('=>', ':') %>
       <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>

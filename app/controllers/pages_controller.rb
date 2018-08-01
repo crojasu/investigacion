@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   before_action :generales
   helper_method :por_agnos
   helper_method :personas
+  helper_method :personas2
   helper_method :tecnico
   helper_method :suma
   helper_method :sum
@@ -49,6 +50,11 @@ def personas(ano, gen)
   return @e.count
 end
 
+def personas2(gen)
+  @e= Personaje.where(genero: gen)
+  return @e.count
+end
+
 def sum(ano, tipo, gen)
   @e= Fondo.where(sexo: gen , agno: ano , tipo: tipo)
   return @e.count
@@ -64,17 +70,27 @@ def suma(ano, tipo, gen)
 end
 
 def salas(ano,item, gen, rol)
+  @agno2 =[]
   por_agnos(ano, gen)
     if @agno.count == 0
       return 0
     else
-      if item == "Salas"
-        return (@agno.map(&:salas).sum(&:to_i))/@agno.count
-      elsif item == "Público"
-        return (@agno.map(&:publico).sum(&:to_i))/@agno.count
-      elsif item == "Copias"
-        return (@agno.map(&:copias).sum(&:to_i))/@agno.count
-      end
+        @agno.each do |pel|
+          if pel.publico != nil
+            @agno2 << pel
+          end
+        end
+        if @agno2.count == 0
+          return 0
+        else
+          if item == "Salas"
+            return (@agno.map(&:salas).sum(&:to_i))/@agno2.count
+          elsif item == "Público"
+            return (@agno.map(&:publico).sum(&:to_i))/@agno2.count
+          elsif item == "Copias"
+            return (@agno.map(&:copias).sum(&:to_i))/@agno2.count
+          end
+        end
     end
 end
 
@@ -95,27 +111,27 @@ def peliculas
     @hombre = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Hombre") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Hombre")
     @mujer = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Mujer") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Mujer")
     @otro =  Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Otro") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Otro")
-    @hombre.each do |pel|
-      (pel.fondos).each do |fx|
-        fx.sexo = "Hombre"
-        fx.save
-         @fhombre << fx
-      end
-    end
-     @mujer.each do |pel|
-      (pel.fondos).each do |fx|
-        fx.sexo = "Mujer"
-        fx.save
-        @fmujer << fx
-      end
-    end
-    @otro.each do |pel|
-      (pel.fondos).each do |fx|
-        fx.sexo = "Otro"
-        fx.save
-         @fotro << fx
-      end
-    end
+    # @hombre.each do |pel|
+    #   (pel.fondos).each do |fx|
+    #     fx.sexo = "Hombre"
+    #     fx.save
+    #      @fhombre << fx
+    #   end
+    # end
+    #  @mujer.each do |pel|
+    #   (pel.fondos).each do |fx|
+    #     fx.sexo = "Mujer"
+    #     fx.save
+    #     @fmujer << fx
+    #   end
+    # end
+    # @otro.each do |pel|
+    #   (pel.fondos).each do |fx|
+    #     fx.sexo = "Otro"
+    #     fx.save
+    #      @fotro << fx
+    #   end
+    # end
   end
 
    # def roles

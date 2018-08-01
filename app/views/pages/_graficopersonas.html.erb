@@ -1,0 +1,29 @@
+<script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+  animationEnabled: true,
+  title:{
+    horizontalAlign: "left"
+  },
+  data: [{
+    type: "doughnut",
+    startAngle: 60,
+    //innerRadius: 60,
+    indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+    dataPoints: [
+    <% hombre="Hombre" %>
+    <% mujer="Mujer" %>
+      { y: <%= personas2(hombre) %>, label: "Hombres" },
+      { y: <%= personas2(mujer) %>, label: "Mujeres" },
+    ]
+  }]
+});
+chart.render();
+
+}
+</script>
+<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

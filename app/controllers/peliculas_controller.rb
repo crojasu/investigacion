@@ -291,21 +291,21 @@ end
   def sexo_pelicula
     @peliculas = Pelicula.all
     @peliculas.each do |pel|
-    #   pel.sexos.delete("0")
+      pel.sexos.delete("0")
     #pel.sexos.delete("sexo")
     #   pel.sexos.delete(index)
-    #   pel.sexos.delete("1")
+      pel.sexos.delete("1")
     # #          raise
       @rols = Rol.where(pelicula_id: pel.id, name: "Dirección")
       @rols.each_with_index do |rol, index|
         if rol.personaje.genero == "Mujer"
-          pel.sexos = {index => "Mujer"}
+          (pel.sexos).merge!(index => "Mujer")
           pel.save
         elsif rol.personaje.genero == "Hombre"
-          pel.sexos= {index => "Hombre"}
+          (pel.sexos).merge!(index => "Hombre")
             pel.save
         elsif rol.personaje.genero == "Otro"
-          pel.sexos= {index => "Otro"}
+          (pel.sexos).merge!(index => "Otro")
             pel.save
         end
     end
