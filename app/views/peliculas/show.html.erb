@@ -22,7 +22,7 @@ Anterior
   <div class="container">
   <div class= "col-sm-12">
 
-  <div class="container-fluid inner">
+  <div class="container-fluid inner" style= "width: 900px;">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <tr>
@@ -32,7 +32,7 @@ Anterior
     <tr>
         <th>Porcentaje de Participación Femenina</th>
          <td><h1>  <%= @porcentaje %> %</h1> </td>
-         <td> <div id="chartContainer" style="height: 150px; width: 320px; align-content: rigth;"></div>
+         <td> <div id="chartContainer" style="height: 150px; width: 320px; align-content: right;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
   window.onload = function () {
@@ -152,57 +152,6 @@ Anterior
         <% end %>
     </table>
 <br>
-
-
-  <table class="tableizer-table" id= "simple">
-  <tr class="tableizer-firstrow">
-    <th>FICHA TECNICA</th>
-    <th>Cargo</th>
-    <th>Nombre</th>
-    <th>Sexo</th>
-    <th>Otros roles realizados//Película</th>
-  </tr>
-  <tr>
-    <% @todorol.each do |rol| %>
-        <% @rols = Rol.where(name: rol, pelicula_id: @pelicula) %>
-        <% @personajes =[] %>
-          <% @rols.each do |roli| %>
-          <% @personajes << roli.personaje %>
-          <% end %>
-        <% unless @personajes == nil %>
-        <% @personajes1 = @personajes.uniq %>
-              <% @personajes2 = @personajes1.sort_by(&:name) %>
-              <% @personajes2.each_with_index do |per, index| %>
-    <td></td>
-
-        <td><%= rol %></td>
-        <td><%= per.name %></td>
-        <td><%= per.genero %></td>
-        <td> <ul><% @rolos = Rol.where(personaje_id: per)%>
-                <% @rolos.each do |rol| %>
-                <% peli = rol.pelicula %>
-              <ol><%= rol.name %> ==> <%= link_to "#{rol.pelicula.titulo}", pelicula_path(peli) %></ol>
-              <% end %>
-          </ul>
-         </td>
-        <!-- <td><%= link_to "doble", personaje_path(per), method: :delete, remote: true %>
-          <% if per.genero == "Mujer" %>
-            <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
-           <%= link_to 'Otro', empresa_personaje_path(per), method: :patch , remote: true %>
-          <% elsif per.genero == "Hombre" %>
-            <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',method: :patch , remote: true %>
-            <%= link_to 'Otro', empresa_personaje_path(per), method: :patch , remote: true %>
-          <% elsif per.genero == "Otro" %>
-           <%= link_to 'hombre', activate_personaje_path(per), class: 'btn btn-primary',
-               method: :patch , remote: true %>
-          <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
-          <% end %>
-            </td> -->
-      </tr>
-      <% end %>
-            <% end %>
-            <% end %>
-  </table>
 </div>
 </div>
 </div>
@@ -221,3 +170,39 @@ Anterior
 </div>
 </div>
 
+<h1>FICHA TECNICA</h1>
+<div class="container-fluid inner" style= "width: 900px;">
+  <table class="tableizer-table" id= "simple">
+  <tr class="tableizer-firstrow">
+    <th>Cargo</th>
+    <th>Nombre</th>
+    <th>Sexo</th>
+    <th>Otros roles realizados//Película</th>
+  </tr>
+      <tr>
+    <% @todorol.each do |rol| %>
+        <% @rols = Rol.where(name: rol, pelicula_id: @pelicula) %>
+        <% @personajes =[] %>
+          <% @rols.each do |roli| %>
+          <% @personajes << roli.personaje %>
+          <% end %>
+        <% unless @personajes == nil %>
+        <% @personajes1 = @personajes.uniq %>
+              <% @personajes2 = @personajes1.sort_by(&:name) %>
+              <% @personajes2.each_with_index do |per, index| %>
+        <td><%= rol %></td>
+        <td><%= per.name %></td>
+        <td><%= per.genero %></td>
+        <td> <ul><% @rolos = Rol.where(personaje_id: per)%>
+                <% @rolos.each do |rol| %>
+                <% peli = rol.pelicula %>
+              <ol><%= rol.name %> ==> <%= link_to "#{rol.pelicula.titulo}", pelicula_path(peli) %></ol>
+              <% end %>
+          </ul>
+         </td>
+      </tr>
+      <% end %>
+            <% end %>
+            <% end %>
+  </table>
+</div>
