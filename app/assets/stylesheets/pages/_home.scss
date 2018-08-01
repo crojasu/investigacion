@@ -473,6 +473,7 @@ h1 {
 
 .col-sm {
 margin: 10px;
+
 }
 
 body {
@@ -519,6 +520,7 @@ li > a:hover{
 
 .container-fluid h2 {
   font-family: 'Montserrat', sans-serif;
+  margin: 50px;
 }
 
 .site-title {
@@ -575,15 +577,29 @@ table{
 table > tbody > tr.tableizer-firstrow > th {
   padding: 10px;
   background: lavenderblush;
+
 }
 
 body > div.container-fluid.inner > table > tbody > tr > td{
   border: 4px solid #fff;
-  width: 170px;
+  flex:0 0 1;
   padding: 10px;
   background: #f8f8f8;
+  margin: 50px;
 }
 
 .home{
   margin: 40px;
+}
+.flechas{
+  margin-top:50px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+}
+.flechasr{
+  margin-top:50px;
+  padding: 30px;
+  display: flex;
+  justify-content: center;
 }

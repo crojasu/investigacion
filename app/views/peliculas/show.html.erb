@@ -1,38 +1,143 @@
-
-  <div class= "row">
-  <div class="col-sm-2">
-      <% if @pelicula.prev != nil %>
-     <%= link_to "<< #{@pelicula.prev.titulo}", @pelicula.prev %>
-     <% end %>
-  </div>
+<div class= "row">
+<div class="col-sm-2">
+<span class= "flechas">
+  <% if @pelicula.prev != nil %>
+  <%= link_to @pelicula.prev do %>
+    <i class="fas fa-arrow-circle-left"></i>
+    <br>
+Anterior
+  <br>
+  <%= "#{@pelicula.prev.titulo}"%>
+  <% end %>
+   <% end %>
+   </span>
+</div>
+<% if @mujer == nil  %>
+  <% @total = @hombre.count + @otro.count%>
+  <%  @porcentaje = 0 %>
+  <% else %>
+  <% @total = @hombre.count + @otro.count + @mujer.count%>
+  <%  @porcentaje = (@mujer.count * 100)/@total %>
+  <% end %>
   <div class="container">
   <div class= "col-sm-12">
-  <div class="container-fluid inner">
 
+  <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-          <th>Título</th>
-          <th>Dirección</th>
-          <th>Observar Imdb</th>
-          <th>Observar Cinechile</th>
-        </tr>
-        <tr>
-          <td><%= @pelicula.titulo %></td>
-          <td>
-            <% (@directors.uniq).each do |dir|%>
-            <ul>
-            <li><%= dir.personaje.name %>//<%= dir.personaje.id %>
-            </li>
-          </ul>
+    <tr>
+      <th></th>
+      <td><h1><%= @pelicula.titulo %></h1></td>
+    </tr>
+    <tr>
+        <th>Porcentaje de Participación Femenina</th>
+         <td><h1>  <%= @porcentaje %> %</h1> </td>
+         <td> <div id="chartContainer" style="height: 150px; width: 320px; align-content: rigth;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+  window.onload = function () {
+
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    title:{
+    },
+    data: [{
+      type: "doughnut",
+      startAngle: 60,
+      dataPoints: [
+      <% hombre="Hombre" %>
+      <% mujer="Mujer" %>
+        { y: <%= @hombre.count %>, label: "Hombres" },
+        { y: <%= @mujer.count %>, label: "Mujeres" },
+      ]
+    }]
+  });
+  chart.render();
+
+  }
+</script>
+    </tr>
+    <tr>
+      <br>
+      <th>Dirección</th>
+      <td>
+          <% (@directors.uniq).each do |dir|%>
+        <ul>
+          <ol><p>  <%= dir.personaje.name %> </p></ol>
+        </ul>
             <% end %>
-            </td>
-            <td>
+        </td>
+    </tr>
+           <tr>
+        <th>Cantidad de Mujeres</th>
+        <td><%= @mujer.count %></td>
+    </tr>
+    <tr>
+        <th>Cantidad de Hombres</th>
+        <td><%= @hombre.count %></td>
+    </tr>
+    <tr>
+        <th>OTRO</th>
+        <td><%= @otro.count %> </td>
+    </tr>
+    <tr>
+          <% if @mujer == nil  %>
+          <% @total = @hombre.count + @otro.count%>
+          <%  @porcentaje = 0 %>
+          <% else %>
+          <% @total = @hombre.count + @otro.count + @mujer.count%>
+          <%  @porcentaje = (@mujer.count * 100)/@total %>
+          <% end %>
+        <th>Total</th>
+        <td><%= @total %></td>
+    </tr>
+    <tr>
+        <th>Año</th>
+        <td><%= @pelicula.agno %></td>
+    </tr>
+    <tr>
+        <th>Responsable de Proyecto</th>
+        <td><%= @pelicula.responsable %></td>
+    </tr>
+    <tr>
+        <th>Responsable</th>
+        <td><%= @pelicula.contacto %></td>
+    </tr>
+    <tr>
+        <th>Institución // Monto Adjudicado</th>
+        <td>
+          <ul> <% @fondo.each do |fondo| %>
+              <li><%= fondo.tipo %> // <%= fondo.monto %></li>
+          </ul>
+          <% end %>
+        </td>
+    </tr>
+
+     <% if @pelicula.salas != nil || @pelicula.publico !=nil %>
+    <tr>
+          <th>Cantidad de Semanas </th>
+          <td><%= @pelicula.salas %></td>
+    </tr>
+    <tr>
+          <th>Cantidad de Copias </th>
+          <td><%= @pelicula.copias %></td>
+    </tr>
+    <tr>
+          <th> Público </th>
+          <td><%= @pelicula.publico %></td>
+    </tr>
+    <tr>
+        <th>Observar Imdb</th>
+        <td>
 <!--             <%= form_for(@pelicula) do |f| %>
             <%= f.text_field :idcinechile , :placeholder => "Nuevo Cinechile"  %>
             <%= f.submit %>
           <% end %> -->
       <%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{@pelicula.idcinechile}" , target: :_blank %>
         </td>
+    </tr>
+    <tr>
+        <th>Observar Cinechile</th>
         <td>
         <%= form_for(@pelicula) do |f| %>
             <%= f.text_field :imbd , :placeholder => "Nuevo imbd"  %>
@@ -43,88 +148,19 @@
       <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
       <% end %>
         </td>
-        <td></td>
-        </tr>
-      </table>
-      <div>
-
-  <table class="tableizer-table" id= "simple">
-  <tr class="tableizer-firstrow">
-    <th>Participé en esta Película</th>
-    <td><%= link_to "Editar, Agregar o Cambiar Información"%></td>
-    </tr>
-  </table>
-
-  <table class="tableizer-table" id= "simple">
-  <tr class="tableizer-firstrowr ">
-        <th>Año</th>
-        <td><%= @pelicula.agno %></td>
-      </tr>
-      <tr>
-        <th>Responsable de Proyecto</th>
-        <td><%= @pelicula.responsable %></td>
-      </tr>
-      <tr>
-        <th>Responsable</th>
-         <td><%= @pelicula.contacto %></td>
-         </tr>
-        <th>Institución // Monto Adjudicado</th>
-        <td><ul> <% @fondo.each do |fondo| %><li>
-           <%= fondo.tipo %> // <%= fondo.monto %>
-        </li></ul>
-                <% end %>
-        </td>
-      </tr>
-      <tr>
-        <th>Cantidad de Mujeres</th>
-        <td><%= @mujer.count %></td>
-      </tr>
-      <tr>
-        <th>Cantidad de Hombres</th>
-         <td><%= @hombre.count %></td>
-        </tr>
-        <tr>
-          <th>OTRO</th>
-           <td><%= @otro.count %> </td>
-        </tr>
-        <tr>
-         <% if @mujer == nil  %>
-           <% @total = @hombre.count + @otro.count%>
-          <%  @porcentaje = 0 %>
-          <% else %>
-          <% @total = @hombre.count + @otro.count + @mujer.count%>
-          <%  @porcentaje = (@mujer.count * 100)/@total %>
-          <% end %>
-          <th>Total</th>
-          <td><%= @total %></td>
-        </tr>
-        <tr>
-          <th>Porcentaje de Participación </th>
-          <td><h1>  <%= @porcentaje %> % </h1> </td>
-        </tr>
-         <% if @pelicula.salas != nil || @pelicula.publico !=nil %>
-        <tr>
-          <th>Cantidad de Semanas </th>
-          <td><%= @pelicula.salas %></td>
-          </tr>
-          <tr>
-          <th>Cantidad de Copias </th>
-          <td><%= @pelicula.copias %></td>
-          </tr>
-          <th> Publico </th>
-          <td><%= @pelicula.publico %></td>
         </tr>
         <% end %>
-      </table>
+    </table>
 <br>
+
 
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-    <th>Número</th>
+    <th>FICHA TECNICA</th>
+    <th>Cargo</th>
     <th>Nombre</th>
-    <th>ID</th>
-    <th>Rol//Película</th>
-    <th>Edita</th>
+    <th>Sexo</th>
+    <th>Otros roles realizados//Película</th>
   </tr>
   <tr>
     <% @todorol.each do |rol| %>
@@ -137,19 +173,19 @@
         <% @personajes1 = @personajes.uniq %>
               <% @personajes2 = @personajes1.sort_by(&:name) %>
               <% @personajes2.each_with_index do |per, index| %>
+    <td></td>
+
         <td><%= rol %></td>
         <td><%= per.name %></td>
-        <td><%= per.id %></td>
-        <td> <ul>
-              <li>
-                <% @rolos = Rol.where(personaje_id: per)%>
+        <td><%= per.genero %></td>
+        <td> <ul><% @rolos = Rol.where(personaje_id: per)%>
                 <% @rolos.each do |rol| %>
-                <%= rol.name %>//<%= rol.pelicula.titulo %>
-                 <% end %>
-              </li>
+                <% peli = rol.pelicula %>
+              <ol><%= rol.name %> ==> <%= link_to "#{rol.pelicula.titulo}", pelicula_path(peli) %></ol>
+              <% end %>
           </ul>
          </td>
-        <td><%= link_to "doble", personaje_path(per), method: :delete, remote: true %>
+        <!-- <td><%= link_to "doble", personaje_path(per), method: :delete, remote: true %>
           <% if per.genero == "Mujer" %>
             <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
            <%= link_to 'Otro', empresa_personaje_path(per), method: :patch , remote: true %>
@@ -161,7 +197,7 @@
                method: :patch , remote: true %>
           <%= link_to 'mujer', deactivate_personaje_path(per), class: 'btn btn-danger', method: :patch , remote: true %>
           <% end %>
-            </td>
+            </td> -->
       </tr>
       <% end %>
             <% end %>
@@ -170,14 +206,18 @@
 </div>
 </div>
 </div>
-</div>
 <div class="col-sm-2">
+  <span class= "flechasr">
     <% if @pelicula.next != nil %>
-      <%= link_to "#{@pelicula.next.titulo} >>", @pelicula.next %>
+  <%= link_to @pelicula.next do %>
+          <i class="fas fa-arrow-circle-right"></i>
+          <br>
+          Siguiente
+          <br>
+          <%= "#{@pelicula.next.titulo}"%>
+      <% end %>
     <% end %>
+</span>
 </div>
-
-
 </div>
-
 

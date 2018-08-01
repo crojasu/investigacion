@@ -14,7 +14,7 @@
               dataPoints: [
               <% hombre="Hombre" %>
               <% mujer="Mujer" %>
-                { y: <%= personas2(hombre) %>, label: "Hombres" },
+                { y: <%= director(hombre) %>, label: "Hombres" },
                 { y: <%= @mujer.count %>, label: "Mujeres" },
                 { y: <%= @otro.count %>, label: "Sin_información" },
               ]
@@ -23,4 +23,4 @@
           chart.render();
 
           }
-          </script>
+</script>
