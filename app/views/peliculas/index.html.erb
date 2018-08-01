@@ -12,7 +12,6 @@
     <!-- <th><%= (Pelicula.all).count %></th> -->
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-    <th>Sexo Dirección</th>
     <th>Título</th>
     <th>Año</th>
     <th>Dirección</th>
@@ -20,7 +19,7 @@
     <th>Imbd</th>
     <th>Fondo Adjudicado</th>
     <th>Ficha Técnica Completa</th></tr>
-     <% @peliculas2 = @peliculas.sort_by(&:titulo) %>
+     <% @peliculas2 = @peliculas.sort_by(&:agno) %>
       <% @peliculas2.each_with_index do |peli, index| %>
       <% @personas= peli.personajes %>
       <% totalmujerespeli = @personas.where(genero: "Mujer") %>
@@ -42,36 +41,6 @@
           <% @otro << dire %>
           <% end%>
    <tr>
-      <td>
-        <script>
-          window.onload = function () {
-
-          var chart = new CanvasJS.Chart("#{peli}char", {
-            animationEnabled: true,
-            title:{
-            },
-            data: [{
-              type: "doughnut",
-              startAngle: 60,
-
-              dataPoints: [
-              <% hombre="Hombre" %>
-              <% mujer="Mujer" %>
-                { y: <%= @hombre.count %>, label: "Hombres" },
-                { y: <%= @mujer.count %>, label: "Mujeres" },
-                { y: <%= @otro.count %>, label: "Sin_información" },
-              ]
-            }]
-          });
-          chart.render();
-
-          }
-          </script>
-      <div id="#{peli}char" style="height: 150px; width: 150px;"></div>
-      <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-      </td>
-                <% end %>
-                  <% end %>
       <td><%= link_to "#{peli.titulo}", pelicula_path(peli) %></td>
       <td><%= peli.agno %></td>
       <td><% if @direccion != nil %>
@@ -112,18 +81,21 @@
       </td>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
-      <td><ul>
-          <% @fondos.each do |fondo| %>
-              <li><%= fondo.tipo%></li>
-              <li><%= fondo.monto%></li>
-          <% end %>
-      </ul></td>
+      <td>
+        <% @fondos.each do |fondo| %>
+        <ul>
+             <ol><%= fondo.tipo%></ol>
+              <ol><%= fondo.monto%></ol>
+          </ul>
+        <% end %>
+      </td>
       <td><%= link_to pelicula_path(peli) do %>
           <i class="fa fa-heart" aria-hidden="true"></i>Ficha Técnica Completa</i>
         <% end %></td>
             <% end %>
     </tr>
-
+<% end %>
+<% end %>
   </table>
 
   </div>

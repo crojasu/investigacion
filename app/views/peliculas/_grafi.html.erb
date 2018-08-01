@@ -1,10 +1,7 @@
-   <div id="chartContainer" style="height: 150px; width: 150px;"></div>
-  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
 <script>
           window.onload = function () {
 
-          var chart = new CanvasJS.Chart("chartContainer", {
+          var chart = new CanvasJS.Chart('<%= "char#{peli.id}"%>', {
             animationEnabled: true,
             title:{
             },
@@ -14,7 +11,7 @@
               dataPoints: [
               <% hombre="Hombre" %>
               <% mujer="Mujer" %>
-                { y: <%= director(hombre) %>, label: "Hombres" },
+                { y: <%= @hombre.count %>, label: "Hombres" },
                 { y: <%= @mujer.count %>, label: "Mujeres" },
                 { y: <%= @otro.count %>, label: "Sin_información" },
               ]

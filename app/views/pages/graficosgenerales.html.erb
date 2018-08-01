@@ -1,32 +1,55 @@
-<div class="home">
-<h1>Total de películas ordenadas según sexo director'a </h1>
-<p>(n = Cantidad de Películas) </p>
-<%= render 'graficopeli' %>
 
-<h1>Cantidad de roles realizados ordenados según sexo</h1>
-<p>(n = Cantidad de roles) </p>
-<%= render 'grafico' %>
+<div class="container">
+ <div class= "row">
+        <div id='dashboard1'>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+        <h1>Total de películas ordenadas según sexo director/a </h1>
+        <p>(n = Cantidad de Películas) </p>
+        <%= render 'graficopeli' %>
+        </div>
 
-<h1>Cantidad de Técnicos/Elencos ordenados según sexo</h1>
-<p>(n = Cantidad de roles) </p>
-<%= render 'graficopersonas' %>
+    <h1>Cantidad de Técnicos/Elencos ordenados según sexo</h1>
+      <p>(n = Cantidad de personas) </p>
+      <%= render 'graficopersonas' %>
 
-<div id='dashboard3'>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<h1>Películas Financiadas por Institución según sexo director'a</h1>
-<p>(n = Cantidad de películas) </p>
-<%= render 'graficofondo' %>
+      <div id='dashboard2'>
+      <script src="https://d3js.org/d3.v3.min.js"></script>
+        <h1>Cantidad de roles realizados ordenados según sexo</h1>
+        <p>(n = Cantidad de roles) </p>
+        <%= render 'grafico' %>
+      </div>
+<div class="container">
+ <div class= "row">
+      <div id='dashboard3'>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <h1>Películas Financiadas por Institución según sexo director/a</h1>
+        <p>(n = Cantidad de películas) </p>
+        <%= render 'graficofondo' %>
+      </div>
+  </div>
 </div>
-<div id='dashboard4'>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<h1>Promedio de montos otorgados por Institución según sexo director'a</h1>
-<p>(n = Montos en USD promedio por película) </p>
-<%= render 'promedios' %>
+<div class="container">
+ <div class= "row">
+      <div id='dashboard4'>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <h1>Promedio de montos otorgados por Institución según sexo director/a</h1>
+        <p>(n = Montos en USD promedio por película) </p>
+        <%= render 'promedios' %>
+      </div>
+
+  </div>
 </div>
-<div id='dashboard5'>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<h1>Promedios de salas, copias y público por películas según sexo director'a</h1>
-<p>(n = Cantidad de salas/copias/público promedio por película) </p>
-<%= render 'salas' %>
+<div class="container">
+ <div class= "row">
+      <div id='dashboard5'>
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <h1>Promedios de salas, copias y público por películas según sexo director/a</h1>
+        <p>(n = Cantidad de semans en salas/copias/público promedio por película) </p>
+        <%= render 'salas' %>
+      </div>
+  </div>
 </div>
+  </div>
 </div>
+
+
