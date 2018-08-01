@@ -1,12 +1,19 @@
-<div id="chartContainer" style="height: 200px; width: 400px; align-content: rigth;"></div>
+<h1><% titulo= params[:id] %>
+  <%= titulo.upcase %>
+</h1>
+<div class="rowf">
+<div id="chartContainer" style="height: 200px; width: 400px; "></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <% m=[] %>
 <% h=[] %>
+<% o=[] %>
 <% @personajes.each do |per| %>
   <%  if per.genero== "Mujer" %>
     <%  m<< per %>
   <% elsif per.genero == "Hombre" %>
     <%  h << per %>
+     <% elsif per.genero == "Otro" %>
+    <%  o << per %>
   <% end %>
 <% end %>
 <script>
@@ -22,8 +29,10 @@
       dataPoints: [
       <% hombre="Hombre" %>
       <% mujer="Mujer" %>
+      <% mujer="Otros" %>
         { y: <%= h.count %>, label: "Hombres" },
         { y: <%= m.count %>, label: "Mujeres" },
+        { y: <%= o.count %>, label: "Otros" },
       ]
     }]
   });
@@ -31,8 +40,8 @@
 
   }
 </script>
-
-
+</div>
+</div>
 
 <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">

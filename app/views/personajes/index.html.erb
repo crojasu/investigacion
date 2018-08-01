@@ -1,3 +1,39 @@
+<h1>TECNICOS Y ELENCO </h1>
+<div class="rowf">
+<div id="chartContainer" style="height: 200px; width: 400px; align-content: center;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<% m=[] %>
+<% h=[] %>
+<% @personajes.each do |per| %>
+  <%  if per.genero== "Mujer" %>
+    <%  m<< per %>
+  <% elsif per.genero == "Hombre" %>
+    <%  h << per %>
+  <% end %>
+<% end %>
+<script>
+  window.onload = function () {
+
+  var chart = new CanvasJS.Chart("chartContainer", {
+    animationEnabled: true,
+    title:{
+    },
+    data: [{
+      type: "doughnut",
+      startAngle: 60,
+      dataPoints: [
+      <% hombre="Hombre" %>
+      <% mujer="Mujer" %>
+        { y: <%= h.count %>, label: "Hombres" },
+        { y: <%= m.count %>, label: "Mujeres" },
+      ]
+    }]
+  });
+  chart.render();
+
+  }
+</script>
+</div>
 <div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">

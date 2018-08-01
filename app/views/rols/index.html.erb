@@ -1,8 +1,9 @@
-   <div class="container-fluid inner">
+   <h1>FICHA TECNICA FINAL
+   </h1><div class="container-fluid inner">
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
     <% @todorol.each do |rol| %>
-     <th><%= rol %></th>
+     <td><%= rol %></td>
      <td><%= link_to "#{rol}", rol_path(rol) %></td>
    <!--   <th><%= form_tag import_rols_path, multipart: true do %>
        <%= file_field_tag :file %>

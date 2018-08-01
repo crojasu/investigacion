@@ -1,7 +1,13 @@
 class Rol < ApplicationRecord
   belongs_to :personaje
   belongs_to :pelicula
+def next
+  Rol.where("id > ?", id).order(id: :asc).limit(1).first
+end
 
+def prev
+  Rol.where("id < ?", id).order(id: :desc).limit(1).first
+end
   # def self.dedupe
   #   # find all models and group them on keys which should be common
   #   grouped = all.group_by{|rol| [rol.name,rol.personaje_id,rol.pelicula_id] }
