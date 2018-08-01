@@ -12,6 +12,8 @@
     <!-- <th><%= (Pelicula.all).count %></th> -->
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
+    <th>Numero</th>
+    <th>Id</th>
     <th>Título</th>
     <th>Año</th>
     <th>Dirección</th>
@@ -19,7 +21,8 @@
     <th>Imbd</th>
     <th>Fondo Adjudicado</th>
     <th>Ficha Técnica Completa</th></tr>
-     <% @peliculas2 = @peliculas.sort_by(&:agno) %>
+     <% @peliculas1 = (@peliculas.sort_by(&:agno)) %>
+     <% @peliculas2 = @peliculas1.uniq %>
       <% @peliculas2.each_with_index do |peli, index| %>
       <% @personas= peli.personajes %>
       <% totalmujerespeli = @personas.where(genero: "Mujer") %>
@@ -40,10 +43,13 @@
            <% elsif dire.personaje.genero == "Otro" %>
           <% @otro << dire %>
           <% end%>
+          <% end %>
    <tr>
+    <td><%= index+1 %></td>
+    <td><%= peli.id %></td>
       <td><%= link_to "#{peli.titulo}", pelicula_path(peli) %></td>
       <td><%= peli.agno %></td>
-      <td><% if @direccion != nil %>
+      <td>
         <ul>
         <% @direccion.each do |dire|%>
         <li data-dire-id="<%= dire.personaje.id %>"><%= dire.personaje.name %>
@@ -67,7 +73,6 @@
            </li>
            <% end %>
         <ul>
-          <% end %>
       </td>
       <td><%= link_to "Ficha en Cinechile", "http://www.cinechile.cl/pelicula-#{peli.idcinechile}" , target: :_blank %></td>
       <td>
@@ -94,7 +99,6 @@
         <% end %></td>
             <% end %>
     </tr>
-<% end %>
 <% end %>
   </table>
 
