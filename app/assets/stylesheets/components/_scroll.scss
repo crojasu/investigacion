@@ -4,12 +4,12 @@
   padding: 0;
 }
 html, body {
-  height: calc(100%-75px);
+  height: calc(100%-100px);
 }
 section {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100vh -100px);
 }
 section::after {
   position: absolute;
@@ -24,7 +24,7 @@ section::after {
 section h1 {
   position: absolute;
   top: 10%;
-  left: 20%;
+  left: 30%;
   z-index: 2;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -91,7 +91,7 @@ section h1 {
 
 #section01 a {
   padding-top: 60px;
-  height: calc(100vh -70px);
+  height: calc(100vh -100px);
 }
 #section01 a span {
   position: absolute;

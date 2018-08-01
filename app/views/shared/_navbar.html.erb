@@ -1,4 +1,4 @@
-<div class="navbar-wagon">
+<div class="navbar-wagon navbar-fixed-top">
   <!-- Logo -->
   <%= link_to root_path, class: "navbar-wagon-brand" do %>
     <%= image_tag "logo2.png", height: 50 %>
@@ -15,8 +15,6 @@
        <%= link_to "Películas", peliculas_path, class: "navbar-wagon-item navbar-wagon-link" %>
       <%= link_to "Roles", rols_path, class: "navbar-wagon-item navbar-wagon-link" %>
       <%= link_to "Personajes", personajes_path, class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "Edita", "#", class: "navbar-wagon-item navbar-wagon-link" %>
-      <%= link_to "Información/ Tablas", tablas_path, class: "navbar-wagon-item navbar-wagon-link" %>
       <%= link_to t(".sign_in", default: "Login"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
 
   </div>
@@ -33,7 +31,6 @@
         <li> <%= link_to "Películas", peliculas_path %></li>
         <li><%= link_to "Roles", rols_path %></li>
         <li><%= link_to "Personas", personajes_path %></li>
-        <li><%= link_to "Información/ Tablas", tablas_path %></li>
       </ul>
     </div>
   </div>
