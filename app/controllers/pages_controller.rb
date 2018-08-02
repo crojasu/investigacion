@@ -65,12 +65,13 @@ def suma(ano, tipo, gen)
   if @fondos.count == 0
     return 0
   else
-    return ((@fondos.map(&:monto).sum(&:to_i))/@fondos.count)/650
+    return ((@fondos.map(&:monto)).sum(&:to_i))/1000000
   end
 end
 
 def salas(ano,item, gen, rol)
   @agno2 =[]
+  @peliculaspor=[]
   por_agnos(ano, gen)
     if @agno.count == 0
       return 0
@@ -86,6 +87,7 @@ def salas(ano,item, gen, rol)
           if item == "Salas"
             return (@agno.map(&:salas).sum(&:to_i))/@agno2.count
           elsif item == "Público"
+            @peliculaspor << @agno2
             return (@agno.map(&:publico).sum(&:to_i))/@agno2.count
           elsif item == "Copias"
             return (@agno.map(&:copias).sum(&:to_i))/@agno2.count
