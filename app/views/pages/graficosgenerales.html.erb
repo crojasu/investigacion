@@ -7,6 +7,42 @@
     </div>
     <div class="boxes-right">
     <div class="boxedar">
+        <h2>Cuadro resumen de la información recopilada</h2>
+
+      <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
+      <br>
+<% hombre= (Personaje.where(genero: "Hombre")).count %>
+<% mujer = (Personaje.where(genero: "Mujer")).count %>
+<% total = hombre + mujer %>
+      <%= total%> Técnicos o Elenco.
+      <br>
+      <%="#{(Rol.all).count}"%> Roles de trabajo.
+      <br>
+      <%="#{(Fondo.where(tipo: "corfo")).count}"%> Fondos de Corfo.
+      <br>
+      <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual
+      <br>
+      Fueron Analizados Público, salas y copias de distribución.
+    </div>
+      <div class="boxeda">
+
+      </div>
+    </div>
+  </div>
+
+  <% @total= (@peliculas.count) %>
+<div class="containerbox">
+    <div class="boxed">
+   <% @total= (@peliculas.count) %>
+        Directores y directoras
+<br>
+        Uno de los primeros datos relevantes para esta investigación hace referencia con la identificación de las áreas de participación en la producción de las mujeres y varones, estableciendo el rol de trabajo. Del análisis se evidencia que del total de las <%= @total %> películas realizadas entre los años 2005 al 2015 financiadas por CORFO y el Fondo de Fomento Audiovisual, <%= @mujer.count %> fueron dirigidas por mujeres lo que equivale al <%= (@mujer.count*100)/@total %> % , <%= @hombre.count %> fueron dirigida hombres representando el <%= (@hombre.count*100)/@total %> % del total y <%= @otro.count %> películas quedaron sin identificar, correspondiendo al <%= (@otro.count*100)/@total %> % del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.
+<br>
+        <br>
+        <br>
+    </div>
+    <div class="boxes-right">
+    <div class="boxedar">
       <h2>Cantidad de Películas dirigidas según sexos</h2>
 <div id="chartContainer1" style="height: 200px; width: 400px; align-content: center;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -32,36 +68,20 @@
 </script>
     </div>
       <div class="boxeda">
-        <h2>Cuadro resumen de la información recopilada</h2>
-
-      <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
-      <br>
-<% hombre= (Personaje.where(genero: "Hombre")).count %>
-<% mujer = (Personaje.where(genero: "Mujer")).count %>
-<% total = hombre + mujer %>
-      <%= total%> Técnicos o Elenco.
-      <br>
-      <%="#{(Rol.all).count}"%> Roles de trabajo.
-      <br>
-      <%="#{(Fondo.where(tipo: "corfo")).count}"%> Fondos de Corfo.
-      <br>
-      <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual
-      <br>
-      Fueron Analizados Público, salas y copias de distribución.
 
       </div>
     </div>
   </div>
 
+
+
+
+
+
 <div class="container">
  <div class= "row">
         <div id='dashboard1'>
         <script src="https://d3js.org/d3.v3.min.js"></script>
-        <% @total= (@peliculas.count) %>
-        <h2>Directores y directoras
-        </h2>
-        Uno de los primeros datos relevantes para esta investigación hace referencia con la identificación de las áreas de participación en la producción de las mujeres y varones, estableciendo el rol de trabajo. Del análisis se evidencia que del total de las <%= @total %> películas realizadas entre los años 2005 al 2015 financiadas por CORFO y el Fondo de Fomento Audiovisual, <%= @mujer.count %> fueron dirigidas por mujeres lo que equivale al <%= (@mujer.count*100)/@total %> % , <%= @hombre.count %> fueron dirigida hombres representando el <%= (@hombre.count*100)/@total %> % del total y <%= @otro.count %> películas quedaron sin identificar, correspondiendo al <%= (@otro.count*100)/@total %> % del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.
-<br>
         <h2>Total de películas ordenadas según sexo director/a </h2>
         <p>(n = <%= @total%> Películas) </p>
         <%= render 'graficopeli' %>
