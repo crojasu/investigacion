@@ -212,11 +212,15 @@ Para el caso de las mujeres, es interesante notar que los números de películas
         <%= render 'grafico' %>
         </div>
          <div class="caja">
+          <% hombrer= (Personaje.where(sexo: "Hombre")).count %>
+<% mujerr = (Personaje.where(sexo: "Mujer")).count %>
+<%  totalr = hombre + mujer %>
+
           <% hombre= (Rol.where(sexo: "Hombre")).count %>
 <% mujer = (Rol.where(sexo: "Mujer")).count %>
 <%  total = hombre + mujer %>
 
-    Se recopiló la participación de <%= total %> personas para las películas analizadas, de estas, <%= (hombre*100)/total %> % (<%= hombre%>) son hombres y el <%= (mujer*100)/total %>% (<%= mujer %>) son mujeres.
+    Se recopiló la participación de <%= totalr %> personas para las películas analizadas, de estas, <%= (hombrer*100)/total %> % (<%= hombrer%>) son hombres y el <%= (mujerr*100)/total %>% (<%= mujerr %>) son mujeres.
     El gráfico muestra la cantidad de roles que fueron utilizados por Técnicos y Elencos ordenads según sexo.
 <br>
 De esta manera las mujeres ocuparon <%= mujer %> roles (<%= (mujer*100)/total %> % ), a diferencia de los varones quienes ocuparon un total de <%= hombre %> roles (<%= (hombre*100)/total %> % ).
