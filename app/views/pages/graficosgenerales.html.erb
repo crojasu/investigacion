@@ -212,8 +212,8 @@ Para el caso de las mujeres, es interesante notar que los números de películas
         <%= render 'grafico' %>
         </div>
          <div class="caja">
-          <% hombrer= (Personaje.where(sexo: "Hombre")).count %>
-<% mujerr = (Personaje.where(sexo: "Mujer")).count %>
+          <% hombrer= (Personaje.where(genero: "Hombre")).count %>
+<% mujerr = (Personaje.where(genero: "Mujer")).count %>
 <%  totalr = hombrer + mujerr %>
 
           <% hombre= (Rol.where(sexo: "Hombre")).count %>
