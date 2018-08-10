@@ -5,6 +5,8 @@ class PagesController < ApplicationController
   helper_method :personas
   helper_method :personas2
   helper_method :tecnico
+  helper_method :tecnicogeneral
+  helper_method :tecnicorol
   helper_method :suma
   helper_method :sum
   helper_method :salas
@@ -101,6 +103,17 @@ def tecnico(ano, rol, gen)
   return @e.count
 end
 
+def tecnicogeneral(rol, gen)
+  @e= Rol.where(sexo: gen , name: rol)
+  return @e.count
+end
+
+def tecnicorol(rol)
+  @e= Rol.where(name: rol)
+  return @e.count
+end
+
+
   private
 
 def peliculas
@@ -161,11 +174,14 @@ def peliculas
    # end
 
 def generales
-  @rols= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción", "Casa Productora","Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Decoración", "Vestuario", "Efectos Especiales",  "Animación", "Voz en Off", "Elenco"]
+  @rols= [ "Dirección", "Guión", "Producción Asociada", "Producción Ejecutiva", "Producción","Dirección Fotografía", "Arte", "Asistente Dirección", "Jefatura de Producción",  "Montaje", "Música", "Sonido", "Maquillaje", "Vestuario", "Elenco"]
   @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"]
   @peliculas =Pelicula.all
   @corfo = Fondo.where(tipo: "corfo")
   @fondart = Fondo.where(tipo: "fondart")
+  @hombre = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Hombre") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Hombre")
+  @mujer = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Mujer") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Mujer")
+  @otro =  Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Otro") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Otro")
 end
 end
 

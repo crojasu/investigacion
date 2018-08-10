@@ -14,7 +14,7 @@
     <!-- <th><%= (Pelicula.all).count %></th> -->
   <table class="tableizer-table" id= "simple">
   <tr class="tableizer-firstrow">
-    <th>Numero</th>
+    <th>Sexo dirección</th>
 <!--     <th>Id</th> -->
     <th>Título</th>
     <th>Año</th>
@@ -47,7 +47,27 @@
           <% end%>
           <% end %>
    <tr>
-    <td><%= index+1 %></td>
+    <td>
+      <div id='chartcontainer<%= peli.id %>' style="height: 100px; width: 200px; align-content: center;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+  var chart<%= peli.id %> = new CanvasJS.Chart("chartcontainer<%= peli.id %>", {
+    animationEnabled: true,
+    data: [{
+      type: "doughnut",
+      startAngle: 60,
+      dataPoints: [
+      <% hombre="Hombre" %>
+      <% mujer="Mujer" %>
+        { y: <%= @hombre.count %>, label: "Hombres" },
+        { y: <%= @mujer.count %>, label: "Mujeres" },
+        { y: <%= @otro.count %>, label: "Otro" },
+      ]
+    }]
+  });
+chart<%= peli.id %>.render();
+</script>
+</td>
 <!--     <td><%= peli.id %></td> -->
       <td><%= link_to "#{peli.titulo}", pelicula_path(peli) %></td>
       <td><%= peli.agno %></td>

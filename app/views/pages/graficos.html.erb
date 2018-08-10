@@ -1,26 +1,30 @@
-    <div class="containerbox">
+<div class="containerbox">
     <div class="boxed">
-          Cantidad de Técnicos/Elencos ordenados según sexo
-      (n = Cantidad de personas)
-      <%= render 'graficopersonas' %>
+          Un elemento relevante sobre el que fue preciso desagregar la información, hizo referencia con puntualizar los roles de trabajo en que participaron las mujeres. En este sentido, tal como se observará en las entrevistas cualitativas más adelante en el informe, todos/as los/as interlocutores son capaces de diferenciar una división sexual del trabajo que se funda en estereotipos de género sobre lo que pueden o no hacer tanto mujeres como varones.
+          De esta forma, se recopiló información que estableció la participación de <%= Personaje.count %> personas para las películas analizadas, de las cuales el <%= Personaje.count %>% (<%= Personaje.count %>) son hombres y el <%= Personaje.count %>% (<%= Personaje.count %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los hombres.
     </div>
     <div class="boxes-right">
     <div class="boxedar">
+<h2>Cantidad de Técnicos/Elencos ordenados según sexo</h2>
+(n = <%= Personaje.count %>)
+      <%= render 'graficopersonas' %>
     </div>
-Se recopiló la participación de 2908 personas para las películas analizadas, de estas, 1824 65,33% son hombres y 962 representando el 34, 67% son mujeres.
-Cabe destacar el aumento de la participación femenina en los últimos años. Esto puede referirse al aumento de mujeres en las universidades e institutos técnicos. (referencia scherson?)
+    <div class="boxeda">
+      En el estudio se puede ver cómo los hombres dominan en cargo de importancia, como Dirección, Producción Ejecutiva y Asociada , Producción. Así también, como en cargos más "técnicos" como el de Dirección de Fotografía, Sonido, Efectos Especiales.
     </div>
   </div>
-
+</div>
 <div class="container">
  <div class= "row">
-
   <div id='dashboard'>
      <div class="caja" style="margin-top: 70px">
       <h1>Gráficos por roles</h1>
-  En el estudio se puede ver cómo los hombres dominan en cargo de importancia, como dirección, producción ejecutiva y asociada , producción. Así también, como en cargos más ¨técnicos¨como el de dirección de fotografía, sonido, efectos especiales.
-Los gráficos muestran que las mujeres han podido posicionarse en en cargos de jefatura dentro de la producción como son Asistente de dirección , jefatura de producción.
-Las áreas de mayor interés o espacio son las relacionadas al arte, maquillaje, vestuario y decoración
+
+Los gráficos muestran que las mujeres han podido posicionarse en en cargos de jefatura dentro de la Producción como son Asistente de Dirección , Jefatura de Producción.
+Las áreas de mayor interés o espacio son las relacionadas al Arte, Maquillaje, Vestuario y Decoración.
+
+Para el cargo de Dirección las mujeres ocuparon <%= Personaje.count %> puestos representado el <%= Personaje.count %> % de los roles a diferencia de los hombres quienes ocuparon <%= Personaje.count %> puestos representando el <%= Personaje.count %> %. Se hace patente que existe una brecha de género en el rol de decisión de la película, como es la Dirección. En el apartado cualitativo se indaga respecto a esta diferenciación de los roles según el género relativo a estereotipos vinculados al liderazgo y la autoridad, además de equipos de trabajo verticales en los largometrajes de ficción.
+
     </div>
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <% @rols.each do |rolos|%>
@@ -221,7 +225,14 @@ function dashboard(id, fData){
         leg= legend(tF);  // create the legend.
 }
 </script>
+<% ano = 2005 %>
+<% hombre="Hombre" %>
+<% mujer="Mujer" %>
+<% otro="Otro" %>
+<% rol=  rolos%>
 <h1><%= rolos %></h1>
+<p>Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %>, representado el <%= (tecnicogeneral(rol, mujer))*100/tecnicorol(rol) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= (tecnicogeneral(rol, hombre))*100/tecnicorol(rol) %> del total.
+</p>
 <script>
 var freqData=[
 <% @anos.each do |ano| %>
@@ -232,6 +243,8 @@ var freqData=[
 {State:'<%= ano %>',freq:{Hombres:<%= tecnico(ano, rol, hombre) %>, Mujeres:<%= tecnico(ano, rol, mujer) %>, Sin_información:<%= tecnico(ano, rol, otro) %>}},
 <% end %>
 ];
+
+
 
 dashboard('#dashboard',freqData);
 </script>

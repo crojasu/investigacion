@@ -1,29 +1,68 @@
-   <div class="containerbox">
+<section id="section01" class="demo">
+  <% @total= (@peliculas.count) %>
+<div class="containerbox">
     <div class="boxed">
-          <h2 style= "row">Los resultados del análisis cuantitativo muestran que del total de las 335 películas realizadas entre los años 2005 al 2015, 71 fueron dirigidas por una mujer lo que equivale al 21.19% del total , 241 fueron dirigida por un hombre representado el 71.94% del total y 64 películas quedaron sin identificar, correspondiendo al 19% del total.Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.
+            El estudio cuantitativo se realizó en base a un total de <%="#{@peliculas.count}"%> proyectos de Películas, que fueron financiadas por el Fondo de fomento Audiovisual o CORFO o ambas instituciones. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las <%="#{@peliculas.count}"%> películas, <%="#{@peliculas.count}"%>  fueron co-dirigidas representando el 12% del total (hombre-hombre, mujer- mujer, mujer- hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, <%="#{@otro.count}"%> (<%= (@otro.count*100/@total).to_f %> %) caen dentro de la categoría “sin información” , ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en el proyecto, puedan añadir o modificar información para así ir completando la faltante.
+
+
+<!-- Los resultados del análisis cuantitativo muestran que del total de las  películas realizadas entre los años 2005 al 2015, <%="#{@mujer.count}" %>    fueron dirigidas por una mujer lo que equivale al <%=(@mujer.count*100/@total).to_f %> % del total , <%="#{@hombre.count}"%> fueron dirigida por un hombre representado el <%= (@hombre.count*100/@total).to_f%> % del total y  películas quedaron sin identificar, correspondiendo al  del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas. -->
         <br>
         <br>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
-      <h1>Cuadro resumen de la información recopilada</h1>
+      <h2>Cantidad de Películas dirigidas según sexos</h2>
+<div id="chartContainer1" style="height: 200px; width: 400px; align-content: center;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+  var chart1 = new CanvasJS.Chart("chartContainer1", {
+    animationEnabled: true,
+    title:{
+    },
+    data: [{
+      type: "doughnut",
+      startAngle: 60,
+      dataPoints: [
+      <% hombre="Hombre" %>
+      <% mujer="Mujer" %>
+        { y: <%= @hombre.count %>, label: "Hombres" },
+        { y: <%= @mujer.count %>, label: "Mujeres" },
+        { y: <%= @otro.count %>, label: "Otro" },
+      ]
+    }]
+  });
+  chart1.render();
 
-335 Películas financiadas por CORFO Y FONDART entre los años 2005 al 2015
-2.908 Personas  participaron en la creación de la película como técnicos o elenco.
-5.549 Roles de trabajo, se consideran diferentes roles de una misma persona. De esta manera, Un director puede haber trabajado como guionista y se cuenta como dos roles distintos y una sola persona.
-230 Fondos de Corfo, solo se tiene registro de fondos y montos desde el año 2006.
-180 Fondos de Fondart, se tiene registro de fondos desde del 2005 . Registro de montos desde el 2006.
-335 Películas en cuando a público, salas y copias de distribución desde los informes de la cámara de exhibidores de multisalas
+</script>
     </div>
+      <div class="boxeda">
+        <h2>Cuadro resumen de la información recopilada</h2>
+
+      <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
+      <br>
+      <%="#{(Personaje.all).count}"%> Técnicos o Elenco.
+      <br>
+      <%="#{(Rol.all).count}"%> Roles de trabajo.
+      <br>
+      <%="#{(Fondo.where(tipo: "corfo")).count}"%> Fondos de Corfo.
+      <br>
+      <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual
+      <br>
+      Fueron Analizados Público, salas y copias de distribución.
+
+      </div>
     </div>
   </div>
+  <a href="#section02"><span></span>Siguiente</a>
+</section>
 
+<section id="section02" class="demo">
 <div class="container">
  <div class= "row">
         <div id='dashboard1'>
         <script src="https://d3js.org/d3.v3.min.js"></script>
-        <h1>Total de películas ordenadas según sexo director/a </h1>
-        <p>(n = 335 Películas) </p>
+        <h2>Total de películas ordenadas según sexo director/a </h2>
+        <p>(n = <%="#{@peliculas.count}"%> Películas) </p>
         <%= render 'graficopeli' %>
         </div>
   <div class="caja">
@@ -31,21 +70,52 @@
     En el caso del gráfico de color azul, podemos ver como el año 2005 comienza el fondo de fomento audiovisual donde fueron apoyados en su momento 7 películas dirigidas por hombres y 1 por mujer y aumenta según van aumentando los fondos cada año. No existe registro de los montos adjudicados para el año 2005.
 
   </div>
-  </div>
+   </div>
+  <a href="#section03"><span></span>Siguiente</a>
+</section>
 
 <div class="containerbox">
     <div class="boxed">
-          <h2 style= "row">Desde CORFO y Fondo de Fomento audiovisual , se entregaron 16.650 millones para 412 fondos para proyectos de Largometraje de Ficción y Documental. Esto quiere decir que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente.
-          De estos, las mujeres recibieron el 15,9% correspondiente a 2.629 millones para 78 proyectos a diferencia de los varones que se adjudicaron el 58,3% con 9.713 millones para 170 proyectos. 64 Proyectos están Sin información correspondientes a 4.308 millones , representando el 25,8% del total .
+<% @f=Fondo.all %>
+<% @fa = Fondo.where(sexo: "Mujer") %>
+<% @fh = Fondo.where(sexo: "Hombre") %>
+<% @fo = Fondo.where(sexo: "Otro") %>
+          <h2 style= "row">Desde CORFO y Fondo de Fomento audiovisual , se entregaron <%=((@f.map(&:monto)).sum(&:to_i))/1000000 %> millones para <%= @f.count %> fondos para proyectos de Largometraje de Ficción y Documental. Esto quiere decir que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente.
+          De estos, las mujeres recibieron el <%= (((@fa.count) * 100)/(@f.count)).to_f %> % correspondiente a <%=((@fa.map(&:monto)).sum(&:to_i))/1000000 %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= (((@fh.count) * 100)/(@f.count)).to_f %> %  con <%=((@fh.map(&:monto)).sum(&:to_i))/1000000 %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%=((@fo.map(&:monto)).sum(&:to_i))/1000000 %> millones , representando el <%= (((@fo.count) * 100)/(@f.count)).to_f %> %  del total .
         <br>
         <br>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
-      <h1>grafico 1 y 2</h1>
+      <h1>Cantidad de Fondos según sexos</h1>
+       <div class="rowf">
+<div id="segundo" style="height: 200px; width: 400px; align-content: center;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script>
+  const charti = new CanvasJS.Chart("segundo", {
+    animationEnabled: true,
+    title:{
+    },
+    data: [{
+      type: "doughnut",
+      startAngle: 60,
+      dataPoints: [
+      <% hombre="Hombre" %>
+      <% mujer="Mujer" %>
+        { y: <%= @fh.count %>, label: "Hombres" },
+        { y: <%= @fa.count %>, label: "Mujeres" },
+        { y: <%= @fo.count %>, label: "Otro" },
+      ]
+    }]
+  });
+  charti.render();
+
+</script>
+</div>
     </div>
     </div>
   </div>
+
 
 <div class="container">
  <div class= "row">
