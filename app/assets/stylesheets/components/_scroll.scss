@@ -601,3 +601,15 @@ section h1 {
   font : normal 400 20px/1 'Josefin Sans', sans-serif;
 }
 
+.boxed2 {
+  grid-row: 1 / span 2;
+  grid-column: 1 / span 2;
+  justify-content: space-around;
+  background: white;
+  padding: 50px;
+  margin: 10px;
+  justify-content: center;
+  text-align: right;
+  overflow: scroll;
+  font : normal 400 20px/1 'Josefin Sans', sans-serif;
+}
