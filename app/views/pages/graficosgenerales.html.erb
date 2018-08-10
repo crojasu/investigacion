@@ -172,7 +172,7 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
       <div id='dashboard5'>
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <h1>Promedios de salas, copias y público por películas según sexo director/a</h1>
-        <p>(n = Cantidad de semans en salas/copias/público promedio por película) </p>
+
         <%= render 'salas' %>
       </div>
   </div>
@@ -186,10 +186,12 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
         <%= render 'grafico' %>
         </div>
          <div class="caja">
-          <%= hombre= (Personaje.where(genero: "Hombre")).count %>
-<%= mujer = (Personaje.where(genero: "Mujer")).count %>
-<%= total = hombre + mujer %>
+          <% hombre= (Personaje.where(genero: "Hombre")).count %>
+<% mujer = (Personaje.where(genero: "Mujer")).count %>
+<%  total = hombre + mujer %>
+
     Se recopiló la participación de <%= total %> personas para las películas analizadas, de estas, <%= (hombre*100)/total %> % (<%= hombre%>) son hombres y el <%= (mujer*100)/total %>% (<%= mujer %>) son mujeres.
+    El gráfico muestra la cantidad de roles que fueron utilizados por Técnicos y Elencos ordenads según sexo.
 En el estudio se puede ver cómo los hombres dominan en cargo de importancia, como dirección, producción ejecutiva y asociada , producción. Así también, como en cargos más ¨técnicos¨como el de dirección de fotografía, sonido, efectos especiales.
 Los gráficos muestran que las mujeres han podido posicionarse en en cargos de jefatura dentro de la producción como son Asistente de dirección , jefatura de producción.
 Las áreas de mayor interés o espacio son las relacionadas al arte, maquillaje, vestuario y decoración.
