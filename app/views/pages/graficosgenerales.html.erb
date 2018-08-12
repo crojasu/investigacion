@@ -8,8 +8,6 @@
     <div class="boxes-right">
     <div class="boxedar">
         <h2>Cuadro resumen de la información recopilada</h2>
-
-<h2 style= "row">
       <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
       <br>
 <% hombre= (Personaje.where(genero: "Hombre")).count %>
@@ -23,11 +21,8 @@
       <br>
       <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual
       <br>
-      Fueron Analizados Público, salas y copias de distribución. </h2>
+      Fueron Analizados Público, salas y copias de distribución.
     </div>
-      <div class="boxeda">
-
-      </div>
     </div>
   </div>
 
@@ -45,7 +40,7 @@
     </div>
     <div class="boxes-right">
     <div class="boxedar">
-      <h2>Cantidad de Películas dirigidas según sexos</h2>
+      <h2 style="text-align: center;">Cantidad de Películas dirigidas según sexos</h2>
 <div id="chartContainer1" style="height: 200px; width: 400px; align-content: center;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
@@ -75,9 +70,6 @@
 
 </script>
     </div>
-      <div class="boxeda">
-
-      </div>
     </div>
   </div>
 
@@ -86,7 +78,7 @@
  <div class= "row">
         <div id='dashboard1'>
         <script src="https://d3js.org/d3.v3.min.js"></script>
-        <h2>Total de películas ordenadas según sexo director/a </h2>
+        <h2 style="text-align: center;">Total de películas ordenadas según sexo director/a </h2>
         <p>(n = <%= @total%> Películas) </p>
         <%= render 'graficopeli' %>
         </div>
@@ -111,7 +103,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
     </div>
     <div class="boxes-right">
     <div class="boxedar">
-      <h1>Cantidad de Fondos en millones de pesos según sexos</h1>
+      <h2>Cantidad de Fondos en millones de pesos según sexos</h2>
        <div class="rowf">
 <div id="segundo" style="height: 200px; width: 400px; align-content: center;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -164,7 +156,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
     </div>
     <div class="boxes-right">
     <div class="boxedar">
-      <h2>Cantidad de Fondos entregados por <%= fondi.upcase %> en millones de pesos según sexos</h2>
+      <h2 style="text-align: center;">Cantidad de Fondos entregados por <%= fondi.upcase %> en millones de pesos según sexos</h2>
        <div class="rowf">
 <div id="segundo3" style="height: 200px; width: 400px; align-content: center;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -213,7 +205,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
  <div class= "row">
       <div id='dashboard3'>
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <h1>Fondos entregados por Institución según sexo director/a</h1>
+        <h2 style="text-align: center;">Fondos entregados por Institución según sexo director/a</h2>
         <p>(n = <%= (Fondo.where(tipo: "corfo")).count %> Fondos) </p>
            <%= render 'graficofondo' %>
       </div>
@@ -244,7 +236,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
     </div>
     <div class="boxes-right">
     <div class="boxedar">
-      <h2>Cantidad de Fondos entregados por el Fondo de fomento Audiovisual en millones de pesos según sexos</h2>
+      <h2 style="text-align: center;">Cantidad de Fondos entregados por el Fondo de fomento Audiovisual en millones de pesos según sexos</h2>
        <div class="rowf">
 <div id="segundo34" style="height: 200px; width: 400px; align-content: center;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -282,7 +274,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
         <script src="http://d3js.org/d3.v3.min.js"></script>
 <% @f2 =Fondo.where(tipo: "fondart") %>
 <% @t2 =((@f2.map(&:monto)).sum(&:to_i))/1000000 %>
-        <h1>Promedio de fondos en Millones de pesos otorgados por Institución según sexo director/a</h1>
+        <h2 style="text-align: center;">Promedio de fondos en Millones de pesos otorgados por Institución según sexo director/a</h2>
         <p>n = <%= @t  %> Millones </p>
         <%= render 'promedio2'%>
 
@@ -295,7 +287,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
  <div class= "row">
       <div id='dashboard34'>
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <h1>Fondos entregados por Institución según sexo director/a</h1>
+        <h2 style="text-align: center;">Fondos entregados por Institución según sexo director/a</h2>
         <p>(n = <%= (Fondo.where(tipo: "fondart")).count %> Fondos) </p>
            <%= render 'graficofondo2' %>
       </div>
@@ -327,7 +319,7 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
  <div class= "row">
       <div id='dashboard5'>
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <h1>Salas, copias y público por películas según sexo director/a</h1>
+        <h2 style="text-align: center;">Salas, copias y público por películas según sexo director/a</h2>
         <%= render 'salas' %>
       </div>
   </div>
