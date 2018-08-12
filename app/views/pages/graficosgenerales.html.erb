@@ -344,7 +344,8 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
 <% mujer = (Rol.where(sexo: "Mujer")).count %>
 <%  total = hombre + mujer %>
 
-    Se recopiló la participación de <%= totalr %> personas para las películas analizadas, de estas, <%= (@hombrer*100)/total.to_f %> % (<%= @hombrer%>) son hombres y el <%= (@mujerr*100)/total.to_f %>% (<%= @mujerr %>) son mujeres.
+    Se recopiló la participación de <%= totalr %> personas para las películas analizadas, de estas, <%= ((@hombrer*100)/totalr.to_f).round(2) %> % (<%= @hombrer%>) son hombres y el <%= ((@mujerr*100)/totalr.to_f).round(2) %>% (<%= @mujerr %>) son mujeres.
+<br>
 <br>
 De esta manera las mujeres ocuparon <%= mujer %> roles (<%= (mujer*100)/total %> % ), a diferencia de los varones quienes ocuparon un total de <%= hombre %> roles (<%= (hombre*100)/total %> % ).
 
