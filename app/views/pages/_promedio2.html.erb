@@ -1,4 +1,5 @@
-<% fondi= "corfo" %>
+<% fondi= "fondart" %>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
 function dashboard(id, fData){
     var barColor = 'steelblue';
@@ -196,7 +197,7 @@ function dashboard(id, fData){
         leg= legend(tF);  // create the legend.
 }
 </script>
-<h1><%= fondi.upcase %></h1>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
   <% @anos=[ "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"] %>
 var freqData=[
@@ -204,9 +205,12 @@ var freqData=[
 <% hombre="Hombre" %>
 <% mujer="Mujer" %>
 <% otro="Otro" %>
-{State:'<%= ano %>',freq:{Hombres:<%= sum(ano, fondi, hombre) %>, Mujeres:<%= sum(ano, fondi, mujer) %>, Sin_información:<%= sum(ano, fondi, otro) %>}},
+{State:'<%= ano %>',freq:{Hombres:<%= suma(ano, fondi, hombre) %>, Mujeres:<%= suma(ano, fondi, mujer) %>, Sin_información:<%= suma(ano, fondi, otro) %>}},
 <% end %>
 ];
 
-dashboard('#dashboard3',freqData);
+
+dashboard('#dashboard52',freqData);
 </script>
+</div>
+<script src="https://d3js.org/d3.v3.min.js"></script>

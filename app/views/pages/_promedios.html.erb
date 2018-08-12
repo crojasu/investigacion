@@ -1,5 +1,3 @@
-<% @fondis= ["corfo", "fondart"] %>
-<% @fondis.each do |fondi| %>
 <script>
 function dashboard(id, fData){
     var barColor = 'steelblue';
@@ -197,22 +195,7 @@ function dashboard(id, fData){
         leg= legend(tF);  // create the legend.
 }
 </script>
-<% @f=Fondo.where( tipo: fondi) %>
-<% @fa = Fondo.where(sexo: "Mujer", tipo: fondi ) %>
-<% @fh = Fondo.where(sexo: "Hombre", tipo: fondi ) %>
-<% @fo = Fondo.where(sexo: "Otro", tipo: fondi ) %>
-<% @t=((@f.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @rm= ((@fa.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @rh= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @ro= ((@fo.map(&:monto)).sum(&:to_i))/1000000 %>
-<br>
-<br><br>
-<br><br>
-<br>
-<br>
-Desde <%= fondi.upcase %>, se entregaron un total de <%= @t %> millones, de los cuales el <%= (@rm*100)/@t %> %, correspondiente a <%= @rm %> millones se entregaron a <%= @fa.count %> proyectos dirigidos por mujeres, con un promedio de <%= @rm/@fa.count %> millones pesos por película, a diferencia de varones que se adjudicaron el <%= (@rh*100)/@t %> % del total , correspondiendo al <%= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %> millones para <%= @fh.count %> películas con un promedio por película de <%= @rh/@fh.count %> millones de pesos.
-<br>
-<br>
+<%= fondi= "corfo" %>
 <h1><%= fondi.upcase %></h1>
 <script>
 
@@ -228,7 +211,5 @@ var freqData=[
 
 dashboard('#dashboard4',freqData);
 </script>
-<% end %>
 </div>
 
-</div>
