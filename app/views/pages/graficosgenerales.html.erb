@@ -92,7 +92,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 <div class="containerbox">
     <div class="boxed">
 <% @f=Fondo.all %>
-<% @fs = (((@f.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
+<% @fs = (((@f.map(&:monto)).sum(&:to_f)).to_f/1000000).round(0) %>
 <% @fa = Fondo.where(sexo: "Mujer") %>
 <% @fas = (((@fa.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
 <% @fh = Fondo.where(sexo: "Hombre") %>
@@ -103,7 +103,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
   <strong>Fondos Entregados</strong>
          <br><br>
          Desde CORFO y Fondo de Fomento audiovisual , se entregaron <%= @fs %> millones en <%= @f.count %> fondos para proyectos de Largometraje de Ficción y Documental. Esto quiere decir que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente.
-          De estos, las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total .
+          De estos, las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total .
     </div>
     <div class="boxes-right">
     <div class="boxedar">
@@ -308,10 +308,12 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
     <div class="boxes-right">
     <div class="boxedara">
   <div class="destacam"> <strong> Mujeres  </strong></div>
+  <br>
     <p class="destacam">Promedio de <strong>4.8</strong> de semanas en salas </p>
     <p class="destacam">Promedio de <strong>4,7</strong> copias por película  </p>
     <p class="destacam">promedio por película de <strong>11.502</strong> espectadores</p>
 <br> <br><div class="destacah"><strong> Hombres</strong></div>
+<br>
   <p class="destacah">Promedio de<strong> 6.5</strong> semanas en salas</p>
   <p class="destacah">Promedio de <strong>18,2</strong> copias por película</p>
   <p class="destacah">promedio por película de<strong> 43.475 </strong>espectadores .</p>
