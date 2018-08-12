@@ -146,15 +146,16 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 <% @fa = Fondo.where(sexo: "Mujer", tipo: fondi ) %>
 <% @fh = Fondo.where(sexo: "Hombre", tipo: fondi ) %>
 <% @fo = Fondo.where(sexo: "Otro", tipo: fondi ) %>
-<% @t=((@f.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @rm= ((@fa.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @rh= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @ro= ((@fo.map(&:monto)).sum(&:to_i))/1000000 %>
+<% @fs = (((@f.map(&:monto)).sum(&:to_f)).to_f/1000000).round(0) %>
+<% @fas = (((@fa.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
+<% @fhs = (((@fh.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
+<% @fos = (((@fo.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
+
 <h2 style= "row">
   <strong>Fondos <%= fondi.upcase %></strong>
   <br>
   <br>
-  Desde <%= fondi.upcase %>, se entregaron un total de <%= @t %> millones, de los cuales el <%= (@rm*100)/@t %> %, correspondiente a <%= @rm %> millones se entregaron a <%= @fa.count %> proyectos dirigidos por mujeres, con un promedio de <%= @rm/@fa.count %> millones pesos por película, a diferencia de varones que se adjudicaron el <%= (@rh*100)/@t %> % del total, correspondiendo al <%= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %> millones para <%= @fh.count %> películas con un promedio por película de <%= @rh/@fh.count %> millones de pesos. </h2>
+  Desde <%= fondi.upcase %>, se entregaron un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
 <br>
 <br>
     </div>
@@ -226,15 +227,15 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 <% @fa = Fondo.where(sexo: "Mujer", tipo: fondi ) %>
 <% @fh = Fondo.where(sexo: "Hombre", tipo: fondi ) %>
 <% @fo = Fondo.where(sexo: "Otro", tipo: fondi ) %>
-<% @t=((@f.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @rm= ((@fa.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @rh= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %>
-<% @ro= ((@fo.map(&:monto)).sum(&:to_i))/1000000 %>
+<% @fs = (((@f.map(&:monto)).sum(&:to_f)).to_f/1000000).round(0) %>
+<% @fas = (((@fa.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
+<% @fhs = (((@fh.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
+<% @fos = (((@fo.map(&:monto)).sum(&:to_f)).to_f/1000000).round(2) %>
 <h2 style= "row">
   <strong>Fondo de Fomento Audiovisual</strong>
   <br>
   <br>
-  El Fondo de Fomento Audiovisual entregó un total de <%= @t %> millones, de los cuales el <%= (@rm*100)/@t %> %, correspondiente a <%= @rm %> millones se entregaron a <%= @fa.count %> proyectos dirigidos por mujeres, con un promedio de <%= @rm/@fa.count %> millones pesos por película, a diferencia de varones que se adjudicaron el <%= (@rh*100)/@t %> % del total , correspondiendo al <%= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %> millones para <%= @fh.count %> películas con un promedio por película de <%= @rh/@fh.count %> millones de pesos. </h2>
+  El Fondo de Fomento Audiovisual se entregaron un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
 <br>
 <br>
     </div>
