@@ -67,7 +67,7 @@ def suma(ano, tipo, gen)
   if @fondos.count == 0
     return 0
   else
-    return ((@fondos.map(&:monto)).sum(&:to_i))/1000000
+    return ((((@fondos.map(&:monto)).sum(&:to_f))/1000000).to_f).round(2)
   end
 end
 
