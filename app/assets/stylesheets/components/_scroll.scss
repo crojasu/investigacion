@@ -590,6 +590,21 @@ section h1 {
   font : normal 400 20px/1 'Josefin Sans', sans-serif;
 
 }
+.boxedara{
+ grid-column: 3 / span 1;
+  grid-row: 1 / span 2;
+  justify-content: center;
+  background: white;
+  padding: 50px;
+  margin: 10px;
+  text-align: left;
+  align-items: center;
+  height: 100%;
+  overflow: scroll;
+  font : normal 400 20px/1 'Josefin Sans', sans-serif;
+
+}
+
 
 .boxeda{
   grid-column: 3 / span 1;
