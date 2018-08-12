@@ -1,13 +1,15 @@
   <% @total= (@peliculas.count) %>
 <div class="containerbox">
     <div class="boxed">
-           El estudio cuantitativo se realizó en base a un total de <%= @total%> proyectos de Películas, que fueron financiadas por el Fondo de fomento Audiovisual o CORFO o ambas instituciones. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las <%= @total %> películas, 41  fueron co-dirigidas representando el <%= 41*100/@total%> % del total (hombre-hombre, mujer- mujer, mujer- hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, <%="#{@otro.count}"%> (<%= (@otro.count*100/@total).to_f %> %) caen dentro de la categoría “sin información” , ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en el proyecto, puedan añadir o modificar información para así ir completando la faltante. Si quieres ayudarnos a completar el estudio click aquí.
-        <br>
+      <h2 style= "row">
+           El estudio cuantitativo se realizó en base a un total de <%= @total %> proyectos de Películas, que fueron financiadas por el Fondo de fomento Audiovisual o CORFO o ambas instituciones. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las <%= @total %> películas, 41  fueron co-dirigidas representando el <%= (41*100/@total.to_f).round(2) %> % del total (hombre-hombre, mujer- mujer, mujer- hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, <%= @otro.count %> (<%= ((@otro.count*100)/@total.to_f).round(2) %> %) caen dentro de la categoría “sin información” , ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en el proyecto, puedan añadir o modificar información para así ir completando la faltante. Si quieres ayudarnos a completar el estudio click aquí.
+        <br></h2>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
         <h2>Cuadro resumen de la información recopilada</h2>
 
+<h2 style= "row">
       <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
       <br>
 <% hombre= (Personaje.where(genero: "Hombre")).count %>
@@ -21,7 +23,7 @@
       <br>
       <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual
       <br>
-      Fueron Analizados Público, salas y copias de distribución.
+      Fueron Analizados Público, salas y copias de distribución. </h2>
     </div>
       <div class="boxeda">
 
@@ -317,11 +319,6 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
   <p class="destacah">Promedio de<strong> 6.5</strong> semanas en salas</p>
   <p class="destacah">Promedio de <strong>18,2</strong> copias por película</p>
   <p class="destacah">promedio por película de<strong> 43.475 </strong>espectadores .</p>
-
-
-    </div>
-      <div class="boxeda">
-
     </div>
 </div>
   </div>
@@ -331,7 +328,6 @@ Por su parte, las películas realizadas por mujeres atraen menor cantidad de pú
       <div id='dashboard5'>
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <h1>Salas, copias y público por películas según sexo director/a</h1>
-
         <%= render 'salas' %>
       </div>
   </div>

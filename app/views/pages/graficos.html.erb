@@ -3,19 +3,16 @@
 <%= total = hombre + mujer %>
 <div class="containerbox">
     <div class="boxed">
-      Participación según roles:
+     <h2 style= "row"><%= "Participación según roles".upcase %></strong>
       <br>
           Un elemento relevante sobre el que fue preciso desagregar la información, hizo referencia con puntualizar los roles de trabajo en que participaron las mujeres. En este sentido, tal como se observará en las entrevistas cualitativas más adelante en el informe, todos/as los/as interlocutores son capaces de diferenciar una división sexual del trabajo que se funda en estereotipos de género sobre lo que pueden o no hacer tanto mujeres como varones.
-          De esta forma, se recopiló información que estableció la participación de <%= total %> personas para las películas analizadas, de las cuales el <%= (hombre*100)/total %> % (<%= hombre%>) son hombres y el <%= (mujer*100)/total %>% (<%= mujer %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los hombres.
+          De esta forma, se recopiló información que estableció la participación de <%= total %> personas para las películas analizadas, de las cuales el <%= ((hombre*100)/total.to_f).round(2)  %> % (<%= hombre%>) son hombres y el <%= ((mujer*100)/total.to_f).round(2) %>% (<%= mujer %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los </h2>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
 <h2>Cantidad de Técnicos/Elencos ordenados según sexo</h2>
 (n = <%= total %>)
       <%= render 'graficopersonas' %>
-    </div>
-    <div class="boxeda">
-      En el estudio se puede ver cómo los hombres dominan en cargo de importancia, como Dirección, Producción Ejecutiva y Asociada , Jefatura Producción. Así también, como en cargos más "técnicos" como el de Dirección de Fotografía, Sonido, Efectos Especiales.
     </div>
   </div>
 </div>
@@ -236,7 +233,7 @@ function dashboard(id, fData){
 <% otro="Otro" %>
 <% rol=  rolos%>
 <h1><%= rolos %></h1>
-<p>Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %>, representado el <%= (tecnicogeneral(rol, mujer))*100/tecnicorol(rol) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= (tecnicogeneral(rol, hombre))*100/tecnicorol(rol) %> del total.
+<p>Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %> representado el <%= ((tecnicogeneral(rol, mujer))*100/tecnicorol(rol).to_f).round(1) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= ((tecnicogeneral(rol, hombre))*100/tecnicorol(rol).to_f).round(1) %> % del total.
 </p>
 <br>
 <br>
@@ -248,7 +245,7 @@ var freqData=[
 <% mujer="Mujer" %>
 <% otro="Otro" %>
 <% rol=  rolos%>
-{State:'<%= ano %>',freq:{Hombres:<%= tecnico(ano, rol, hombre) %>, Mujeres:<%= tecnico(ano, rol, mujer) %>, Sin_información:<%= tecnico(ano, rol, otro) %>}},
+{State:'<%= ano %>',freq:{Hombres:<%= (tecnico(ano, rol, hombre)).to_f %>, Mujeres:<%= (tecnico(ano, rol, mujer)).to_f  %>, Sin_información:<%= (tecnico(ano, rol, otro)).to_f  %>}},
 <% end %>
 ];
 

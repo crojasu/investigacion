@@ -207,7 +207,7 @@ var freqData=[
 <% mujer="mujer" %>
 <% otro="otro" %>
 <% rol = "Dirección" %>
-{State:'<%= ano %>',freq:{Hombres:<%= salas(ano, item, hombre, rol) %>, Mujeres:<%= salas(ano, item, mujer, rol) %>, Sin_información:<%= salas(ano, item, otro, rol) %>}},
+{State:'<%= ano %>',freq:{Hombres:<%= (salas(ano, item, hombre, rol)).round(1) %>, Mujeres:<%= (salas(ano, item, mujer, rol)).round(1) %>, Sin_información:<%= (salas(ano, item, otro, rol)).round(1) %>}},
 <% end %>
 ];
 
