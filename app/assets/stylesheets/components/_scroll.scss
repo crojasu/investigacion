@@ -569,13 +569,14 @@ section h1 {
 }
 .boxedar{
  grid-column: 3 / span 1;
-  grid-row: 1 / span 1;
+  grid-row: 1 / span 2;
   justify-content: space-around;
   background: white;
   padding: 50px;
   margin: 10px;
   align-self: center;
-  height: 50%;
+  align-content: center;
+  height: 100%;
   overflow: scroll;
   font : normal 400 20px/1 'Josefin Sans', sans-serif;
 }

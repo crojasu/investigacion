@@ -54,6 +54,12 @@
     data: [{
       type: "doughnut",
       startAngle: 60,
+      indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+      indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
       dataPoints: [
       <% hombre="Hombre" %>
       <% mujer="Mujer" %>
@@ -115,6 +121,9 @@ Para el caso de las mujeres, es interesante notar que los números de películas
     data: [{
       type: "doughnut",
       startAngle: 60,
+      indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
       dataPoints: [
       <% hombre="Hombre" %>
       <% mujer="Mujer" %>
@@ -165,6 +174,9 @@ Para el caso de las mujeres, es interesante notar que los números de películas
     data: [{
       type: "doughnut",
       startAngle: 60,
+      indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
       dataPoints: [
       <% hombre="Hombre" %>
       <% mujer="Mujer" %>
@@ -221,7 +233,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 <% @rh= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %>
 <% @ro= ((@fo.map(&:monto)).sum(&:to_i))/1000000 %>
 <h2 style= "row">
-  <strong>Fondos <%= fondi.upcase %></strong>
+  <strong>Fondo de Fomento Audiovisual</strong>
   <br>
   <br>
   El Fondo de Fomento Audiovisual entregó un total de <%= @t %> millones, de los cuales el <%= (@rm*100)/@t %> %, correspondiente a <%= @rm %> millones se entregaron a <%= @fa.count %> proyectos dirigidos por mujeres, con un promedio de <%= @rm/@fa.count %> millones pesos por película, a diferencia de varones que se adjudicaron el <%= (@rh*100)/@t %> % del total , correspondiendo al <%= ((@fh.map(&:monto)).sum(&:to_i))/1000000 %> millones para <%= @fh.count %> películas con un promedio por película de <%= @rh/@fh.count %> millones de pesos. </h2>
@@ -242,6 +254,9 @@ Para el caso de las mujeres, es interesante notar que los números de películas
     data: [{
       type: "doughnut",
       startAngle: 60,
+      indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
       dataPoints: [
       <% hombre="Hombre" %>
       <% mujer="Mujer" %>
@@ -290,10 +305,8 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 
    <div class="containerbox">
     <div class="boxed">
-    Para identificar la permanencia temporal en salas de cine nacional y las copias plausibles a ser distribuidas tanto de películas realizadas por mujeres y varones entre los años mencionados, se evidencia una disparidad. De esta forma, las mujeres tienen un promedio de 4.8 de semanas en salas  a diferencia de los hombres quienes permanecen 6.5 semanas en salas. En relación a las copias, las mujeres tienen un promedio de copias por película de 4,7 a diferencia de los hombres con un promedio de 18,2 copias por película.
-Por su parte, las películas realizadas por mujeres atraen menor cantidad de público, teniendo un promedio por película de 11.502 espectadores, a diferencia de los hombres con un promedio por película de 43.475 espectadores .
-
-    </div>
+    <h2 style= "row">Para identificar la permanencia temporal en salas de cine nacional y las copias plausibles a ser distribuidas tanto de películas realizadas por mujeres y varones entre los años mencionados, se evidencia una disparidad. De esta forma, las mujeres tienen un promedio de 4.8 de semanas en salas  a diferencia de los hombres quienes permanecen 6.5 semanas en salas. En relación a las copias, las mujeres tienen un promedio de copias por película de 4,7 a diferencia de los hombres con un promedio de 18,2 copias por película.
+Por su parte, las películas realizadas por mujeres atraen menor cantidad de público, teniendo un promedio por película de 11.502 espectadores, a diferencia de los hombres con un promedio por película de 43.475 espectadores.</h2>    </div>
     <div class="boxes-right">
     <div class="boxedar">
   <div class="destacam"> <strong> Mujeres  </strong></div>
@@ -355,6 +368,9 @@ De esta manera las mujeres ocuparon <%= mujer %> roles (<%= (mujer*100)/total %>
     data: [{
       type: "doughnut",
       startAngle: 60,
+      indexLabelFontSize: 17,
+    indexLabel: "{label} - #percent%",
+    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
       dataPoints: [
       <% hombre="Hombre" %>
       <% mujer="Mujer" %>
