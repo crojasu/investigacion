@@ -238,6 +238,9 @@ function dashboard(id, fData){
 <h1><%= rolos %></h1>
 <p>Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %>, representado el <%= (tecnicogeneral(rol, mujer))*100/tecnicorol(rol) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= (tecnicogeneral(rol, hombre))*100/tecnicorol(rol) %> del total.
 </p>
+<br>
+<br>
+<p>(n= <%= tecnicorol(rol)%> cargos )</p>
 <script>
 var freqData=[
 <% @anos.each do |ano| %>
