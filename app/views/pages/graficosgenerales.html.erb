@@ -10,7 +10,7 @@
         <h2>Cuadro resumen de la información recopilada</h2>
       <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
       <br>
-<% hombre= (Personaje.where(genero: "Hombre")).count %>
+<% hombre = (Personaje.where(genero: "Hombre")).count %>
 <% mujer = (Personaje.where(genero: "Mujer")).count %>
 <% total = hombre + mujer %>
       <%= total%> Técnicos o Elenco.
@@ -26,14 +26,16 @@
     </div>
   </div>
 
-  <% @total= (@peliculas.count) %>
+  <% @total= @hombre.count + @mujer.count + @otro.count %>
+   <% @hombre = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Hombre") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Hombre")%>
+  <% @mujer = Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Mujer") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Mujer")%>
+  <% @otro =  Pelicula.where("sexos @> hstore(:key, :value)", key: "0", value: "Otro") + Pelicula.where("sexos @> hstore(:key, :value)", key: "1", value: "Otro")%>
 <div class="containerbox">
     <div class="boxed">
-   <% @total= (@peliculas.count) %>
 <br>
       <h2 style= "row">
          <strong>Directores y directoras</strong>
-         <br><br>Uno de los primeros datos relevantes para esta investigación hace referencia con la identificación de las áreas de participación en la producción de las mujeres y varones, estableciendo el rol de trabajo. Del análisis se evidencia que del total de las <%= @total %> películas realizadas entre los años 2005 al 2015 financiadas por CORFO y el Fondo de Fomento Audiovisual, <%= @mujer.count %> fueron dirigidas por mujeres lo que equivale al <%= (@mujer.count*100)/@total %> % , <%= @hombre.count %> fueron dirigida hombres representando el <%= (@hombre.count*100)/@total %> % del total y <%= @otro.count %> películas quedaron sin identificar, correspondiendo al <%= (@otro.count*100)/@total %> % del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.</h2>
+         <br><br>Uno de los primeros datos relevantes para esta investigación hace referencia con la identificación de las áreas de participación en la producción de las mujeres y varones, estableciendo el rol de trabajo. Del análisis se evidencia que del total de las <%= @total %> películas realizadas entre los años 2005 al 2015 financiadas por CORFO y el Fondo de Fomento Audiovisual, <%= @mujer.count %> fueron dirigidas por mujeres lo que equivale al <%= ((@mujer.count*100)/@total.to_f).round(2) %> % , <%= @hombre.count %> fueron dirigida hombres representando el <%= ((@hombre.count*100)/@total.to_f).round(2) %> % del total y <%= @otro.count %> películas quedaron sin identificar, correspondiendo al <%= ((@otro.count*100)/@total.to_f).round(2) %> % del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.</h2>
 <br>
         <br>
         <br>
@@ -58,8 +60,6 @@
     indexLabel: "{label} - #percent%",
     toolTipContent: "<b>{label}:</b> {y} (#percent%)",
       dataPoints: [
-      <% hombre="Hombre" %>
-      <% mujer="Mujer" %>
         { y: <%= @hombre.count %>, label: "Hombres" },
         { y: <%= @mujer.count %>, label: "Mujeres" },
         { y: <%= @otro.count %>, label: "Otro" },
