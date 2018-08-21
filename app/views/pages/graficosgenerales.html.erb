@@ -79,7 +79,7 @@
         <div id='dashboard1'>
         <script src="https://d3js.org/d3.v3.min.js"></script>
         <h2 style="text-align: center;">Total de películas ordenadas según sexo director/a </h2>
-        <p>(n = <%= @total%> Películas) </p>
+        <p>(n = <%= (Pelicula.all.count)%> Películas) </p>
         <%= render 'graficopeli' %>
         </div>
   <div class="caja">
