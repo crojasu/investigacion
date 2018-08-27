@@ -1,4 +1,7 @@
 <div align="center" style ="margin-top: 190px">
+  <div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-4" style ="margin-left:10%;">
   <h3>Contácto</h3>
 
 Contáctanos a
@@ -19,7 +22,7 @@ Equipo Ucronía
 <br>
 <br>
  <%= simple_form_for @message, url: create_message_url do |f| %>
-
+<div class="form-input">
   <%= @message.errors.full_messages.join(', ') %>
 
   <%= f.input :name, label: 'Nombre', error: 'No puede estar en blanco!' %>
@@ -29,9 +32,14 @@ Equipo Ucronía
   <%= f.input :titulo, label: 'Título de la Película', error: 'No puede estar en blanco!' %>
   <%= f.input :nombre, label: 'Nombre Completo', error: 'No puede estar en blanco!' %>
   <%= f.input :rol, label: 'Cargo desarrollado', error: 'No puede estar en blanco!' %>
-  <%= f.submit 'Envía' %>
+  </div>
+  <div class="form-actions">
+    <%= f.submit 'Enviar' %>
 
   <h3><%= notice %></h3>
 <% end %>
-
+</div>
+</div>
+    </div>
+  </div>
 </div>
