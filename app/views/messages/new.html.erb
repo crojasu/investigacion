@@ -1,20 +1,34 @@
 <div align="center" style ="margin-top: 190px">
   <h3>Contácto</h3>
 
-Puedes escribirnos a la siguiente dirección de correo :
-ucronía....
-Puedes enviarnos la informacion de tu participacion en la pelicula para eso debes incluir:
-título de la pelicula
-nombre completo
-cargo desarrollado
-
+Contáctanos a
+ucronia.investiga.actua(a)gmail.com
+<br>
+<br>
+En tu mensaje por favor incluye:
+<br>
+<br>-Título de la pelicula
+<br>-Nombre completo
+<br>-Cargo desarrollado
+<br>
+<br>
+Muchas gracias!
+<br>
+<br>
+Equipo Ucronía
+<br>
+<br>
  <%= simple_form_for @message, url: create_message_url do |f| %>
 
   <%= @message.errors.full_messages.join(', ') %>
 
-  <%= f.input :name, placeholder: 'Nombre' %>
-  <%= f.input :email, placeholder: 'Email' %>
-  <%= f.input :body, placeholder: 'Mensaje' %>
+  <%= f.input :name, label: 'Nombre', error: 'No puede estar en blanco!' %>
+  <%= f.input :email, label: 'Email', error: 'No puede estar en blanco!' %>
+  <%= f.input :body, label: 'Mensaje', error: 'No puede estar en blanco!' %>
+
+  <%= f.input :titulo, label: 'Título de la Película', error: 'No puede estar en blanco!' %>
+  <%= f.input :nombre, label: 'Nombre Completo', error: 'No puede estar en blanco!' %>
+  <%= f.input :rol, label: 'Cargo desarrollado', error: 'No puede estar en blanco!' %>
   <%= f.submit 'Envía' %>
 
   <h3><%= notice %></h3>

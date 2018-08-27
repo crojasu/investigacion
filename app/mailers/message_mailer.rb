@@ -7,6 +7,6 @@ class MessageMailer < ApplicationMailer
   #
   def contacto(message)
     @body = message.body
-    mail to: "rojas.catalina@gmail.com", from: message.email
+    mail to: "ucronia.investiga.actua@gmail.com", from: message.email
   end
 end

@@ -9,7 +9,7 @@ en:
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
     error_notification:
-      default_message: "Please review the problems below:"
+      default_message: "Error, por favor completa los campos "
     # Examples
     # labels:
     #   defaults:
@@ -29,3 +29,9 @@ en:
     # prompts:
     #   defaults:
     #     age: 'Select your age'
+
+errors:
+    messages:
+      blank: "%{attribute} No puede estar en blanco"
+      invalid: "%{attribute} No puede estar en blanco"
+
