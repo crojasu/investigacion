@@ -9,7 +9,7 @@ if @message.valid?
   MessageMailer.contacto(@message).deliver_now
       redirect_to new_message_url, notice: "Gracias, tu mensaje fue enviado con Éxito!"
     else
-      render :new
+      render :new, notice: "Ups , intenta nuevamente !"
     end
   end
 
