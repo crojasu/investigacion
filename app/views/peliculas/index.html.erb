@@ -31,6 +31,7 @@
       <% totalhombrespeli = @personas.where(genero: "Hombre") %>
       <% if peli.imbd != nil %>
       <% @r = peli.imbd %>
+
       <% @f= JSON.parse @r.gsub('=>', ':')%>
       <% @direccio = Rol.where(pelicula_id: peli.id, name: "Dirección") %>
       <% @direccion = @direccio.uniq %>
@@ -103,7 +104,8 @@ chart<%= peli.id %>.render();
             <%= f.submit %>
           <% end %> -->
           <% if peli.imbd != nil %>
-      <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@f["imdbID"]}", target: :_blank %>
+          <% @a = @f["imdbID"] %>
+      <%= link_to "Ficha en Imbd", "https://www.imdb.com/title/#{@a}", target: :_blank %>
       <% end %>
       </td>
       <% @fondos = Fondo.where(pelicula_id: peli.id) %>
