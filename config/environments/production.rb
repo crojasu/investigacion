@@ -26,6 +26,7 @@ Rails.application.configure do
 
 config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
+    email: "ucronia.investiga.actua@gmail.com"
    api_key: 'ENV["mailgun_secret_api_key"]',
    domain: 'sandboxab5b87413cf541f1b078245502bfc2fd.mailgun.org',
   }
