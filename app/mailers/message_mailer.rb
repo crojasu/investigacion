@@ -7,6 +7,9 @@ class MessageMailer < ApplicationMailer
   #
   def contacto(message)
     @body = message.body
+    @titulo = message.titulo
+    @nombre = message.nombre
+    @rol = message.rol
 
     mail to: "ucronia.investiga.actua@gmail.com", from: message.email
   end
