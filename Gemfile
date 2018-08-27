@@ -12,6 +12,7 @@ gem 'redis'
 gem 'chart-js-rails'
 gem 'derailed', group: :development
 gem 'simple_form'
+gem 'mailgun-ruby', '~>1.1.6'
 
 gem 'autoprefixer-rails'
 gem 'bootstrap-sass', '~> 3.3'
