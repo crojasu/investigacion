@@ -8,13 +8,13 @@ título de la pelicula
 nombre completo
 cargo desarrollado
 
-  <%= simple_form_for @message, :html => {:class => 'form-horizontal' } do |f| %>
-    <%= f.input :name, :required => true %>
-    <%= f.input :email, :required => true %>
-    <%= f.input :phone_number  %>
-    <%= f.input :body, :as => :text, :required => true %>
-      </br>
-      <%= f.button :submit, 'Envía', :class=> "btn btn-primary" %>
-    </div>
-  <% end %>
+ <%= simple_form_for @message, url: create_message_url do |f| %>
+  <%= notice %>
+  <%= @message.errors.full_messages.join(', ') %>
+
+  <%= f.text_field :name, placeholder: 'name' %>
+  <%= f.email_field :email, placeholder: 'email' %>
+  <%= f.text_area :body, placeholder: 'body' %>
+  <%= f.submit 'Send' %>
+<% end %>
 </div>

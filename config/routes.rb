@@ -5,11 +5,13 @@ Rails.application.routes.draw do
   get 'tablas', to: 'pages#tablas'
   get 'todos', to: 'rols#todos'
   get 'graficosgenerales', to: 'pages#graficosgenerales'
-  get 'messages', to: 'messages#new'
   # get 'contacto', 'to messages#create'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+
+  get 'contacto', to: 'messages#new', as: 'new_message'
+  post 'contacto', to: 'messages#create', as: 'create_message'
+
 resources :peliculas
-resources :messages
 
   resources :rols do
     collection { post :import}
