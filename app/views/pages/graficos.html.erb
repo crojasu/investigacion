@@ -6,12 +6,13 @@
      <h2 style= "row"><strong><%= "Participación según roles".upcase %></strong>
       <br>
       <br>
-        Un elemento relevante sobre el que fue preciso desagregar la información, hizo referencia con puntualizar los roles de trabajo en que participaron las mujeres. En este sentido, tal como se observará en las entrevistas cualitativas (pestaña Voces y Discursos), todos/as los/as interlocutores son capaces de diferenciar una división sexual del trabajo que se funda en estereotipos de género sobre lo que pueden o no hacer tanto mujeres como varones. De esta forma, se recopiló información que estableció la participación de <%= total %> personas para las películas analizadas, de las cuales el <%= ((hombre*100)/total.to_f).round(2)  %> % (<%= hombre%>) son hombres y el <%= ((mujer*100)/total.to_f).round(2) %>% (<%= mujer %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los varones.</h2>
+        Un elemento relevante sobre el que fue preciso desagregar la información, hizo referencia con puntualizar los roles de trabajo en que participaron las mujeres. En este sentido, tal como se observará en las entrevistas cualitativas (pestaña Voces y Discursos), todos/as los/as interlocutores son capaces de diferenciar una división sexual del trabajo que se funda en estereotipos de género sobre lo que pueden o no hacer tanto mujeres como varones. De esta forma, se recopiló información que estableció la participación de <%= number_with_precision(total, precision: 0, separator: ',', delimiter: '.') %> personas para las películas analizadas, de las cuales el <%= number_with_precision(((hombre*100)/total.to_f).round(2), precision: 2, separator: ',', delimiter: '.')  %> % (<%=       number_with_precision(hombre, precision: 0, separator: ',', delimiter: '.')
+%>) son hombres y el <%=number_with_precision(((mujer*100)/total.to_f).round(2), precision: 2, separator: ',', delimiter: '.')  %>% (<%= number_with_precision(mujer, precision: 0, separator: ',', delimiter: '.') %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los varones.</h2>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
 <h2>Cantidad de Técnicos/Elencos ordenados según sexo</h2>
-(n = <%= total %>)
+(n = <%= number_with_precision(total, precision: 0, separator: ',', delimiter: '.') %>)
       <%= render 'graficopersonas' %>
     </div>
   </div>
@@ -233,8 +234,8 @@ function dashboard(id, fData){
 <% otro="Otro" %>
 <% rol=  rolos%>
 <h1><%= rolos %></h1>
-<h3 style =" font : normal 400 20px/1 'Josefin Sans', sans-serif;">Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %> representado el <%= ((tecnicogeneral(rol, mujer))*100/tecnicorol(rol).to_f).round(1) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= ((tecnicogeneral(rol, hombre))*100/tecnicorol(rol).to_f).round(1) %> % del total.</h3>
-<p>(n= <%= tecnicorol(rol)%> cargos )</p>
+<h3 style =" font : normal 400 20px/1 'Josefin Sans', sans-serif;">Del total de <%=number_with_precision(tecnicorol(rol), precision: 0, separator: ',', delimiter: '.')  %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= number_with_precision(tecnicogeneral(rol, mujer), precision: 0, separator: ',', delimiter: '.') %> representado el <%= number_with_precision(((tecnicogeneral(rol, mujer))*100/tecnicorol(rol).to_f), precision: 2, separator: ',', delimiter: '.') %> % a diferencia de los varones quienes ocuparon <%= number_with_precision(tecnicogeneral(rol, hombre), precision: 0, separator: ',', delimiter: '.') %> espacios representado el <%= number_with_precision(((tecnicogeneral(rol, hombre))*100/tecnicorol(rol).to_f), precision: 2, separator: ',', delimiter: '.') %> % del total.</h3>
+<p>(n= <%= number_with_precision(tecnicorol(rol), precision: 0, separator: ',', delimiter: '.') %> cargos )</p>
 <script>
 var freqData=[
 <% @anos.each do |ano| %>

@@ -2,26 +2,29 @@
 <div class="containerbox">
     <div class="boxed">
       <h2 style= "row">
-           <strong>El análisis de los datos cuantitativo</strong> se realizó en base a un total de 335 proyectos de películas financiadas por el Fondo de Fomento Audiovisual, por CORFO o ambas instituciones entre los años 2005 y 2015 inclusive. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las 335 películas, 41 fueron co-dirigidas representando el 12,24% del total (hombre-hombre, mujer-mujer, mujer-hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, un 19,1% (64) caen dentro de la categoría “sin información”, ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información sistematizada o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en uno de los proyectos de películas, puedan añadir o modificar información para así ir completando la faltante. Si quieres ayudarnos a completar el estudio click aquí.
+           <strong>El análisis de los datos cuantitativos</strong> se realizó en base a un total de 335 proyectos de películas financiadas por el Fondo de Fomento Audiovisual, por CORFO o ambas instituciones entre los años 2005 y 2015 inclusive. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las 335 películas, 41 fueron co-dirigidas representando el 12,24% del total (hombre-hombre, mujer-mujer, mujer-hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, un 19,1% (64) caen dentro de la categoría “sin información”, ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información sistematizada o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en uno de los proyectos de películas, puedan añadir o modificar información para así ir completando la faltante. Si quieres ayudarnos a completar el estudio click aquí.
         <br></h2>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
         <h2>Cuadro resumen de la información recopilada</h2>
+        <br>
       <%="#{@peliculas.count}"%> Películas financiadas por CORFO y Fondo de Fomento Audiovisual entre los años 2005 al 2015
+      <br>
       <br>
 <% hombre = (Personaje.where(genero: "Hombre")).count %>
 <% mujer = (Personaje.where(genero: "Mujer")).count %>
 <% total = hombre + mujer %>
-      <%= total%> Técnicos o Elenco.
+      <%= number_with_precision(total, precision: 0, separator: ',', delimiter: '.')%> Técnicos o Elenco.
       <br>
-      <%="#{(Rol.all).count}"%> Roles de trabajo.
+      <br>
+      <%= number_with_precision((Rol.all).count, precision: 0, separator: ',', delimiter: '.')%> Roles de trabajo.
+      <br>
       <br>
       <%="#{(Fondo.where(tipo: "corfo")).count}"%> Fondos de Corfo.
       <br>
-      <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual
       <br>
-      Fueron Analizados Público, salas y copias de distribución.
+      <%="#{(Fondo.where(tipo: "fondart")).count}"%> Fondos de Fondo de Fomento Audiovisual.
     </div>
     </div>
   </div>
@@ -35,7 +38,7 @@
 <br>
       <h2 style= "row">
          <strong>Directores y directoras</strong>
-         <br><br>Uno de los primeros datos relevantes para esta investigación hace referencia con la identificación de las áreas de participación en la producción de las mujeres y varones, estableciendo el rol de trabajo. Del análisis se evidencia que del total de las <%= (Pelicula.all).count %> películas realizadas entre los años 2005 al 2015 financiadas por CORFO y el Fondo de Fomento Audiovisual, <%= @mujer.count %> fueron dirigidas por mujeres lo que equivale al <%= ((@mujer.count*100)/@total.to_f).round(2) %> % , <%= @hombre.count %> fueron dirigidas por hombres representando el <%= ((@hombre.count*100)/@total.to_f).round(2) %> % del total y <%= @otro.count %> películas quedaron sin identificar, correspondiendo al <%= ((@otro.count*100)/@total.to_f).round(2) %> % del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.</h2>
+         <br><br>Uno de los primeros datos relevantes para esta investigación hace referencia con la identificación de las áreas de participación en la producción de las mujeres y varones, estableciendo el rol de trabajo. Del análisis se evidencia que del total de las <%= (Pelicula.all).count %> películas realizadas entre los años 2005 al 2015 financiadas por CORFO y el Fondo de Fomento Audiovisual, <%= @mujer.count %> fueron dirigidas por mujeres lo que equivale al <%= number_with_precision(((@mujer.count*100)/@total.to_f).round(2), precision: 2, separator: ',', delimiter: '.') %> % , <%= @hombre.count %> fueron dirigidas por hombres representando el <%= number_with_precision(((@hombre.count*100)/@total.to_f).round(2), precision: 2, separator: ',', delimiter: '.') %> % del total y <%= @otro.count %> películas quedaron sin identificar, correspondiendo al <%= number_with_precision(((@otro.count*100)/@total.to_f).round(2), precision: 2, separator: ',', delimiter: '.') %> % del total. Este número se eleva los últimos años debido al largo proceso de término de una película,  por lo que no existen los datos actualizados de sus fichas técnicas en las bases de datos públicas.</h2>
 <br>
         <br>
         <br>
@@ -102,7 +105,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
  <h2 style= "row">
   <strong>Fondos Entregados</strong>
          <br><br>
-         Desde CORFO y Fondo de Fomento audiovisual , se entregaron <%= @fs %> millones en <%= @f.count %> fondos para proyectos de Largometraje de Ficción y Documental. Debe tenerse en cuenta que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente. De estos, las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total .
+        Desde CORFO y Fondo de Fomento audiovisual , se entregaron <%=              number_with_precision(@fs, precision: 0, separator: ',', delimiter: '.') %> millones en <%= @f.count %> fondos para proyectos de Largometraje de Ficción y Documental. Debe tenerse en cuenta que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente. De estos, las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%=              number_with_precision(@fas, precision: 0, separator: ',', delimiter: '.') %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= number_with_precision(((@fhs * 100)/(@fs)).to_f.round(2), precision: 2, separator: ',', delimiter: '.') %> %  con <%=              number_with_precision(@fhs, precision: 0, separator: ',', delimiter: '.') %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%=              number_with_precision(@fos, precision: 0, separator: ',', delimiter: '.') %> millones , representando el <%=          number_with_precision(((@fos * 100)/(@fs)).to_f.round(2), precision: 2, separator: ',', delimiter: '.') %> %  del total .
     </div>
     <div class="boxes-right">
     <div class="boxedar">
@@ -154,8 +157,11 @@ Para el caso de las mujeres, es interesante notar que los números de películas
   <strong>Fondos <%= fondi.upcase %></strong>
   <br>
   <br>
-  <%= fondi.upcase %> entregó un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos con un promedio de 9 millones pesos por película, a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos , con un promedio por película de 11 millones de pesos.
-<%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
+  <%= fondi.upcase %> entregó un total de <%=              number_with_precision(@fs, precision: 0, separator: ',', delimiter: '.') %> millones, de los cuales las mujeres recibieron el <%=          number_with_precision(((@fas * 100)/(@fs)).to_f.round(2), precision: 2, separator: ',', delimiter: '.')
+ %> % correspondiente a <%=              number_with_precision(@fas, precision: 0, separator: ',', delimiter: '.') %> millones para <%= @fa.count %> proyectos con un promedio de 9 millones pesos por película, a diferencia de los varones que se adjudicaron el <%=            number_with_precision(((@fhs * 100)/(@fs)).to_f.round(2), precision: 2, separator: ',', delimiter: '.')
+ %> %  con <%=              number_with_precision(@fhs, precision: 0, separator: ',', delimiter: '.') %> para <%= @fh.count %> proyectos, con un promedio por película de 11 millones de pesos.
+<%= @fo.count %> Proyectos están Sin información correspondientes a <%=              number_with_precision(@fos, precision: 0, separator: ',', delimiter: '.') %> millones , representando el <%=            number_with_precision(((@fos * 100)/(@fs)).to_f.round(2), precision: 2, separator: ',', delimiter: '.')
+ %> %  del total . </h2>
 <br>
 <br>
     </div>
@@ -235,7 +241,12 @@ Para el caso de las mujeres, es interesante notar que los números de películas
   <strong>Fondo de Fomento Audiovisual</strong>
   <br>
   <br>
-  El Fondo de Fomento Audiovisual entregó un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos con un promedio de 71 millones pesos por película , a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos, con un promedio por película de 76 millones de pesos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
+
+  El Fondo de Fomento Audiovisual entregó un total de <%=              number_with_precision(@fs, precision: 0, separator: ',', delimiter: '.')
+ %> millones, de los cuales las mujeres recibieron el <%=              number_with_precision(((@fas * 100)/(@fs)).to_f.round(2) , precision: 2, separator: ',', delimiter: '.')
+%> % correspondiente a <%=              number_with_precision(@fas, precision: 0, separator: ',', delimiter: '.') %> millones para <%= @fa.count %> proyectos con un promedio de 71 millones pesos por película , a diferencia de los varones que se adjudicaron el <%=              number_with_precision(((@fhs * 100)/(@fs)).to_f.round(2) , precision: 2, separator: ',', delimiter: '.')
+%> %  con <%=              number_with_precision(@fhs, precision: 0, separator: ',', delimiter: '.') %> para <%= @fh.count %> proyectos, con un promedio por película de 76 millones de pesos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%=              number_with_precision(@fos, precision: 0, separator: ',', delimiter: '.') %> millones , representando el <%=              number_with_precision(((@fos * 100)/(@fs)).to_f.round(2), precision: 2, separator: ',', delimiter: '.')
+ %> %  del total . </h2>
 <br>
 <br>
     </div>
@@ -344,10 +355,10 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 <% mujer = (Rol.where(sexo: "Mujer")).count %>
 <%  total = hombre + mujer %>
 
-    Se recopiló la participación de <%= totalr %> personas para las películas analizadas, de estas, <%= ((@hombrer*100)/totalr.to_f).round(2) %> % (<%= @hombrer%>) son hombres y el <%= ((@mujerr*100)/totalr.to_f).round(2) %>% (<%= @mujerr %>) son mujeres.
+    Se recopiló la participación de <%= number_with_precision(totalr, precision: 0, separator: ',', delimiter: '.') %> personas para las películas analizadas, de estas, <%= number_with_precision(((@hombrer*100)/totalr.to_f).round(2), precision: 2, separator: ',', delimiter: '.') %> % (<%= number_with_precision(@hombrer, precision: 0, separator: ',', delimiter: '.')%>) son hombres y el <%= number_with_precision(((@mujerr*100)/totalr.to_f).round(2), precision: 2, separator: ',', delimiter: '.') %>% (<%= @mujerr %>) son mujeres.
 <br>
 <br>
-De esta manera las mujeres ocuparon <%= mujer %> roles (<%= (mujer*100)/total %> % ), a diferencia de los varones quienes ocuparon un total de <%= hombre %> roles (<%= (hombre*100)/total %> % ).
+De esta manera las mujeres ocuparon <%= number_with_precision(mujer, precision: 0, separator: ',', delimiter: '.') %> roles (<%= (mujer*100)/total %>%), a diferencia de los varones quienes ocuparon un total de <%= number_with_precision(hombre, precision: 0, separator: ',', delimiter: '.') %> roles (<%= (hombre*100)/total %> % ).
 
     </div>
     <div class="boxes-right">
