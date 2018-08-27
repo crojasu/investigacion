@@ -2,7 +2,7 @@
 <div class="containerbox">
     <div class="boxed">
       <h2 style= "row">
-           El estudio cuantitativo se realizó en base a un total de <%= @total %> proyectos de Películas, que fueron financiadas por el Fondo de fomento Audiovisual o CORFO o ambas instituciones. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las <%= @total %> películas, 41  fueron co-dirigidas representando el <%= (41*100/@total.to_f).round(2) %> % del total (hombre-hombre, mujer- mujer, mujer- hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, <%= @otro.count %> (<%= ((@otro.count*100)/@total.to_f).round(2) %> %) caen dentro de la categoría “sin información” , ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en el proyecto, puedan añadir o modificar información para así ir completando la faltante. Si quieres ayudarnos a completar el estudio click aquí.
+           El análisis de los datos cuantitativo se realizó en base a un total de 335 proyectos de películas financiadas por el Fondo de Fomento Audiovisual, por CORFO o ambas instituciones entre los años 2005 y 2015 inclusive. Antes de comenzar el análisis es preciso puntualizar algunos elementos: En primer lugar, se considera el año de una película como el año en que se adjudica un primer fondo, independiente de cuándo fue terminada o estrenada. Así mismo, es preciso acotar que de las 335 películas, 41 fueron co-dirigidas representando el 12,24% del total (hombre-hombre, mujer-mujer, mujer-hombre); de esta forma, fueron consideradas las películas co-dirigidas como una película, pero para efectos estadísticos se consideran dos roles de realizador/a. Finalmente, del total de películas financiadas, un 19,1% (64) caen dentro de la categoría “sin información”, ya que no se obtuvo información desde IMBD, CINECHILE o sus representantes legales. Esta falta de información puede deberse a que los proyectos cambian de nombre al finalizar, no están finalizados, no se tiene la información sistematizada o no se llevó a cabo. De esta forma, la plataforma web del estudio permite que, quienes participaron en uno de los proyectos de películas, puedan añadir o modificar información para así ir completando la faltante. Si quieres ayudarnos a completar el estudio click aquí.
         <br></h2>
     </div>
     <div class="boxes-right">
@@ -82,7 +82,7 @@
         <p>(n = <%= (Pelicula.all.count)%> Películas) </p>
         <%= render 'graficopeli' %>
         </div>
-  <div class="caja">
+  <div class="caja" style ="font : normal 400 20px/1 'Josefin Sans', sans-serif;"">
 Para el caso de las mujeres, es interesante notar que los números de películas dirigidas se mantienen entre 5 a 9, siendo muy probable que se repitan las directoras.
     En el caso del gráfico de color azul, podemos ver como el año 2005 comienza el fondo de fomento audiovisual donde fueron apoyados en su momento 7 películas dirigidas por hombres y 1 por mujer y aumenta según van aumentando los fondos cada año. No existe registro de los montos adjudicados para el año 2005.
 
@@ -102,8 +102,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
  <h2 style= "row">
   <strong>Fondos Entregados</strong>
          <br><br>
-         Desde CORFO y Fondo de Fomento audiovisual , se entregaron <%= @fs %> millones en <%= @f.count %> fondos para proyectos de Largometraje de Ficción y Documental. Esto quiere decir que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente.
-          De estos, las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total .
+         Desde CORFO y Fondo de Fomento audiovisual , se entregaron <%= @fs %> millones en <%= @f.count %> fondos para proyectos de Largometraje de Ficción y Documental. Debe tenerse en cuenta que una película pudo recibir diferentes fondos, tanto de ambas instituciones como separadamente. De estos, las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total .
     </div>
     <div class="boxes-right">
     <div class="boxedar">
@@ -155,7 +154,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
   <strong>Fondos <%= fondi.upcase %></strong>
   <br>
   <br>
-  Desde <%= fondi.upcase %>, se entregaron un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos con un promedio de 9 millones pesos por película, a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos , con un promedio por película de 11 millones de pesos.
+  <%= fondi.upcase %> entregó un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos con un promedio de 9 millones pesos por película, a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos , con un promedio por película de 11 millones de pesos.
 <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
 <br>
 <br>
@@ -236,7 +235,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
   <strong>Fondo de Fomento Audiovisual</strong>
   <br>
   <br>
-  El Fondo de Fomento Audiovisual se entregaron un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos con un promedio de 71 millones pesos por película , a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos, con un promedio por película de 76 millones de pesos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
+  El Fondo de Fomento Audiovisual entregó un total de <%= @fs %> millones, de los cuales las mujeres recibieron el <%= ((@fas * 100)/(@fs)).to_f.round(2) %> % correspondiente a <%= @fas %> millones para <%= @fa.count %> proyectos con un promedio de 71 millones pesos por película , a diferencia de los varones que se adjudicaron el <%= ((@fhs * 100)/(@fs)).to_f.round(2) %> %  con <%= @fhs %> para <%= @fh.count %> proyectos, con un promedio por película de 76 millones de pesos. <%= @fo.count %> Proyectos están Sin información correspondientes a <%= @fos %> millones , representando el <%= ((@fos * 100)/(@fs)).to_f.round(2) %> %  del total . </h2>
 <br>
 <br>
     </div>
@@ -305,8 +304,7 @@ Para el caso de las mujeres, es interesante notar que los números de películas
 
    <div class="containerbox">
     <div class="boxed">
-    <h2 style= "row">Para identificar la permanencia temporal en salas de cine nacional y las copias plausibles a ser distribuidas tanto de películas realizadas por mujeres y varones entre los años mencionados, se evidencia una disparidad. De esta forma, las mujeres tienen un promedio de 4.8 de semanas en salas  a diferencia de los hombres quienes permanecen 6.5 semanas en salas. En relación a las copias, las mujeres tienen un promedio de copias por película de 4,7 a diferencia de los hombres con un promedio de 18,2 copias por película.
-Por su parte, las películas realizadas por mujeres atraen menor cantidad de público, teniendo un promedio por película de 11.502 espectadores, a diferencia de los hombres con un promedio por película de 43.475 espectadores.</h2>    </div>
+    <h2 style= "row">Para identificar la permanencia temporal en salas de cine nacional y las copias plausibles a ser distribuidas tanto de películas realizadas por mujeres y varones entre los años mencionados, se evidencia una disparidad. De esta forma, las mujeres tienen un promedio de 4,8 de semanas en salas a diferencia de los hombres quienes permanecen 6,5 semanas en salas. En relación a las copias, las mujeres tienen un promedio de copias por película de 4,7 a diferencia de los hombres con un promedio de 18,2 copias por película. Por su parte, las películas realizadas por mujeres atraen menor cantidad de público, teniendo un promedio por película de 11.502 espectadores, a diferencia de los hombres con un promedio por película de 43.475 espectadores.</h2>    </div>
     <div class="boxes-right">
     <div class="boxedar">
   <div class="destacam"> <strong> Mujeres  </strong></div>
@@ -397,7 +395,7 @@ De esta manera las mujeres ocuparon <%= mujer %> roles (<%= (mujer*100)/total %>
         <p>(n = <%= Rol.count %>) </p>
         <%= render 'grafico' %>
         </div>
-         <div class="caja">
+         <div class="caja" style="font : normal 400 20px/1 'Josefin Sans', sans-serif;">
 
 <br>
     El gráfico muestra la cantidad de roles que fueron utilizados por Técnicos y Elencos ordenads según sexo.

@@ -6,8 +6,7 @@
      <h2 style= "row"><strong><%= "Participación según roles".upcase %></strong>
       <br>
       <br>
-          Un elemento relevante sobre el que fue preciso desagregar la información, hizo referencia con puntualizar los roles de trabajo en que participaron las mujeres. En este sentido, tal como se observará en las entrevistas cualitativas más adelante en el informe, todos/as los/as interlocutores son capaces de diferenciar una división sexual del trabajo que se funda en estereotipos de género sobre lo que pueden o no hacer tanto mujeres como varones.
-          De esta forma, se recopiló información que estableció la participación de <%= total %> personas para las películas analizadas, de las cuales el <%= ((hombre*100)/total.to_f).round(2)  %> % (<%= hombre%>) son hombres y el <%= ((mujer*100)/total.to_f).round(2) %>% (<%= mujer %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los </h2>
+        Un elemento relevante sobre el que fue preciso desagregar la información, hizo referencia con puntualizar los roles de trabajo en que participaron las mujeres. En este sentido, tal como se observará en las entrevistas cualitativas (pestaña Voces y Discursos), todos/as los/as interlocutores son capaces de diferenciar una división sexual del trabajo que se funda en estereotipos de género sobre lo que pueden o no hacer tanto mujeres como varones. De esta forma, se recopiló información que estableció la participación de <%= total %> personas para las películas analizadas, de las cuales el <%= ((hombre*100)/total.to_f).round(2)  %> % (<%= hombre%>) son hombres y el <%= ((mujer*100)/total.to_f).round(2) %>% (<%= mujer %>) son mujeres. Los números evidencian que la participación de mujeres corresponde a un poco más de un tercio, mostrando una brecha laboral en dicho sentido respecto de los varones.</h2>
     </div>
     <div class="boxes-right">
     <div class="boxedar">
@@ -21,7 +20,7 @@
  <div class= "row">
   <div id='dashboard'>
      <div class="caja" style="margin-top: 70px">
-      <h1>Gráficos por roles</h1>
+      <h1><strong>Gráficos por roles</strong></h1>
 
 Los gráficos muestran que las mujeres han podido posicionarse en en cargos de jefatura dentro de la Producción como son Asistente de Dirección , Jefatura de Producción.
 Las áreas de mayor interés o espacio son las relacionadas al Arte, Maquillaje, Vestuario y Decoración.
@@ -234,10 +233,7 @@ function dashboard(id, fData){
 <% otro="Otro" %>
 <% rol=  rolos%>
 <h1><%= rolos %></h1>
-<p>Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %> representado el <%= ((tecnicogeneral(rol, mujer))*100/tecnicorol(rol).to_f).round(1) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= ((tecnicogeneral(rol, hombre))*100/tecnicorol(rol).to_f).round(1) %> % del total.
-</p>
-<br>
-<br>
+<h3 style =" font : normal 400 20px/1 'Josefin Sans', sans-serif;">Del total de <%= tecnicorol(rol) %> cargos disponibles en <%= rolos %>, Las mujeres ocuparon <%= tecnicogeneral(rol, mujer) %> representado el <%= ((tecnicogeneral(rol, mujer))*100/tecnicorol(rol).to_f).round(1) %> % a diferencia de los varones quienes ocuparon <%= tecnicogeneral(rol, hombre) %> espacios representado el <%= ((tecnicogeneral(rol, hombre))*100/tecnicorol(rol).to_f).round(1) %> % del total.</h3>
 <p>(n= <%= tecnicorol(rol)%> cargos )</p>
 <script>
 var freqData=[
