@@ -1,4 +1,22 @@
-Down on English, 
+Down in Spanish, 
+
+Hi Folks!
+
+This platform is the result of an investigacion about women in the Chilean movie industrie.
+We made a research about the 335 movies that where suported by the State, (CORFO and Fondo de Fomento Audiovisual) during the years of 2005 to 2015.
+
+For doing this I fetch the database from IMBD and CINECHILE to get the information of the people Cast and Crew.
+After that I selected the gender of every person and display the result using the JSD3 library. https://d3js.org/
+
+The research is open to people that participated in the movies but that are not on the databse. This information can be uploaded and the result will be reflected at the same time.
+
+
+https://cineymujeres.herokuapp.com/graficos
+https://cineymujeres.herokuapp.com/
+
+Thanks!
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 Wena amig@s, 
 
@@ -14,17 +32,7 @@ Ayudanos a difundir los resultados!
 
 Gracias!
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
-Hi Folks!
 
-This platform is the result of an investigacion about women in the Chilean movie industrie.
-We made a research about the 335 movies that where suported by the State, (CORFO and Fondo de Fomento Audiovisual) during the years of 2005 to 2015.
 
-For doing this I fetch the database from IMBD and CINECHILE to get the information of the people Cast and Crew.
-After that I selected the gender of every person and display the result using the JSD3 library. https://d3js.org/
-
-The research is open to people that participated in the movies but that are not on the databse. This information can be uploaded and the result will be reflected at the same time.
-
-Thanks!
