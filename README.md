@@ -18,7 +18,7 @@ Thanks!
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-Wena amig@s, 
+Hola internaut@s, 
 
 Esta plataforma es el resultado de una investigación sobre la participación de las mujeres en la industria cinematográfica chilena.
 Realizamos una investigación sobre las 335 películas que fueron apoyadas por el Estado, (CORFO y Fondo de Fomento Audiovisual) durante los años de 2005 a 2015.
